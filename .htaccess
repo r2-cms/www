@@ -1,0 +1,12 @@
+#deny from 201.83.63.57
+
+RewriteEngine on
+
+#RewriteCond %{HTTP_HOST} !^www.gt8.com.br
+#RewriteRule (.*) http://www.gt8.com.br/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ engine/connect.php?path=$1&rewrite=1 [NC,L,QSA]
+
+#Options -Indexes
