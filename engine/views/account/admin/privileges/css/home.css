@@ -1,0 +1,43 @@
+.SplitPane-horizontal .cards {
+	padding-bottom: 0px;
+}
+.SplitPane-horizontal .left-pane {
+	overflow: visible;
+}
+body .right-pane .card {
+	border-radius: 30px;
+}
+	body .right-pane .card .imgC2 {
+		display: block;
+		width: 170px;
+		height: 170px;
+		background: #F2F2F2;
+		padding: 10px;
+		border: 3px solid #CCC;
+		border-radius: 100px;
+	}
+		body .right-pane .card .imgC2 > span {
+			position: static;
+			width: 163px;
+			height: 163px;
+			display: block;
+			background: #CCC;
+			margin: 0px;
+			border: 4px solid #BBB;
+			border-radius: 100px;
+			overflow: hidden;
+		}
+			body .right-pane .card .imgC2 > span > span {
+				display: block;
+				position: static;
+				margin-left: -169px;
+				width: 500px;
+				height: 100%;
+				text-align: center;
+			}
+				body .right-pane .card .imgC2 span img {
+					width: auto;
+					height: auto;
+					background: #CCC;
+					margin: 0px;
+				}
