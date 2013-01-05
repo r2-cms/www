@@ -1,0 +1,73 @@
+h3 {
+	text-indent: 10px;
+	margin: 0px;
+}
+h2 {
+	text-transform: uppercase;
+	font-weight: bolder;
+	font-family: arial;
+	font-size: 48px;
+	line-height: 50px;
+	text-shadow: 1px 1px #FFF;
+	margin-bottom: 20px;
+	text-indent: 10px;
+}
+.empty-cart {
+	display: none;
+	padding: 10px 0;
+}
+.empty-cart > div {
+	text-align: center;
+	padding: 40px 0;
+	background: #FFF;
+	border: 1px solid #CCC;
+}
+.empty-cart > div.clear {
+	padding: 0;
+	border: none;
+}
+.empty-cart h4 {
+	font-size: 20px;
+}
+.empty-cart p {
+	margin: 0;
+}
+.empty-cart p a {
+	font-size: 18px;
+	float: none;
+	display: block;
+	margin: 0 auto;
+}
+body .table-EA .body > .tr > .col-24 {
+	margin-bottom: 0px;
+}
+body .table-EA .body .button a {
+	background: url(../imgs/cart/remove-cart-item.png) no-repeat center transparent;
+	border-right: 1px solid #CCC;
+}
+body .items .qty input {
+	width: 60px !important;
+	text-indent: 5px;
+	cursor: default;
+	border: 1px solid #CCC;
+}
+.table-EA .body #eSumary {
+	margin-top: 20px;
+}
+.table-EA .body #eExtras {
+	margin-top: 20px;
+}
+.table-EA .body #eExtras .td {
+	height: 50px;
+	line-height: 50px;
+}
+.table-EA .body #eSumary .td {
+	height: 40px;
+	line-height: 40px;
+}
+.table-EA .body #eExtras > .coupon {
+	color: red;
+}
+.table-EA .body #eExtras > .coupon .coupon {
+	overflow: visible;
+}

@@ -1,0 +1,213 @@
+#eMain header.main {
+	background: #EFE;
+	padding: 10px 0;
+}
+	#eMain header.main .menu {
+		display: none;
+	}
+	#eMain header.main .fast-links {
+		height: auto;
+		line-height: 35px;
+		text-align: left;
+	}
+#eCartLocation {
+	
+}
+	#eCartLocation > a {
+		position: relative;
+		display: block;
+		float: left;
+		width: 115px;
+		height: 42px;
+		text-indent: 1000px;
+	}
+	#eCartLocation > a.cart {
+		background: transparent url(../imgs/catalog/cart-location.png) no-repeat 0px 0px;
+	}
+	#eCartLocation > a.delivery {
+		background: transparent url(../imgs/catalog/cart-location.png) no-repeat -115px 0px;
+	}
+	#eCartLocation > a.pay {
+		background: transparent url(../imgs/catalog/cart-location.png) no-repeat -230px 0px;
+	}
+	#eCartLocation > a.receipt {
+		background: transparent url(../imgs/catalog/cart-location.png) no-repeat -345px 0px;
+	}
+	#eCartLocation > a.selected {
+		/*background: transparent url(../imgs/catalog/cart-location.png) no-repeat -460px 0px;*/
+	}
+img.ssl-seal {
+	margin-top: -7px;
+}
+/*********************************** CART LOCATION ****************************/
+body.cart #eCartLocation img {
+	background: transparent url(../imgs/catalog/cart-location.png) no-repeat left 0;
+}
+body.delivery #eCartLocation img {
+	background: transparent url(../imgs/catalog/cart-location.png) no-repeat left -50px;
+}
+body.pay #eCartLocation img {
+	background: transparent url(../imgs/catalog/cart-location.png) no-repeat left -100px;
+}
+body.receipt #eCartLocation img {
+	background: transparent url(../imgs/catalog/cart-location.png) no-repeat left -150px;
+}
+/*********************************** CART *************************************/
+.cart-items {
+	position: relative;
+	height: 85px;
+	font-size: 16px;
+	font-weight: bolder;
+	color: #555;
+	border-bottom: 1px solid #CCC;
+	transition: all 0.4s;
+	-ms-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+}
+	.cart-items h4 {
+		margin-bottom: 10px;
+	}
+	.cart-items .product {
+		
+	}
+	.cart-items .line-height {
+		line-height: 85px !important;
+	}
+	.cart-items .small {
+		font-weight: normal;
+		color: #999;
+	}
+	.cart-items .increaser {
+		width: 130px;
+		display: block;
+		margin: 30px auto 0;
+	}
+	.cart-items div {
+		z-index: 1;
+	}
+	.cart-items .bt-close {
+		display: block;
+		position: absolute;
+		left: auto;
+		top: 10px;
+		right: 10px;
+		width: 32px;
+		height: 32px;
+		cursor: pointer;
+		background: transparent url(../imgs/bt-close-small.png) no-repeat center;
+		z-index: 2;
+		opacity: 0;
+		transition: all 0.4s;
+		-ms-transition: all 0.4s;
+		-moz-transition: all 0.4s;
+		-webkit-transition: all 0.4s;
+	}
+	.cart-items:hover .bt-close {
+		opacity: 1;
+	}
+	.cart-items .e-bts-hrefs {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #FFF;
+		background: rgba(255,255,255,0);
+		overflow: hidden;
+		opacity: 0;
+		z-index: 0;
+		transition: all 0.4s;
+		-ms-transition: all 0.4s;
+		-moz-transition: all 0.4s;
+		-webkit-transition: all 0.4s;
+	}
+		.cart-items .e-bts-hrefs.show {
+			background: rgba(255,225,225,0.85);
+			z-index: 3;
+			opacity: 1;
+		}
+		.cart-items .e-bts-hrefs .href-button {
+			position: relative;
+			width: 160px;
+			height: 40px;
+			line-height: 38px;
+			left: 100%;
+			margin-top: 15px;
+			transition: all 0.4s;
+			-ms-transition: all 0.4s;
+			-moz-transition: all 0.4s;
+			-webkit-transition: all 0.4s;
+		}
+			.cart-items .e-bts-hrefs.show .href-button {
+				margin-left: -180px;
+			}
+.bar-total {
+	background: #D9EEFA;
+	color: #2C5987;
+	font-weight: bolder;
+}
+footer.main > .top {
+	display: none;
+}
+footer.main > .bottom > .row-1 {
+	border-top: 1px solid #BBB;
+	box-shadow: #FFF 0 1px 0px inset;
+	padding-top: 5px;
+}
+/*********************************** DELIVERY *************************************/
+._address-holder a.card {
+	transition: all 0.4s;
+	-ms-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+}
+	._address-holder a.card:hover {
+		box-shadow: 0 1px 5px #CCC;
+	}
+		.address-holder a.card .padding {
+			height: 136px;
+		}
+/*********************************** PAY **************************************/
+body.pay {
+	
+}
+	body.pay .chooser {
+		
+	}
+		body.pay .chooser .item {
+			text-align: center;
+			cursor: pointer;
+		}
+			body.pay .chooser .item.selected {
+				box-shadow: 0 1px 5px 2px #339;
+			}
+				body.pay .chooser .item.selected .border {
+					border: 1px solid #009;
+				}
+			body.pay .chooser .item strong {
+				display: block;
+			}
+			body.pay .chooser .item img {
+				display: block;
+				margin: 0 auto 10px;
+				height: 65px;
+				width: auto;
+			}
+			body.pay .chooser .item span {
+				display: block;
+			}
+#eBodyBoleto {
+	
+}
+#eBodyCardHolder {
+	height: 390px;
+}
+/*********************************** RECEIPT **********************************/
+.receipt .sumary-item .imgC img {
+	position: relative;
+	top: 0px !important;
+}
+.receipt .sumary-items div.border-bottom:last-child {
+	border-bottom: none !important;
+}

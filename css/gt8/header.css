@@ -1,0 +1,116 @@
+header.main {
+	position: relative;
+	padding-top: 32px;
+	margin-bottom: 24px;
+}
+header.main nav.main {
+	position: relative;
+	left: 0px;
+	width: 100%;
+	height: 66px;
+	display: inline;
+	float: left;
+}
+header.main nav.main > div {
+	position: relative;
+	float: left;
+	height: 66px;
+	line-height: 66px;
+	background: #FFF;
+	box-shadow: 3px 1px 3px #999;
+	z-index: 2;
+}
+header.main nav.main > .circle {
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	margin: -18px -14px 0;
+	z-index: 1;
+	text-align: center;
+	border-radius: 100px;
+	box-shadow: 0px 0px 10px #999;
+}
+header.main nav.main .logo {
+	position: absolute;
+	left: -80px;
+	top: -12px;
+}
+header.main nav.main .left-margin-space {
+	width: 50%;
+	margin-left: -480px;
+	box-shadow: -4px 1px 3px #999999;
+}
+header.main nav.main > div:last-child {
+	padding: 0 20px;
+}
+/*********************** ACCOUNT **********************************************/
+header.main nav.account {
+	position: absolute;
+	right: 0px;
+	line-height: 66px;
+	border-radius: 4px 0px 0px 4px;
+	box-shadow: 0px 0px 3px #666;
+	background: #333;
+}
+header.main nav.account a.login {
+	position: relative;
+	display: block;
+	height: 66px;
+	margin: 0 20px 0 0;
+	padding: 0px 0 0 60px;
+	line-height: 66px;
+	color: #FFF;
+	float: left;
+	cursor: pointer;
+}
+header.main nav.account a.login img {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	height: 46px;
+	width: auto;
+	max-width: 66px;
+}
+header.main nav.account a.logout {
+	position: relative;
+	display: block;
+	width: 50px;
+	float: left;
+	text-align: center;
+	color: #CCD;
+	background: #622;
+}
+header.main nav.account a.new {
+	position: relative;
+	display: block;
+	padding: 0 20px;
+	margin-top: 10px;
+	line-height: 46px;
+	border-left: 1px solid #BBB;
+	float: left;
+	text-align: center;
+	color: #CCD;
+}
+/*********************** DIRECTORY ********************************************/
+nav.directory {
+	margin-bottom: 20px;
+}
+nav.directory h4 {
+	font-size: 18px;
+	line-height: normal;
+	margin-bottom: 0px;
+}
+nav.directory hr {
+	margin: 5px 0;
+}
+nav.directory div.location {
+	margin-top: -8px;
+	line-height: 32px;
+}
+nav.directory div.location a {
+	background: transparent url(../imgs/product/nav-arrow-next-dir.png) no-repeat right center;
+	padding: 0 12px 0 4px;
+}
+nav.directory div.location span {
+	
+}

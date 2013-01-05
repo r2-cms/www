@@ -1,0 +1,87 @@
+/*********************** BANNER ***********************************************/
+.banner {
+	background: #FFF;
+	box-shadow: 0px 0px 3px #333;
+	padding: 20px 0;
+}
+.banner .image-preview {
+	position: relative;
+	max-height: 460px;
+}
+.banner .info {
+	position: relative;
+	overflow: visible;
+}
+h1 {
+	margin-bottom: 20px;
+	font-size: 38px;
+}
+a.bt-admin {
+	float: right;
+}
+.image-preview {
+	position: relative;
+	overflow: hidden;
+}
+	.image-preview img {
+		position: relative;
+		width: 100%;
+		height: auto;
+	}
+h2 {
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+.banner p.start-price {
+	font-size: 20px;
+}
+.banner a.buy {
+	
+}
+.banner a.buy span {
+	font-size: 24px;
+	line-height: 62px;
+}
+/*********************** ?????????? *******************************************/
+#eDescription {
+	
+}
+/*********************** TabbedPane *******************************************/
+body .TabbedPane {
+	
+}
+	body .TabbedPane > .header {
+		height: 66px;
+	}
+		body .TabbedPane .header > .tab {
+			color: #2C2E2D;
+			font-size: 14px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			border-radius: 2px 2px 0 0;
+			top: 2px;
+		}
+		body .TabbedPane .header > .over {
+			top: 3px;
+			box-shadow: 0px -1px 1px #BBB;
+		}
+			body .TabbedPane .header > .tab div, .TabbedPane .header > .tab a {
+				height: 66px;
+				line-height: 66px;
+				padding: 0 120px 0 40px;
+			}
+	body .TabbedPane > .body {
+		opacity: 1;
+		box-shadow: 0px 1px 3px #333;
+		border-radius: 1px;
+	}
+		body .TabbedPane .body > .card {
+			box-shadow: none;
+			font-size: 18px;
+			line-height: 150%;
+		}
+
+footer.main {
+	position: relative !important;
+}

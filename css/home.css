@@ -1,0 +1,154 @@
+.banner {
+	
+}
+.background-effect {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	background: #444;
+	box-shadow: 0 1px 3px 0 #444;
+	border-bottom: 1px solid #AAA;
+}
+	.background-effect .images-step {
+		position: absolute;
+		overflow: hidden;
+		width: 100%;
+		height: 100%;
+	}
+		.background-effect .images-step > div, .background-effect .images-step > a {
+			display: block;
+			position: relative;
+			width: 100%;
+			text-align: center;
+		}
+			.background-effect .images-step > div > img, .background-effect .images-step a > img {
+				display: inline;
+			}
+	.background-effect .enunciation {
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+		z-index: 2;
+	}
+			.background-effect .enunciation h5 {
+				display: none;
+				color: #FFF;
+				font-size: 14px;
+				font-weight: bold;
+			}
+			.background-effect .enunciation h5.active {
+				display: block;
+			}
+			.background-effect .enunciation p {
+				display: none;
+				color: #FFF;
+			}
+			.background-effect .enunciation p.active {
+				display: block;
+			}
+	.background-effect .slider-steps {
+		position: absolute;
+		right: 10px;
+		bottom: 5px;
+		width: 100%;
+		height: 20px;
+		z-index: 2;
+	}
+		.background-effect .slider-steps .steps {
+			position: absolute;
+			right: 10px;
+		}
+			.background-effect .slider-steps a {
+				float: left;
+				position: relative;
+				width: 16px;
+				height: 16px;
+				margin: 0 3px;
+				line-height: 0;
+				border-radius: 100%;
+				box-shadow: inset 0 2px 2px #666, 0 1px 4px #FFFFFF;
+				background: #FFF;
+				text-decoration: none;
+			}
+			.background-effect .slider-steps a.active {
+				background: #8EDB1B;
+				background-image: linear-gradient( top, #98E729, #9AE727 48%, #8EDB1B 52%, #74C504);
+				background-image: -moz-linear-gradient( top, #98E729, #9AE727 48%, #8EDB1B 52%, #74C504);
+				background-image: -ms-linear-gradient( top, #98E729, #9AE727 48%, #8EDB1B 52%, #74C504);
+				background-image: -webkit-linear-gradient( top, #98E729, #9AE727 48%, #8EDB1B 52%, #74C504);
+				box-shadow: 0px 0px 2px;
+			}
+.background-effect .emulator {
+	display: block;
+}
+.background-effect .bar-indicator {
+	position: absolute;
+	bottom: 0px;
+	width: 10px;
+	height: 2px;
+	background: #afa;
+	z-index: 10;
+}
+.brands-highlights {
+	
+}
+.offers-highlights .card {
+	border-radius: 4px;
+	background: #FFF;
+	background-image: linear-gradient(#F2F2F2, #FFF 10%, #FFF 80%, #F2F2F2);
+	background-image: -ms-linear-gradient(#F2F2F2, #FFF 10%, #FFF 80%, #F2F2F2);
+	background-image: -moz-linear-gradient(#F2F2F2, #FFF 10%, #FFF 80%, #F2F2F2);
+	background-image: -webkit-linear-gradient(#F2F2F2, #FFF 10%, #FFF 80%, #F2F2F2);
+}
+	.offers-highlights .card .border {
+		border: 1px solid #fff !important;
+		border-radius: 4px;
+		background: rgba( 255,255,255,0);
+		transition: all 0.4s;
+		-ms-transition: all 0.4s;
+		-moz-transition: all 0.4s;
+		-webkit-transition: all 0.4s;
+	}
+		.offers-highlights .card:hover .border {
+			background: rgba( 255,255,255,1);
+		}
+/*********** bgs *********/
+.bg-home-1 {
+	background: transparent url(../imagens/banners/home-1s.jpg) repeat left bottom;
+}
+.bg-home-2 {
+	background: transparent url(../imagens/banners/home-2s.jpg) repeat;
+}
+.bg-home-3 {
+	background: transparent url(../imagens/banners/home-3s.jpg) repeat;
+}
+.bg-home-4 {
+	background: transparent url(../imagens/banners/home-4s.jpg) repeat;
+}
+/*********** specials *********/
+.background-effect .img-sgh {
+	position: relative;
+}
+.background-effect .menu-links-a {
+	position: absolute;
+	left: 20px;
+	top: 0px;
+	width: 300px;
+	height: 410px;
+	z-index: 2;
+}
+	.background-effect .shadow {
+		box-shadow: 20px 0px 30px #000, -20px 0px 30px #000;
+	}
+		.background-effect .menu-links-a a {
+			float: left;
+			text-align: center;
+			width: 112px;
+			margin: 15px 0px 5px 25px;
+			background: #F3E6D5;
+			color: #773A0D;
+			font-family: "Trebuchet MS";
+			font-size: 16px;
+			line-height: 30px;
+		}
+/*********** others *********/

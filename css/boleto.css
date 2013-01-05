@@ -1,0 +1,316 @@
+body, html {
+	background: #FFF;
+}
+#eMain {
+	position: relative;
+	z-index: 2;
+	margin: 0 auto;
+	width: 666px;
+	min-height: 800px;
+	color: #000;
+}
+span {
+	font-family: arial;
+	font-weight: bold;
+	font-size: 10px;
+}
+small {
+	font-family: arial;
+	font-size: 9px;
+	color: #000033;
+}
+.bank-logo {
+	float: left;
+}
+.bank-dv-code {
+	float: left;
+	border-left: 2px solid #000;
+	border-right: 2px solid #000;
+	line-height: 24px;
+	height: 24px;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 0px 4px 0;
+	margin-top: 18px;
+	text-align: center;
+}
+.linha-digitavel {
+	float: right;
+	line-height: 24px;
+	height: 24px;
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 20px;
+}
+.separator-dotted {
+	border-bottom: 1px dashed #000;
+}
+.row {
+	line-height: 16px;
+}
+.cedente-holder {
+	border: 1px solid #000;
+}
+	.cedente-holder .row {
+		border-bottom: 1px solid #000;
+	}
+		.cedente-holder .row .cedente {
+			float: left;
+			width: 299px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .agencia {
+			float: left;
+			width: 127px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .especie {
+			float: left;
+			width: 35px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .quantidade {
+			float: left;
+			width: 54px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .nosso-numero {
+			float: left;
+			width: 120px;
+			text-indent: 5px;
+		}
+		
+		.cedente-holder .row .num-doc {
+			float: left;
+			width: 193px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .cpfcnpj {
+			float: left;
+			width: 133px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .vencimento {
+			float: left;
+			width: 135px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .valor-documento {
+			float: left;
+			width: 180px;
+			text-indent: 5px;
+		}
+		
+		.cedente-holder .row .descontos {
+			float: left;
+			width: 114px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .outras-deducoes {
+			float: left;
+			width: 113px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .mora-multa {
+			float: left;
+			width: 113px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .outros-acrescimos {
+			float: left;
+			width: 115px;
+			padding-left: 5px;
+			border-right: 1px solid #000;
+		}
+		.cedente-holder .row .valor-cobrado {
+			float: left;
+			width: 113px;
+			text-indent: 5px;
+		}
+		
+		.cedente-holder .row .sacado {
+			clear: both;
+			text-indent: 5px;
+		}
+	.demonstrativo-holder {
+		min-height: 80px;
+	}
+.bank-holder {
+	border: 1px solid #000;
+}
+	.bank-holder .row {
+		border-bottom: 1px solid #000;
+	}
+		.bank-holder .row .local-pagamento {
+			float: left;
+			width: 472px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .vencimento {
+			float: left;
+			width: 188px;
+			text-indent: 5px;
+		}
+		.bank-holder .row .cedente {
+			float: left;
+			width: 472px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .agencia {
+			float: left;
+			width: 188px;
+			text-indent: 5px;
+		}
+		
+		.bank-holder .row .data-do-documento {
+			float: left;
+			width: 119px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .numero-documento {
+			float: left;
+			width: 149px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .especie-doc {
+			float: left;
+			width: 65px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .aceite {
+			float: left;
+			width: 40px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .data-processamento {
+			float: left;
+			width: 95px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .nosso-numero {
+			float: left;
+			width: 188px;
+			text-indent: 5px;
+		}
+		
+		.bank-holder .row .uso-do-banco {
+			float: left;
+			width: 119px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .carteira {
+			float: left;
+			width: 89px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .especie {
+			float: left;
+			width: 59px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .quantidade {
+			float: left;
+			width: 123px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .valor-documento {
+			float: left;
+			width: 78px;
+			text-indent: 5px;
+			border-right: 1px solid #000;
+		}
+		.bank-holder .row .valor-documento-final {
+			float: left;
+			width: 180px;
+			text-indent: 5px;
+		}
+.instructions-holder {
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+}
+	.instructions-holder .instruction {
+		float: left;
+		width: 462px;
+		margin-left: 10px;
+	}
+	.instructions-holder .sumary {
+		float: left;
+		width: 129px;
+		border-left: 1px solid #000;
+		padding-left: 10px;
+	}
+.sacado-holder {
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+}
+	.sacado-holder .nome {
+		float: left;
+		width: 469px;
+		padding-left: 10px;
+	}
+	.sacado-holder .cpfcnpj {
+		float: left;
+		width: 166px;
+		padding-left: 5px;
+	}
+	.sacado-holder .address {
+		float: left;
+		width: 462px;
+		padding-left: 10px;
+	}
+	.sacado-holder .cod-baixa {
+		float: left;
+		width: 166px;
+		padding-left: 10px;
+		border-left: 1px solid #000;
+	}
+.bar-holder {
+	
+}
+	.bar-holder .barcode {
+		padding-left: 10px;
+	}
+		.bar-holder .barcode .b1, .bar-holder .barcode .b3, .bar-holder .barcode .p1, .bar-holder .barcode .p3 {
+			float: left;
+			height: 50px;
+			line-height: 0px;
+		}
+		.bar-holder .barcode .p1 {
+			width: 1px;
+			background: #000;
+		}
+		.bar-holder .barcode .b1 {
+			width: 1px;
+			background: #FFF;
+		}
+		.bar-holder .barcode .p3 {
+			width: 3px;
+			background: #000;
+		}
+		.bar-holder .barcode .b3 {
+			width: 3px;
+			background: #FFF;
+		}

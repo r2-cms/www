@@ -1,0 +1,836 @@
+@font-face {
+	font-family: 'Arista';
+	src: url('arista-light.eot');
+	src: local('☺'), url('arista-light.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+html, body {
+	height: 100%;
+	font-family: Arista;
+}
+input, select, textarea, table {
+	font-family: Arista;
+	font-size: 18px;
+}
+body h1, body h2, body h3, body h4, body h5, body h6 {
+	font-weight: normal;
+}
+h1 {
+	
+}
+h2 {
+	
+}
+#eContent {
+	position: relative;
+	height: 100%;
+}
+.gravity-block {
+	position: relative;
+	height: 100%;
+	max-height: 100%;
+	overflow: hidden;
+	z-index: 20;
+}
+	.gravity-block .gravity {
+		position: relative;
+		display: block;
+		z-index: 3;
+	}
+#g2 {
+	border: 1px dashed #AAA;
+	overflow: hidden;
+}
+/************************************* STAGES *********************************/
+.circles {
+	position: relative;
+	height: 100%;
+	z-index: 3;
+}
+	.circles > .circle {
+		position: absolute;
+		left: 0;
+		top: 0;
+		border-radius: 50%;
+	}
+	.circles > .circle-large {
+		width: 480px;
+		height: 480px;
+	}
+	.circles > .circle-small {
+		width: 240px;
+		height: 240px;
+	}
+		.circles > .circle > .circle {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			padding: 50px;
+			background: #F0F0F0;
+		}
+			.circles > .circle > .circle > img.circle-dashed {
+				position: absolute;
+				left: 0;
+				top: 0;
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+				.circles > .circle > .circle > .circle {
+					position: relative;
+					width: 100%;
+					height: 100%;
+					border-radius: 50%;
+					background: #7F725F;
+					text-shadow: 3px 3px 4px #4A3719;
+				}
+					.circles > .circle > .circle > .circle > img {
+						position: relative;
+						display: block;
+						left: -10%;
+						top: -10%;
+						width: 120%;
+						height: 120%;
+					}
+						.circles .circle p.subtitle {
+							position: relative;
+							left: -60px;
+							top: 56px;
+							width: 360px;
+							height: 65px;
+							margin-bottom: 50px;
+							line-height: 65px;
+							font-size: 60px;
+							font-weight: normal;
+							color: #574833;
+							text-align: center;
+						}
+						.circles .circle p.description {
+							position: relative;
+							left: -30px;
+							width: 300px;
+							height: 70px;
+							line-height: 35px;
+							font-size: 30px;
+							color: #574833;
+							text-align: center;
+						}
+.paths {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+/************************************* STAGE 1 ********************************/
+#eHome {
+	background: #F4F4F4;
+	background-image: -webkit-radial-gradient( center, circle farthest-side, #A0825F, #51412C);
+	background-image: -moz-radial-gradient( center, circle farthest-side, #A0825F, #51412C);
+	background-image: radial-gradient( center, circle farthest-side, #A0825F, #51412C);
+}
+	#eHome h1 {
+		position: absolute;
+		left: 50%;
+		width: 478px;
+		height: 64px;
+		margin: 0 0 0 -236px;
+	}
+		#eHome h1 a {
+			display: block;
+			text-align: center;
+		}
+		#eHome .bottom-shadow {
+			position: relative;
+			width: 730px;
+			height: 55px;
+			margin: 0 auto;
+			display: block;
+			background: transparent;
+			background-image: -webkit-radial-gradient(center -12px , ellipse farthest-side, #0A0C23 0%, rgba(255, 255, 255, 0.05));
+			background-image: -moz-radial-gradient(center -12px , ellipse farthest-side, #0A0C23 0%, rgba(255, 255, 255, 0.05));
+		}
+			#eHome .bottom-shadow span {
+				display: block;
+				height: 1px;
+				overflow: hidden;
+				text-indent: -10000px;
+				background: -webkit-linear-gradient(left, rgba(30,87,153,0) 0%, rgba(10,12,35,1) 50%, rgba(125,185,232,0) 100%);
+				background: -moz-linear-gradient(left, rgba(30,87,153,0) 0%, rgba(10,12,35,1) 50%, rgba(125,185,232,0) 100%);
+			}
+	#e1Grabber {
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin: -30px 0 0 -30px;
+		width: 60px;
+		height: 30px;
+	}
+		#e1Grabber > div {
+			position: relative;
+			background: #6B573C;
+			height: 4px;
+			border-top: 1px solid #000;
+			border-bottom: 1px solid #FCEAC8;
+			border-radius: 5px;
+		}
+/************************************* STAGE 2 ********************************/
+#eAbout {
+	background: #D8C9B0;
+	background-image: -webkit-radial-gradient( center, ellipse farthest-side, #E3D8C6, #CBB796);
+	background-image: -moz-radial-gradient( center, ellipse farthest-side, #E3D8C6, #CBB796);
+	background-image: radial-gradient( center, ellipse farthest-side, #E3D8C6, #CBB796);
+}
+	#e2CircleDashedLarge {
+		margin: 50px 0 0 -20px;
+		z-index: 3;
+	}
+		#e2CircleDashedLarge > .circle {
+			background: #F0F0F0;
+		}
+			#e2CircleDashedLarge .circle > .circle {
+				background: #A9957A url(../imgs/sinetes/cream.png) center no-repeat;
+			}
+	#eAbout h2 {
+		position: absolute;
+		margin-top: 20px;
+		margin-left: 480px;
+		width: 460px;
+		font-size: 60px;
+		line-height: 60px;
+		text-align: right;
+	}
+	#eAbout .paths {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: url(../imgs/paths/cream.png) no-repeat center transparent;
+		z-index: 2;
+	}
+#e2Description {
+	position: absolute;
+	margin: 190px 0 0 640px;
+	width: 296px;
+	text-align: right;
+	color: #564326;
+	z-index: 3;
+}
+.float-circles {
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	background: #E6CFA9;
+	box-shadow: 0 0 5px #8E7150;
+	border-radius: 50%;
+	opacity: 0.5;
+	z-index: 1;
+}
+	#e2CircleDashedSmall {
+		width: 180px;
+		height: 180px;
+		margin: 380px 0 0 650px;
+		z-index: 1;
+	}
+		#e2CircleDashedSmall > .circle {
+			background: #F0F0F0;
+		}
+			#e2CircleDashedSmall .circle > .circle {
+				background: #E4DED8;
+			}
+				#e2CircleDashedSmall .circle p.subtitle {
+					top: 40px;
+					width: 300px;
+				}
+				#e2CircleDashedSmall .circle p.description {
+					top: -10px;
+					width: 245px;
+				}
+			
+/************************************* STAGE 3 ********************************/
+#eGreen {
+	background: #6F8179;
+	background-image: -moz-radial-gradient( center, circle farthest-side, #E6F7E7, #556861);
+	background-image: -webkit-radial-gradient( center, circle farthest-side, #E6F7E7, #556861);
+	background-image: radial-gradient( center, circle farthest-side, #E6F7E7, #556861);
+}
+	#e3CircleDashedLarge {
+		width: 400px;
+		height: 400px;
+		margin: 40px 0 0 460px;
+		z-index: 3;
+	}
+		#e3CircleDashedLarge > .circle {
+			background: #8E9E95;
+		}
+			#e3CircleDashedLarge .circle > .circle {
+				background: #4B5E58 url(../imgs/sinetes/green.png) center no-repeat;
+			}
+	#eGreen h3 {
+		position: absolute;
+		margin-top: 20px;
+		margin-left: 20px;
+		width: 460px;
+		font-size: 60px;
+		line-height: 60px;
+	}
+	#e3Description {
+		position: absolute;
+		margin: 190px 0 0 20px;
+		width: 296px;
+		color: #0A0C0D;
+		z-index: 3;
+	}
+	#eGreen .paths {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: url(../imgs/paths/green.png) no-repeat center transparent;
+		z-index: 2;
+	}
+	#e3CircleDashedSmall {
+		width: 160px;
+		height: 160px;
+		margin: 400px 0 0 180px;
+		z-index: 1;
+	}
+		#e3CircleDashedSmall > .circle {
+			background: #92A299;
+		}
+			#e3CircleDashedSmall .circle > .circle {
+				background: #3E4142;
+			}
+				#e3CircleDashedSmall > .circle > .circle {
+					text-shadow: 3px 3px 4px #393E3D;
+				}
+				#e3CircleDashedSmall .circle p.subtitle {
+					left: -100px;
+					top: 40px;
+					color: #FFF;
+				}
+				#e3CircleDashedSmall .circle p.description {
+					left: -70px;
+					top: -10px;
+					color: #CCC;
+				}
+			
+/************************************* STAGE 4 ********************************/
+#eFireBrick {
+	background: #8F6262;
+	background-image: radial-gradient( center, circle farthest-side, #CDB6B6, #7D4747);
+	background-image: -moz-radial-gradient( center, circle farthest-side, #CDB6B6, #7D4747);
+	background-image: -webkit-radial-gradient( center, circle farthest-side, #CDB6B6, #7D4747);
+}
+	#e4CircleDashedLarge {
+		margin: 80px 0 0 0;
+		z-index: 3;
+	}
+		#e4CircleDashedLarge > .circle {
+			background: #C2A8A8;
+		}
+			#e4CircleDashedLarge .circle > .circle {
+				background: #764244 url(../imgs/sinetes/dark.png) center no-repeat;
+			}
+	#e4Title {
+		position: absolute;
+		margin-top: 20px;
+		margin-left: 480px;
+		width: 460px;
+		font-size: 60px;
+		line-height: 60px;
+		text-align: right;
+	}
+	#e4Description {
+		position: absolute;
+		margin: 180px 0 0 660px;
+		width: 280px;
+		color: #2D1A1A;
+		text-align: right;
+		z-index: 3;
+	}
+	#eFireBrick .paths {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: url(../imgs/paths/firebrick.png) no-repeat center transparent;
+		z-index: 2;
+	}
+	#e4CircleDashedSmall {
+		margin: 380px 0 0 580px;
+		z-index: 1;
+	}
+		#e4CircleDashedSmall > .circle {
+			background: #CDB9B8;
+		}
+			#e4CircleDashedSmall .circle > .circle {
+				background: #B5797C;
+				text-align: center;
+			}
+				#e4CircleDashedSmall > .circle > .circle img {
+					display: block;
+				}
+			
+/************************************* STAGE 4 ********************************/
+#eWhite {
+	position: relative;
+	height: 200%;
+}
+	#eWhite .gravity-block {
+		position: relative;
+		height: 50%;
+		z-index: 0;
+	}
+	#eWhite > .overall {
+		position: fixed;
+		top: 0px;
+		width: 100%;
+		height: 100%;
+		background: #FFF;
+		z-index: 1;
+	}
+		#eWhite > .overall .paths {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: url(../imgs/paths/gray-highlights.png) no-repeat center top transparent;
+			z-index: 2;
+		}
+		#eWhite > .overall h6 {
+			position: relative;
+			top: 0;
+			margin: 0 20px;
+			font-size: 60px;
+			color: #333;
+			font-weight: normal;
+			text-align: right;
+			line-height: 100px;
+			transition: all 1s;
+			-moz-transition: all 1s;
+			-webkit-transition: all 1s;
+		}
+		#eWhite > .overall h6.fade-out {
+			top: -100px;
+		}
+		#eWhite > .overall .info {
+			position: relative;
+			margin: -20px 20px 0 0;
+			font-size: 30px;
+			color: #666;
+			font-weight: normal;
+			text-align: right;
+			transition: all 1.5s 0.3s;
+			-moz-transition: all 1.5s 0.3s;
+			-webkit-transition: all 1.5s 0.3s;
+		}
+		#eWhite > .overall .info-fade-out {
+			top: -150px;
+		}
+		#eWhite > .overall .labelsC {
+			position: relative;
+			z-index: 3;
+		}
+		#eWhite > .overall #e5Descriptions {
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			font-size: 22px;
+			text-shadow: 1px 1px 0px #FFF;
+			line-height: 140%;
+			text-align: right;
+			transition: all 1s 0.4s;
+			-moz-transition: all 1s 0.4s;
+			-webkit-transition: all 1s 0.4s;
+		}
+			#eWhite > .overall #e5Descriptions.fade-out {
+				left: 100%;
+			}
+			#eWhite > .overall #e5Descriptions > div {
+				position: absolute;
+				right: 100px;
+				top: 200px;
+				opacity: 0;
+				transition: all 0.5s;
+				-moz-transition: all 0.5s;
+				-webkit-transition: all 0.5s;
+			}
+			#eWhite > .overall #e5Descriptions > .active {
+				opacity: 1;
+			}
+			#eWhite > .overall #e5Descriptions .a {
+				color: #423024;
+				width: 270px;
+			}
+			#eWhite > .overall #e5Descriptions .b {
+				width: 340px;
+				color: #530000;
+			}
+			#eWhite > .overall #e5Descriptions .c {
+				width: 320px;
+				color: #6C4600;
+			}
+			#eWhite > .overall #e5Descriptions .d {
+				width: 220px;
+				color: #00003C;
+			}
+			#eWhite > .overall #e5Descriptions .e {
+				left: 20px;
+				top: auto;
+				bottom: 20px;
+				width: 370px;
+				color: #354E62;
+				text-align: left;
+			}
+			#eWhite > .overall #e5Descriptions .f {
+				color: #000;
+				left: 50%;
+				bottom: 20px;
+				top: auto;
+				width: 600px;
+				margin-left: -300px;
+				text-align: center;
+			}
+		#eWhite > .overall .btsC {
+			position: absolute;
+			left: 0px;
+			top:  0px;
+			width: 100%;
+			z-index: 3;
+			transition: all 1.2s;
+			-moz-transition: all 1.2s;
+			-webkit-transition: all 1.2s;
+		}
+		#eWhite > .overall .btsC-fade-out {
+			left: 80px;
+		}
+			#eWhite > .overall .btsC .abs-right {
+				position: absolute;
+				right: 10px;
+				top:  200px;
+				width: 70px;
+			}
+			#eWhite > .overall .btsC a {
+				display: block;
+				position: relative;
+				width: 70px;
+				height: 70px;
+				margin-bottom: 10px;
+				border-radius: 50%;
+				opacity: 0.3;
+				transition: all 0.4s;
+				-moz-transition: all 0.4s;
+				-webkit-transition: all 0.4s;
+			}
+			#eWhite > .overall .btsC a.active, #eWhite > .overall .btsC a:hover {
+				opacity: 1;
+			}
+				#eWhite > .overall .btsC a img {
+					display: block;
+					width: 64px;
+					height: 64px;
+					border-radius: 50%;
+				}
+	#eImgsFullscreenC {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1
+	}
+		#eImgsFullscreenC div {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			z-index: 2;
+			transition: all 1s;
+			-moz-transition: all 1s;
+			-webkit-transition: all 1s;
+		}
+		#eImgsFullscreenC div.active {
+			opacity: 1;
+		}
+			#eImgsFullscreenC div img {
+				display: block;
+				position: absolute;
+				bottom: 0px;
+				width: 100%;
+				height: auto;
+				margin: 0 auto;
+				z-index: 2;
+			}
+				#eImgsFullscreenC img.underlay {
+					display: block;
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					z-index: 1;
+				}
+/************************************* STAGE 5 ********************************/
+#eWhiteOverlay {
+	position: relative;
+	height: 200%;
+}
+	#eWhiteOverlay .gravity-block {
+		position: relative;
+		height: 50%;
+		z-index: 0;
+	}
+	#eWhiteOverlay .gravity-emulation {
+		background: #FFF;
+		opacity:  0.7;
+		z-index: 1;
+	}
+	#eWhiteOverlay > .overall {
+		position: fixed;
+		top: 0px;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+	#eWhiteOverlay h2 {
+		position: absolute;
+		width: 460px;
+		margin-top: 20px;
+		margin-left: 480px;
+		font-size: 60px;
+		text-align: right;
+		opacity: 0;
+		transition: all 0.4s;
+		-moz-transition: all 0.4s;
+		-webkit-transition: all 0.4s;
+	}
+	#eWhiteOverlay h2.show-up {
+		opacity: 1;
+	}
+	#eWhiteOverlay .info {
+		position: absolute;
+		margin-top: 90px;
+		margin-left: 480px;
+		width: 460px;
+		font-size: 30px;
+		line-height: 30px;
+		text-align: right;
+		opacity: 0;
+		transition: all 0.7s;
+		-moz-transition: all 0.7s;
+		-webkit-transition: all 0.7s;
+	}
+	#eWhiteOverlay .info-show-up {
+		opacity: 1;
+	}
+	#eWhiteOverlay .description {
+		position: absolute;
+		margin-top: 200px;
+		margin-left: 540px;
+		width: 400px;
+		line-height: 140%;
+		text-align: right;
+		opacity: 0;
+		transition: all 1.2s;
+		-moz-transition: all 1.2s;
+		-webkit-transition: all 1.2s;
+	}
+	#eWhiteOverlay .description-show-up {
+		opacity: 1;
+	}
+	#eWhiteOverlay #e10ImgHolder {
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		opacity: 0;
+		transition: all 1s;
+		-moz-transition: all 1s;
+		-webkit-transition: all 1s;
+	}
+	#eWhiteOverlay #e10ImgHolder.show-up {
+		opacity: 1;
+	}
+/************************************* STAGE 6 ********************************/
+#eContact {
+	min-height: 100%;
+	background: #9C7F5D;
+	background-image: radial-gradient( center, circle farthest-side, #A0825F, #51412C);
+	background-image: -moz-radial-gradient( center, circle farthest-side, #A0825F, #51412C);
+	background-image: -webkit-radial-gradient( center, circle farthest-side, #A0825F, #51412C);
+	overflow: visible;
+}
+	#eContact .paths {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: url(../imgs/paths/brown.png) no-repeat center transparent;
+		z-index: 2;
+	}
+	#eContact h6 {
+		position: absolute;
+		margin-top: 20px;
+		margin-left: 480px;
+		width: 460px;
+		font-size: 60px;
+		line-height: 60px;
+		text-align: right;
+	}
+	#eContact .info {
+		position: absolute;
+		margin: 100px 0 0 640px;
+		width: 296px;
+		text-align: right;
+		font-size: 30px;
+		color: #E8DDDD;
+		text-shadow: 2px 2px 2px #444;
+		z-index: 3;
+	}
+	#eContact .description {
+		position: absolute;
+		margin: 200px 0 0 640px;
+		width: 296px;
+		text-align: right;
+		color: #EBE2E2;
+		line-height: 140%;
+		z-index: 3;
+	}
+	#eContact .txtC {
+		height: 540px;
+	}
+	#e7CircleDashedLarge {
+		position: absolute;
+		width: 460px;
+		margin: 200px 0 0 20px;
+	}
+		#e7CircleDashedLarge label {
+			display: block;
+			position: relative;
+			margin-bottom: 10px;
+			line-height: 30px;
+			min-height: 30px;
+		}
+			#e7CircleDashedLarge label span {
+				position: absolute;
+				display: block;
+			}
+			#e7CircleDashedLarge label input {
+				display: block;
+				position: relative;
+				width: 230px;
+				margin-left: 120px;
+				background: transparent;
+				border:  none;
+				color: #FFF;
+				font-size: 20px;
+				border-bottom: 1px dashed #FFF;
+			}
+			#e7CircleDashedLarge label textarea {
+				display: block;
+				position: relative;
+				width: 480px;
+				margin-left: 120px;
+				background: transparent;
+				border: none;
+				color: #FFF;
+				font-size: 20px;
+				border-bottom: 1px dashed #FFF;
+			}
+	#eContact #e7CircleDashedSmall {
+		display: none;
+		width: 180px;
+		height: 180px;
+		margin: 420px 0 0 650px;
+		z-index: 1;
+	}
+		#e7CircleDashedSmall > .circle {
+			background: #DBD0C1;
+			padding: 40px;
+		}
+			#e7CircleDashedSmall .circle > .circle {
+				background: transparent url(../imgs/mail.jpg) center no-repeat;
+			}
+	#eFooter {
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+		padding-top: 20px;
+		color: #DBD0C1;
+		background: #574938;
+		background: rgba( 74, 62, 47, 0.7);
+		z-index: 3;
+	}
+		#eFooter a {
+			transition: all 0.4s;
+			-moz-transition: all 0.4s;
+			-webkit-transition: all 0.4s;
+		}
+		#eFooter ul li a {
+			color: #D0C1AE;
+			text-decoration: none;
+		}
+		#eFooter a:hover {
+			color: #FFFFFF;
+			text-decoration: underline;
+		}
+/************************************* CLASSES ********************************/
+.texture-wood-white {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: url(../imgs/textures/wood-white.png) repeat transparent;
+}
+.texture-wood-cream {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: url(../imgs/textures/wood-cream.png) repeat transparent;
+}
+.texture-wood-light {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: url(../imgs/textures/wood-light.png) repeat transparent;
+}
+.texture-wood-dark {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: url(../imgs/textures/wood-dark.png) repeat transparent;
+}
+.no-texture {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.text-shadow-inset-cream {
+	color: rgba(124, 101, 70, 0.7);
+	text-shadow: 2px 3px 5px #FDF3E0, 0 0 0px #000000, 2px 2px 0px #FDF3E0;
+}
+.text-shadow-inset-green {
+	color: rgba(44, 62, 60, 0.7);
+	text-shadow: 2px 2px 2px #D1E4EF, 0 0 0 #000000, 1px 2px 0 #CFDAD2;
+}
+.text-shadow-inset-firebrick {
+	color: rgba(90, 47, 49, 0.8);
+	text-shadow: 2px 2px 2px #E4DADA, 0 0 0 #000000, 1px 2px 0 #824E4E;
+}
+.text-shadow-inset-dark {
+	color: rgba(60, 60, 60, 0.7);
+	text-shadow: 2px 2px 2px #DDD, 0 0 0 #000000, 1px 2px 0 #CCC;
+}
+.text-shadow-inset-brown {
+	color: rgba(99, 83, 63, 0.7);
+	text-shadow: 2px 2px 2px #C5B49E, 0 0 0 #000000, 1px 2px 0 #C5B49E;
+}
+.wrapper {
+	z-index: 3;
+}
+.height-100 {
+	height: 100%;
+}

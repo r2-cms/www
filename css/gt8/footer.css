@@ -1,0 +1,55 @@
+footer.main {
+	position: relative;
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+footer.main-fixed {
+	position: fixed;
+	bottom: 0px;
+}
+footer.main nav.wrapper {
+	position: relative;
+	display: block;
+	overflow: visible;
+}
+footer.main .box {
+	position: relative;
+	float: left;
+	background: #FFF;
+	box-shadow: 3px 1px 3px #999;
+}
+footer.main nav.wrapper .left-margin-space {
+	position: absolute;
+	width: 2000px;
+	height: 100%;
+	margin-left: -2000px;
+	box-shadow: -4px 1px 3px #999999;
+}
+footer.main nav.wrapper > div:last-child {
+	padding: 0 20px;
+}
+footer.main nav.wrapper > div.clear {
+	float: none;
+	clear: both;
+	height: 0;
+	line-height: 0px;
+}
+footer.main a.logo {
+	
+}
+footer.main a.logo img {
+	position: relative;
+	height: 64px;
+	margin: 10px 0 10px 10px;
+}
+footer.main ul li a {
+	display: inline;
+}
+footer.main ul li {
+	height: 25px;
+	overflow: hidden;
+}
+footer.main ul.col {
+	max-width: 552px;
+}

@@ -1,0 +1,37 @@
+/*********************** STAGE ************************************************/
+.stage {
+	
+}
+.stage > .row {
+	overflow: visible;
+}
+.stage .top-options {
+	
+}
+.stage .top-options > div {
+	padding: 2px 0;
+}
+.stage .top-options > div.clear {
+	height: 0px;
+}
+.stage .top-options .e-select {
+	height: 32px;
+}
+.stage .top-options .e-select span {
+	border-radius: 4px;
+}
+.stage .cards {
+	padding-bottom: 0px;
+}
+/*********************** CATALOG **********************************************/
+.shopping-content {
+	
+}
+.shopping-content .items {
+	
+}
+.row-12 .grid-12.top-paging {
+	position: absolute;
+	left: 0;
+	top: 0;
+}

@@ -1,0 +1,67 @@
+html, body {
+	margin: 0px;
+	padding: 0px;
+	background: transparent;
+	overflow: hidden;
+	border: 0px solid red;
+	text-align: center;
+	height: 100%;
+}
+div, form, input, img {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 2;
+	border: 0px none;
+	background: transparent;
+	cursor: pointer;
+}
+body input, body form {
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+img {
+	position: relative;
+	width: auto;
+	height: auto;
+	z-index: 1;
+}
+img.img-add-more {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 80px;
+	height: 75px;
+	margin-left: -41px;
+	margin-top: -50px;
+}
+#img-close-bt {
+	position: absolute;
+	left: auto;
+	top: auto;
+	right: 10px;
+	bottom: 10px;
+	width: 22px;
+	height: 22px;
+	cursor: pointer;
+	display: none;
+	z-index: 10000;
+}
+#label {
+	position: absolute;
+	bottom: 0px;
+	top: auto;
+	height: 30px;
+	line-height: 30px;
+	font-family: arial;
+	font-size: 11px;
+	color: blue;
+	text-decoration: underline;
+	text-align: center;
+	display: none;
+}
+#spinner {
+	background: transparent url(../../imgs/gt8/spinner.gif) no-repeat center scroll;
+	z-index: 5;
+	display: none;
+}
