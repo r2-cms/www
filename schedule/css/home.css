@@ -1,0 +1,212 @@
+body, html {
+	margin: 0;
+	padding: 0;
+}
+.Scheduler {
+	display: block;
+	position: relative;
+}
+	.Scheduler .body {
+		display: block;
+		position: relative;
+	}
+		.Scheduler .panel {
+			display: block;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			width: 400px;
+			z-index: 3;
+			background: rgba(255,255,255,0.5);
+		}
+			.Scheduler .panel .row-top {
+				height: 40px;
+			}
+			.Scheduler .panel .row {
+				position: relative;
+				line-height: 30px;
+				height: 30px;
+				margin: 10px 0px 0 8px;
+				border: 1px solid #CCC;
+				border-radius: 5px;
+				overflow: hidden;
+				box-shadow: 1px 1px 3px #666;
+			}
+				.Scheduler .panel .task {
+					float: left;
+					width: 300px;
+					text-indent: 5px;
+					font-size: small;
+					text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+					color: #333;
+					font-family: "Trebuchet MS", Arial;
+				}
+				.Scheduler .panel .done {
+					float: left;
+					position: relative;
+					top: 2px;
+					width: 40px;
+					line-height: 25px;
+					font-size: small;
+					text-align: center;
+					border-left: 1px solid #CCC;
+				}
+				.Scheduler .panel .duration {
+					float: left;
+					position: relative;
+					top:  2px;
+					width: 40px;
+					line-height: 25px;
+					font-size: small;
+					text-align: center;
+					border-left: 1px solid #CCC;
+				}
+		.Scheduler .stage {
+			display: block;
+			position: relative;
+			margin-left: 420px;
+		}
+			.Scheduler .stage .months {
+				position: absolute;
+				top: 0px;
+				line-height: 20px;
+				height: 100%;
+				z-index: 2;
+			}
+				.Scheduler .stage .months > div {
+					float: left;
+					width: 620px;
+					height: 100%;
+					box-shadow: 1px 1px 0px #ccc inset;
+				}
+					.Scheduler .stage .months > div:last-child {
+						box-shadow: 1px 1px 0 #CCCCCC inset, 1px 0 0 #CCC;
+					}
+			.Scheduler .stage .days {
+				position: absolute;
+				top: 20px;
+				line-height: 20px;
+				height: 20px;
+				font-size: 9px;
+			}
+				.Scheduler .stage .days .column {
+					position: relative;
+					top: 20px;
+					width: 600px;
+					text-align: center;
+					margin-bottom: 20px;
+				}
+					.Scheduler .stage .days .column > div {
+						float: left;
+						width: 20px;
+						height: 100%;
+						overflow: hidden;
+					}
+						.Scheduler .stage .days .column > div > div {
+							position: fixed;
+							width: 20px;
+							height: 20px;
+						}
+						.Scheduler .stage .days .column > div.saturday {
+							
+						}
+						.Scheduler .stage .days .column > div.holyday {
+							
+						}
+						.Scheduler .stage .days .column > div.sunday {
+							background: #FDD;
+						}
+						.Scheduler .stage .days .column > div.previous {
+							background: #EEE;
+						}
+						.Scheduler .stage .days .column > div.sunday.previous, .Scheduler .stage .days .column > div.holyday.previous {
+							background: #FDD;
+						}
+						.Scheduler .stage .days .column > div.today {
+							background: #DDF;
+							box-shadow: -1px 0 1px #999999 inset;
+						}
+				.Scheduler .stage .days .label {
+					position: absolute;
+					top: 0px;
+					text-align: center;
+					box-shadow: 0 0px 1px #444 inset;
+				}
+					.Scheduler .stage .days .label > div {
+						float: left;
+						width: 20px;
+						height: 100%;
+						overflow: hidden;
+						color: #555;
+					}
+						.Scheduler .stage .days .label > div.saturday {
+							
+						}
+						.Scheduler .stage .days .label > div.holyday {
+							
+						}
+						.Scheduler .stage .days .label > div.sunday {
+							color: #F55;
+						}
+						.Scheduler .stage .days .label > div.previous {
+							color: #000;
+							font-weight: bold;
+						}
+						.Scheduler .stage .days .label > div.today {
+							color: #55F;
+							box-shadow: 1px 0 0 #CCC;
+						}
+			.Scheduler .stage .schedule {
+				position: relative;
+				top: 92px;
+			}
+				.Scheduler .stage .schedule > div {
+					height: 32px;
+				}
+					.Scheduler .stage .schedule > div:nth-child(2n+1) {
+						background: rgba(0,0,0, 0.02);
+					}
+					.Scheduler .stage .schedule > div > div {
+						position: relative;
+						top: 12px;
+						height: 5px;
+						line-height: 30px;
+						margin: 10px 0 0px 0px;
+						border: 1px solid #CCC;
+						border-radius: 5px;
+					}
+						.Scheduler .stage .schedule > div > div > div {
+							position: relative;
+							top: -12px;
+							width: 0px;
+							height: 30px;
+							border-radius: 5px;
+						}
+/****************************** COLORS ****************************************/
+.bg-green	{ background: -moz-linear-gradient(top, rgba(205, 235, 163, 0.4), rgba(145, 219, 45, 0.9));	background: -webkit-linear-gradient(top, rgba(205, 235, 163, 0.4), rgba(145, 219, 45, 0.9));	}
+.bg-red		{ background: -moz-linear-gradient(top, rgba(236, 119, 99, 0.6), rgba(203, 55, 25, 0.9));	background: -webkit-linear-gradient(top, rgba(236, 119, 99, 0.6), rgba(203, 55, 25, 0.9));		}
+.bg-cyan	{ background: -moz-linear-gradient(top, rgba(182, 220, 242, 0.7), rgba(27, 147, 235, 0.8));	background: -webkit-linear-gradient(top, rgba(182, 220, 242, 0.7), rgba(27, 147, 235, 0.8));	}
+.bg-blue	{ background: -moz-linear-gradient(top, rgba(27, 147, 235, 0.7), rgba(14, 96, 156, 0.8));	background: -webkit-linear-gradient(top, rgba(27, 147, 235, 0.7), rgba(14, 96, 156, 0.8));	}
+.bg-yellow	{ background: -moz-linear-gradient(top, rgba(246, 242, 49, 0.2), rgba(232, 199, 9, 0.9));	background: -webkit-linear-gradient(top, rgba(246, 242, 49, 0.2), rgba(232, 199, 9, 0.9));		}
+.bg-maroon	{ background: rgba(238,0,0, 0.2); }
+.bg-orange	{ background: -moz-linear-gradient(top, rgba(249, 187, 104, 0.5), rgba(251, 137, 45, 1));	background: -webkit-linear-gradient(top, rgba(249, 187, 104, 0.5), rgba(251, 137, 45, 1));		}
+.bg-black	{ background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.3), rgba(10, 10, 10, 0.7));		background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.3), rgba(10, 10, 10, 0.7));		}
+.bg-green2	{ background: -moz-linear-gradient(top, rgba(225, 255, 179, 0.2), rgba(160, 241, 50, 0.7));	background: -webkit-linear-gradient(top, rgba(225, 255, 179, 0.2), rgba(160, 241, 50, 0.7));	}
+.bg-brown	{ background: -moz-linear-gradient(top, rgba(176, 138, 103, 0.2), rgba(139, 100, 65, 0.7));	background: -webkit-linear-gradient(top, rgba(176, 138, 103, 0.2), rgba(139, 100, 65, 0.7));	}
+.bg-gray	{ background: -moz-linear-gradient(top, rgba(125, 125, 125, 0.3), rgba(250, 250, 250, 0.7));background: -webkit-linear-gradient(top, rgba(125, 125, 125, 0.3), rgba(250, 250, 250, 0.7));	}
+.bg-neutral	{ background: -moz-linear-gradient(top, rgba(27, 147, 235, 0.9), rgba(14, 96, 156, 1));		background: -webkit-linear-gradient(top, rgba(27, 147, 235, 0.9), rgba(14, 96, 156, 1));	color: #FFF; text-shadow: 1px 1px 0px #000; }
+	.bg-neutral >.task { color: #FFF !important; text-shadow: 1px 1px 0px #000 !important;}
+
+/****************************** UTILITIES *************************************/
+.clear {
+	clear: both;
+	display: block;
+}
+.clearfix {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0 !important;
+  height: 0 !important;
+}

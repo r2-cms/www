@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Programação e escopo de trabalho</title>
+		<link rel="stylesheet" type="text/css" href="css/home.css" />
+		<script type="text/javascript" src="../jCube/jCube.js" ></script>
+		
+		<script type="text/javascript" >
+		//<![CDATA[
+			
+			var data	= [
+				//task, done, duration, schedule, start, finish
+				{ task:'Início do projeto. Definições e escopo',	offsetLeft:0,	done:1.0,	duration:1,		schedule:'2012/07/06',	start:'2012/07/06', finish:'2012/08/12',	className:'bg-green' },
+				{ task:'Estudo e pesquisa do projeto',				offsetLeft:0,	done:1.0,	duration:7,		schedule:'2012/07/11',	start:'2012/07/11', finish:'2012/07/18',	className:'bg-brown' },
+				{ task:'Layout: identidade visual',					offsetLeft:0,	done:1.0,	duration:14,	schedule:'2012/07/09', 	start:'2012/07/09',	finish:'2012/10/25',	className:'bg-green', ignoreSchedule:true },
+				{ task:'Layout: home',								offsetLeft:0,	done:1.0,	duration:8,		schedule:'2012/07/23',	start:'2012/07/27',	finish:'2012/08/07',	className:'bg-yellow', ignoreSchedule:true },
+				{ task:'Layout: about, account',					offsetLeft:20,	done:1.0,	duration:2,		schedule:null,			start:'2012/08/10',	finish:'2012/08/12',	className:'bg-yellow' },
+				{ task:'Layout: shopping, contact',					offsetLeft:20,	done:1.0,	duration:2,		schedule:null,			start:'2012/08/03',	finish:'2012/08/10',	className:'bg-yellow' },
+				
+				{ task:'View: base',								offsetLeft:0,	done:1.0,	duration:3,		schedule:null,			start:'2012/08/27',	finish:'2012/09/11',	className:'bg-orange' },
+				{ task:'Institucional: página inicial',				offsetLeft:20,	done:1.0,	duration:1,		schedule:null,			start:'2012/08/28',	finish:'2012/09/10',	className:'bg-orange' },
+				{ task:'Institucional: sobre a empresa',			offsetLeft:20,	done:1.0,	duration:1,		schedule:null, 			start:'2012/09/11',	finish:'2012/09/11',	className:'bg-orange' },
+				{ task:'Atendimento: formas de pagamento',			offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/09/12',	finish:'2012/09/12',	className:'bg-orange' },
+				{ task:'Institucional: conteúdo textual',			offsetLeft:0,	done:0.1,	duration:15,	schedule:null, 			start:0,			finish:0,				className:'bg-green', ignoreSchedule:true },
+				
+				{ task:'Curso agendado',							offsetLeft:0,	done:1.0,	duration:13,	schedule:'2012/08/13',	start:'2012/08/13',	finish:'2012/08/24',	className:'bg-red', ignoreSchedule:true },
+				
+				{ task:'Atendimento: Trocas e devoluções',			offsetLeft:20,	done:1.0,	duration:1,		schedule:null, 			start:'2012/09/12',	finish:'2012/09/12',	className:'bg-orange' },
+				{ task:'Atendimento: Contato',						offsetLeft:20,	done:1.0,	duration:2,		schedule:null,			start:'2012/09/12',	finish:'2012/09/12',	className:'bg-orange' },
+				{ task:'Atendimento: conteúdo textual',				offsetLeft:0,	done:0.0,	duration:7,		schedule:null, 			start:0,			finish:0,				className:'bg-green', ignoreSchedule:true },
+				{ task:'Política: segurança',						offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/09/11',	finish:'2012/09/11',	className:'bg-orange' },
+				{ task:'Política: privacidade',						offsetLeft:20,	done:1.0,	duration:1,		schedule:null, 			start:'2012/09/11',	finish:'2012/09/11',	className:'bg-orange' },
+				{ task:'Política: conteúdo textual',				offsetLeft:0,	done:0.1,	duration:7,		schedule:null, 			start:0,			finish:0,				className:'bg-green', ignoreSchedule:true },
+				{ task:'FTP: Inauguração institucional',			offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/09/13',	finish:'2012/09/13',	className:'bg-black' },
+				
+				{ task:'Compromisso agendado',						offsetLeft:0,	done:1.0,	duration:5,		schedule:'2012/09/06',	start:'2012/09/07',	finish:'2012/09/09',	className:'bg-red', ignoreSchedule:true },
+				
+				{ task:'produtos: linhas',							offsetLeft:0,	done:1.0,	duration:5,		schedule:null,			start:'2012/10/29',	finish:'2012/11/05',	className:'bg-blue', ignoreSchedule:true },
+				{ task:'produtos: famílias',						offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/05',	finish:'2012/11/06',	className:'bg-blue' },
+				{ task:'produtos: marcas',							offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/06',	finish:'2012/11/07',	className:'bg-blue' },
+				{ task:'produtos: detalhe',							offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/08',	finish:'2012/11/12',	className:'bg-blue' },
+				{ task:'FTP: inauguração do catálogo',				offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/12',	finish:'2012/11/12',	className:'bg-black' },
+				
+				{ task:'Produtos: cadastro de produtos',			offsetLeft:0,	done:1.0,	duration:23,	schedule:null, 			start:'2012/11/12',	finish:'2012/11/20',	className:'bg-green', ignoreSchedule:true },
+				{ task:'Cadastro: home',							offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/10/24',	finish:'2012/10/28',	className:'bg-cyan' },
+				{ task:'Cadastro: login',							offsetLeft:20,	done:1.0,	duration:1,		schedule:null, 			start:'2012/10/28',	finish:'2012/10/29',	className:'bg-cyan' },
+				{ task:'Cadastro: novo registro',					offsetLeft:20,	done:1.0,	duration:2,		schedule:null, 			start:'2012/11/17',	finish:'2012/11/18',	className:'bg-cyan' },
+				{ task:'Cadastro: recuperação de acesso',			offsetLeft:20,	done:1.0,	duration:3,		schedule:null, 			start:'2012/11/19',	finish:'2012/11/19',	className:'bg-cyan' },
+				{ task:'Cadastro: contatos',						offsetLeft:20,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/15',	finish:'2012/11/17',	className:'bg-cyan' },
+				{ task:'Cadastro: endereços',						offsetLeft:20,	done:1.0,	duration:2,		schedule:null, 			start:'2012/11/14',	finish:'2012/11/16',	className:'bg-cyan' },
+				{ task:'FTP: cadastro de usuário',					offsetLeft:0,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/20',	finish:'2012/11/20',	className:'bg-black' },
+				
+				{ task:'Shopping: forma de pagamento (boleto)',		offsetLeft:20,	done:1.0,	duration:10,	schedule:'2012/09/10',	start:'2012/11/28',	finish:'2012/12/07',	className:'bg-blue', ignoreSchedule:true },
+				{ task:'Shopping: forma de pagamento (cartão)',		offsetLeft:20,	done:0.3,	duration:20,	schedule:'2012/09/10',	start:'2012/11/29',	finish:0,				className:'bg-blue', ignoreSchedule:true },
+				{ task:'Shopping: carrinho',						offsetLeft:20,	done:1.0,	duration:2,		schedule:null,			start:'2012/11/23',	finish:'2012/11/26',	className:'bg-blue' },
+				{ task:'Shopping: identificação',					offsetLeft:20,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/27',	finish:'2012/11/27',	className:'bg-blue' },
+				{ task:'Shopping: endereço de entrega',				offsetLeft:20,	done:1.0,	duration:1,		schedule:null, 			start:'2012/11/27',	finish:'2012/11/27',	className:'bg-blue' },
+				{ task:'Shopping: confirmação de pagamento',		offsetLeft:20,	done:0.5,	duration:2,		schedule:null, 			start:'2012/11/28',	finish:0,				className:'bg-blue' },
+				{ task:'FTP: inauguração do sistema de compras',	offsetLeft:0,	done:0.0,	duration:1,		schedule:null, 			start:0,			finish:0,				className:'bg-black' },
+				{ task:'Test: homologação',							offsetLeft:0,	done:0.0,	duration:5,		schedule:null, 			start:0,			finish:0,				className:'bg-black', ignoreSchedule:true },
+				
+			];
+			var holydays	= [
+				//curso de pioneiro
+				'2012/08/13',
+				'2012/08/14',
+				'2012/08/15',
+				'2012/08/16',
+				'2012/08/17',
+				'2012/08/18',
+				'2012/08/19',
+				'2012/08/20',
+				'2012/08/21',
+				'2012/08/22',
+				'2012/08/23',
+				'2012/08/24',
+				'2012/08/25',
+				
+				//congresso
+				'2012/09/06',
+				'2012/09/07',
+				'2012/09/08',
+				'2012/09/09'
+			];
+			
+		//]]>
+		</script>
+		<script type="text/javascript" src="js/home.js" ></script>
+	</head>
+	<body>
+		<div id="eContent" >
+			<div class="Scheduler" >
+				<div class="top" >
+					
+				</div>
+				<div class="body" >
+					<div class="panel" >
+						<div class="row-top" ></div>
+					</div>
+					<div class="stage" >
+						<div class="months" ></div>
+						<div class="days" ></div>
+						<div class="schedule" ></div>
+					</div>
+				</div>
+				<div class="bottom" >
+					
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
