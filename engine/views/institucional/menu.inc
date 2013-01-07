@@ -13,7 +13,7 @@
 							<span>Segurança</span>
 						</a>
 					</li>
-					<li>
+					<li class="hidden" >
 						<a href="{{CROOT}}institucional/controle-de-qualidade/" class="href-button href-button-cancel text-align-left text-indent line-height-large font-size-small margin-bottom-small" >
 							<span>Controle de Qualidade</span>
 						</a>

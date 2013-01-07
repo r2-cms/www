@@ -35,27 +35,29 @@
 							<h6><a href="{{CROOT}}institucional/" >Institucional</a></h6>
 							<ul>
 								<li><a href="{{CROOT}}institucional/sobre-a-empresa/" >Sobre a Empresa</a></li>
-								<li><a href="{{CROOT}}institucional/trabalhe-conosco/" >Trabalhe Conosco</a></li>
 								<li><a href="{{CROOT}}institucional/politica-de-privacidade/" >Política de Privacidade</a></li>
-								<li><a href="{{CROOT}}institucional/politica-de-seguranca/" >Política de Segurança</a></li>
+								<li><a href="{{CROOT}}institucional/seguranca/" >Política de Segurança</a></li>
 								<li><a href="{{CROOT}}institucional/seja-nosso-fornecedor/" >Seja Nosso Fornecedor</a></li>
 							</ul>
 						</div>
 						<div class="grid-2hm t-grid-3 shadowless mobile-hidden" >
 							<h6>Certificados</h6>
-							<p class="text-light" ><small>As informações de cadastro e compra são transmitidas de forma segura</small></p>
-							<p class="text-light" ><small>Donec gravida posuere arcu. Nulla facilisi. Phasellus imperdiet. Vestibulum at metus. Integer euismod</small></p>
-							<p class="text-light" ><small>Testes de segurança são feitos diariamente</small></p>
+							<p class="text-light" ><small>Utilizamos a tecnologia SSL da Comodo Secure para transmitir de forma segura todas as informações de compra e cadastro.</small></p>
+							<p class="text-light" ><small>Todo o site foi programado com as mais modernas linguagens.</small></p>
+							<p class="text-light" ><small>Todo o site é validado segundo o órgão validador W3C</small></p>
 						</div>
 						<div class="grid-1h t-grid-3 shadowless text-align-right overflow-hidden mobile-hidden" >
-							<p>
-								<img src="{{CROOT}}imgs/icn-certisign.png" alt="[Certificado Certisign]" width="100" height="46" />
+							<p class="margin-bottom-small" >
+								<img src="{{CROOT}}imgs/icn-comodo.png" alt="[Certificado SSL Comodo Secure]" width="104" height="51" />
 							</p>
-							<p>
+							<p class="margin-bottom-small" >
+								<img src="{{CROOT}}imgs/icn-html5.png" alt="[Certificado do moderno código HTML5]" width="40" height="54" />
+							</p>
+							<p class="margin-bottom-small" >
+								<img src="{{CROOT}}imgs/icn-w3c.png" alt="[Certificado de código padronizado segundo a W3C]" width="100" height="35" />
+							</p>
+							<p class="margin-bottom-small hidden" >
 								<img src="{{CROOT}}imgs/icn-ebit.png" alt="[Certificado de qualidade]" width="87" height="95" />
-							</p>
-							<p>
-								<img src="{{CROOT}}imgs/icn-seal.png" alt="[Certificado de segurança]" width="100" height="28" />
 							</p>
 						</div>
 					</div>
@@ -65,7 +67,7 @@
 					<div class="row-12 fluid-12 block clearfix-child mobile-hidden" >
 						<div class="grid-12" >
 							<p class="text-light" >
-								<small>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.</small>
+								<small>O <a href="http://www.salaodocalcado.com.br" class="link" >Salãodocalcado.com.br</a> é especializado no comércio eletrônico de calçados nobre, de de alta qualidade, todos fabricados com couro legítimo. O site busca constantemente a satisfação do consumidor, oferecendo o melhor atendimento possível, rapidez nas entregas, segurança e simplicidade nas compras. Estamos sempre pesquisando tendências na moda feminina para poder lhe oferecer o que há de mais novo e melhor.</small>
 							</p>
 						</div>
 					</div>

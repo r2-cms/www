@@ -17,7 +17,7 @@
 								<strong class="display-block margin-bottom-small text-align-center" >Segurança</strong>
 							</span>
 						</a>
-						<a href="{{CROOT}}institucional/controle-de-qualidade/" class="card grid-4 bg-light shadow-small margin-bottom text-decoration-none overflow-hidden" >
+						<a href="{{CROOT}}institucional/controle-de-qualidade/" class="card grid-4 bg-light shadow-small margin-bottom text-decoration-none overflow-hidden hidden" >
 							<span class="padding display-block" >
 								<img class="display-block margin-center margin-bottom" src="{{CROOT}}institucional/imgs/quality.png" alt="[Ícone]" width="88" height="128" />
 								<strong class="display-block margin-bottom-small text-align-center" >Controle de Qualidade</strong>
