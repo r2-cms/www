@@ -1803,6 +1803,10 @@ img.float-right {
 .margin-bottom-none {
 	margin-bottom: 0px !important;
 }
+.margin-center {
+	margin-left: auto;
+	margin-right: auto;
+}
 .pos-top {
 	top: 20px;
 }
