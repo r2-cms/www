@@ -1,0 +1,10 @@
+		
+		<style type="text/css" >
+			#eArticleEditor {
+				display: block;
+				position: relative;
+				overflow: auto;
+				border: 1px dotted #CCC;
+				color: #000;
+			}
+		</style>

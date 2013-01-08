@@ -1,0 +1,60 @@
+#eSortablesC {
+	position: relative;
+	width: 600px;
+	margin: 0 auto;
+}
+	#eSortablesC > div.card {
+		position: absolute;
+	}
+		#eSortablesC div .bt-delete {
+			position: absolute;
+			left: 0px;
+			top: 50%;
+			margin-top: -16px;
+			opacity: 0;
+			cursor: pointer;
+			
+			transition: all .6s;
+			-ms-transition: all .6s;
+			-moz-transition: all .6s;
+			-webkit-transition: all .6s;
+			transform: rotate(0deg);
+			-ms-transform: rotate(0deg);
+			-moz-transform: rotate(0deg);
+			-webkit-transform: rotate(0deg);
+		}
+#eSortablesC.show-delete-button .bt-delete {
+	opacity: 1;
+	left: 10px;
+}
+	#eSortablesC.show-delete-button .bt-delete.selected {
+		transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+	}
+#eSortablesC .bt-delete-confirm {
+	position: absolute;
+	top: 50%;
+	right: -100px;
+	margin: -20px;
+	opacity:  0;
+	cursor: default;
+	
+	transition: all .6s;
+	-ms-transition: all .6s;
+	-moz-transition: all .6s;
+	-webkit-transition: all .6s;
+}
+	#eSortablesC.show-delete-button .bt-delete-confirm.selected {
+		right: 30px;
+		opacity: 1;
+		cursor: pointer;
+	}
+		#eSortablesC .bt-delete-confirm > span {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+#eCardGeneral > div {
+	max-width: 600px;
+}

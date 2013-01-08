@@ -594,14 +594,6 @@ var GT8	= {
 		rs.h	= rs[1];
 		var paddingTop	= (eImg.getParent().getComputedStyle('padding-top')+'').toInteger();
 		
-		if ( !rs[0]) {//firefox define algumas imagens como tendo 33x15... navegador estúpido!
-			eImg.onload	= function() {
-				var crrImg	= this;
-				window.setTimeout( function(){ GT8.adjustImgSize(crrImg); }, 250);
-			}
-			return null;
-		}
-		
 		var w	= rs.w;
 		var h	= rs.h;
 		
@@ -616,10 +608,15 @@ var GT8	= {
 			h	= H;
 			w	= 'auto';
 		}
+		if ( !w || !h) {
+			window.setTimeout( function(){ GT8.adjustImgSize(eImg); }, 250);
+			return null;
+		}
 		eImg.setStyle({
 			width: w,
 			height: h
 		});
+		
 		if ( w < W) {
 			eImg.setStyle('left', (W-w)/2);
 		}

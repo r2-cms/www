@@ -1334,7 +1334,6 @@ body .Editor-TabbedPaneC {
 }
 body .Editor-TabbedPaneC .TabbedPane > .body {
 	position: relative;
-	padding: 15px 0 15px 15px;
 	box-shadow: 1px 1px 3px #999999;
 	-webkit-box-shadow: 1px 1px 3px #999999;
 	overflow-x: hidden;

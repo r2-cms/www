@@ -178,6 +178,7 @@
 			$pages		= array();
 			$tabs		= array();
 			$cards		= array();
+			$css		= array();
 			$len	= count($path);
 			for ( $i=0; $i<$len; $i++) {
 				$crr	= $path[$i];
@@ -200,9 +201,13 @@
 				if ( file_exists($plugpath.'cards.rec.inc')) {
 					$cards[]	= $plugpath.'cards.rec.inc';
 				}
+				if ( file_exists($plugpath.'editor.rec.css')) {
+					$css[]		= $plugpath.'editor.rec.css';
+				}
 			}
 			$this->data['PLUGGIN:tabs']	= '';
 			$this->data['PLUGGIN:cards']	= '';
+			$this->data['PLUGGIN:css']	= '';
 			$this->data['PLUGGIN:editor']	= '';
 			$this->data['PLUGGIN:editor.js']	= '';
 			//exactly
@@ -220,6 +225,12 @@
 					ob_start();
 					include( $plugpath .'/cards.inc');
 					$this->data['PLUGGIN:cards']	= ob_get_contents();
+					ob_end_clean();
+				}
+				if ( file_exists($plugpath .'/editor.css') ) {
+					ob_start();
+					include( $plugpath .'/editor.css');
+					$this->data['PLUGGIN:css']	= ob_get_contents();
 					ob_end_clean();
 				}
 				if ( file_exists($plugpath .'/editor.js') ) {
@@ -255,6 +266,12 @@
 					$this->data['PLUGGIN:cards']	.= ob_get_contents();
 					ob_end_clean();
 				}
+				if ( count($css) > 0) {
+					ob_start();
+					include( $css[count($css)-1]);
+					$this->data['PLUGGIN:css']	.= ob_get_contents();
+					ob_end_clean();
+				}
 			}
 			
 			//LEVELS
@@ -264,6 +281,7 @@
 			$pages		= array();
 			$tabs		= array();
 			$cards		= array();
+			$css		= array();
 			for ( $i=0; $i<$len; $i++) {
 				$crr	= $path[$i];
 				
@@ -288,6 +306,9 @@
 				if ( file_exists($plugpath.'cards.rec.inc')) {
 					$cards[]	= $plugpath.'cards.rec.inc';
 				}
+				if ( file_exists($plugpath.'editor.rec.css')) {
+					$css[]	= $plugpath.'editor.rec.css';
+				}
 			}
 			//exactly
 			if ( $plugindex == $len-1) {
@@ -304,6 +325,12 @@
 					ob_start();
 					include( $plugpath .'/cards.inc');
 					$this->data['PLUGGIN:cards']	.= ob_get_contents();
+					ob_end_clean();
+				}
+				if ( file_exists($plugpath .'/editor.css') ) {
+					ob_start();
+					include( $plugpath .'/editor.css');
+					$this->data['PLUGGIN:css']	.= ob_get_contents();
 					ob_end_clean();
 				}
 				if ( file_exists($plugpath .'/editor.js') ) {
@@ -337,6 +364,12 @@
 					ob_start();
 					include( $cards[count($cards)-1]);
 					$this->data['PLUGGIN:cards']	.= ob_get_contents();
+					ob_end_clean();
+				}
+				if ( count($css) > 0) {
+					ob_start();
+					include( $css[count($css)-1]);
+					$this->data['PLUGGIN:css']	.= ob_get_contents();
 					ob_end_clean();
 				}
 			}

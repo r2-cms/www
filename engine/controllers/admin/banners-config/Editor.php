@@ -3,7 +3,6 @@
 		die('Undefined GT8: a1i32->a114e00->e1i1o4->Home');
 	}
 	require_once( SROOT ."engine/functions/CheckLogin.php");
-	require_once( SROOT ."engine/functions/CheckPrivileges.php");
 	require_once( SROOT ."engine/classes/Editor.php");
 	
 	class AdminEditor extends Editor {
@@ -32,13 +31,61 @@
 			$this->data	= $this->Pager;
 			$this->id	= $this->Pager['id'];
 			$this->setFields();
-			CheckPrivileges( 0, 'OBJECT','home-offers/', 1);
+			$this->name	= $this->name .'/'. $page .'/';
 			
 			$this->checkActionRequest();
+			
+			$this->checkReadPrivileges();
 			
 			$this->setToolbar();
 			
 			parent::Editor();
+		}
+		private function checkActionRequest() {
+			if ( isset($_GET['action']) && $_GET['action']) {
+				switch($_GET['action']) {
+					case 'save-position': {
+						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
+						new SaveSettings(array(
+							'page'	=> 'home',
+							'field'	=> 'source',
+							'value'	=> $_GET['ids'],
+							'format'=> 'JSON'
+						));
+						die();
+					}
+					case 'save-limit': {
+						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
+						new SaveSettings(array(
+							'page'	=> 'home',
+							'field'	=> 'limit',
+							'value'	=> $_GET['limit'],
+							'format'=> 'JSON'
+						));
+						die();
+					}
+					case 'save-random-option': {
+						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
+						new SaveSettings(array(
+							'page'	=> 'home',
+							'field'	=> 'random',
+							'value'	=> $_GET['random'],
+							'format'=> 'JSON'
+						));
+						die();
+					}
+					case 'update': {
+						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
+						new SaveSettings(array(
+							'page'	=> 'home',
+							'field'	=> $_GET['field'],
+							'value'	=> $_GET['value'],
+							'format'=> 'JSON'
+						));
+						die();
+					}
+				}
+			}
 		}
 		private function setToolbar() {
 			$this->addToolbarItem('Adicionar produto', 'add-product', '?action=adicionar-produto', CROOT.'imgs/gt8/add-small.png', null);
@@ -86,52 +133,6 @@
 		}
 		public function update( $field, $value) {
 			
-		}
-		private function checkActionRequest() {
-			if ( isset($_GET['action']) && $_GET['action']) {
-				switch($_GET['action']) {
-					case 'save-position': {
-						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
-						new SaveSettings(array(
-							'page'	=> 'home',
-							'field'	=> 'source',
-							'value'	=> $_GET['ids'],
-							'format'=> 'JSON'
-						));
-						die();
-					}
-					case 'save-limit': {
-						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
-						new SaveSettings(array(
-							'page'	=> 'home',
-							'field'	=> 'limit',
-							'value'	=> $_GET['limit'],
-							'format'=> 'JSON'
-						));
-						die();
-					}
-					case 'save-random-option': {
-						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
-						new SaveSettings(array(
-							'page'	=> 'home',
-							'field'	=> 'random',
-							'value'	=> $_GET['random'],
-							'format'=> 'JSON'
-						));
-						die();
-					}
-					case 'update': {
-						require_once( SROOT .'engine/queries/banners-config/SaveSettings.php');
-						new SaveSettings(array(
-							'page'	=> 'home',
-							'field'	=> $_GET['field'],
-							'value'	=> $_GET['value'],
-							'format'=> 'JSON'
-						));
-						die();
-					}
-				}
-			}
 		}
 		public function getServerJSVars() {
 			global $GT8;

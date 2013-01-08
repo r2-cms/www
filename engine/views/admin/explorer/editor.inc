@@ -8,6 +8,7 @@
 		{{tag:script|inline:{{JS_SERVER_VARS}}}}
 		<script type="text/javascript" src="{{CROOT}}js/gt8/Editor.js" ></script>
 		<script type="text/javascript" src="{{AROOT}}explorer/js/fileEditor.js" ></script>
+		{{PLUGGIN:css}}
 	</head>
 	<body class="{{modal-class}}" >
 		<div id="eMain" >

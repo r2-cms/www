@@ -78,7 +78,7 @@
 					</p>
 					<p class="grid-12 row-2" >
 						<small>
-							<a href="http://www.salaodocalcado.com.br/" >SALÃO DO CALÇADO (C) 2012</a> | Todos os direitos reservados  |  <a href="{{CROOT}}institucional/politica-de-privacidade/" >Privacidade</a>  |  <a href="{{CROOT}}institucional/politica-de-seguranca/" >Segurança</a>  |  <a href="{{CROOT}}{{GT8:atendimento.root}}" >SAC</a>  |  <a href="{{CROOT}}{{GT8:atendimento.root}}contato/" >Contato</a>
+							<a href="http://www.salaodocalcado.com.br/" >SALÃO DO CALÇADO (C) 2012</a> | Todos os direitos reservados  |  <a href="{{CROOT}}institucional/politica-de-privacidade/" >Privacidade</a>  |  <a href="{{CROOT}}institucional/seguranca/" >Segurança</a>  |  <a href="{{CROOT}}{{GT8:atendimento.root}}" >SAC</a>
 						</small>
 					</p>
 				</div>

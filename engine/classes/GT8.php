@@ -1014,5 +1014,35 @@
 				die();
 			}
 		}
+		protected function checkReadPrivileges( $url='') {
+			$this->checkPrivileges( $url, null, null, 1);
+		}
+		protected function checkWritePrivileges($url='') {
+			$this->checkPrivileges( $url, null, null, 2);
+		}
+		protected function checkPrivileges( $url=null, $field='*', $format='OBJECT', $min=2) {
+			require_once( SROOT ."engine/functions/CheckPrivileges.php");
+			
+			if ( !$url) {
+				global $paths;
+				$url	= $paths;
+				array_shift($url);
+				if ( empty($url[count($url)-1]) ) {
+					array_pop($url);
+				}
+				$url	= join('/',$url) .'/';
+			}
+			
+			$prv	= CheckPrivileges($field, $format, $url, $min);
+			
+			//se o privilégio para o campo específico não foi encontrado, procure-o genericamente
+			if ( $prv == 404 && $field!='*') {
+				$prv	= CheckPrivileges('*', $format, $url, $min);
+			}
+			
+			if ( $format == 'OBJECT' && $prv < $min) {
+				$this->redirect('forbidden');
+			}
+		}
 	}
 ?>
