@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Domínios cadastrados | GT8</title>
+		<title>Personalização das ofertas na home | GT8</title>
 		
 		<link rel="stylesheet" type="text/css" href="{{CROOT}}css/gt8/gt8.css" />
 		<link rel="stylesheet" type="text/css" href="{{CROOT}}{{GT8:admin.root}}css/main.css" />
