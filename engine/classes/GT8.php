@@ -1008,7 +1008,7 @@
 			}
 		}
 		static function enterSSL() {
-			if ( $_SERVER['DOCUMENT_ROOT'] != '/Users/Roger/Sites' && (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "") ) {
+			if ($_SERVER['DOCUMENT_ROOT'] != '/home/robson/sites/r2-cms.com/www/trunk' && $_SERVER['DOCUMENT_ROOT'] != '/Users/Roger/Sites' && (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "") ) {
 				$redirect = "https://". $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 				header("Location: $redirect");
 				die();
