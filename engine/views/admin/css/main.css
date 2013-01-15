@@ -167,25 +167,26 @@ a.button:hover, .e-select:hover span.button {
 	-moz-transition: all 0.4s;
 	-webkit-transition: all 0.4s;
 }
-a.button span, span.group-button a {
+a.button span, span.group-button a, span.group-button button {
 	display: block;
 	background: rgba(255,255,255, 0);
 	transition: background 1s;
 	-moz-transition: background 1s;
 	-webkit-transition: background 1s;
+	text-decoration: none;
 }
-a.button:hover span, span.group-button a:hover {
+a.button:hover span, span.group-button a:hover, span.group-button button:hover {
 	background: rgba(255,255,255, 0.4);
 	transition: background 0.3s;
 	-moz-transition: background 0.3s;
 	-webkit-transition: background 0.3s;
 }
-a.button:active span, span.group-button a:active {
+a.button:active span, span.group-button a:active, span.group-button button:active {
 	background: rgba(255,255,255, 0);
 }
 a.button:active,
-span.group-button a:active,
-span.group-button a.selected {
+span.group-button a:active, span.group-button button:active,
+span.group-button a.selected, span.group-button button.selected {
 	top: 1px;
 	box-shadow: inset 2px 2px 7px #000;
 	background: #AAA;
@@ -200,15 +201,19 @@ span.group-button {
 	width: auto !important;
 	overflow: visible;
 }
-span.group-button a {
+span.group-button a, span.group-button button {
 	height: 48px;
 	float: left;
 	margin: 0px !important;
+	background-color: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
 }
-span.group-button a:first-child {
+span.group-button a:first-child, span.group-button button:first-child {
 	border-radius: 6px 0px 0 6px;
 }
-span.group-button a:last-child {
+span.group-button a:last-child, span.group-button button:last-child {
 	border-radius: 0px 6px 6px 0;
 }
 span.group-button > small {/*separator*/
@@ -224,7 +229,7 @@ span.group-button > small {/*separator*/
 		border-left: 1px solid #757575;
 		border-right: 1px solid #EEE;
 	}
-span.group-button a img {
+span.group-button a img, span.group-button button img {
 	border-radius: 0px;
 	height: 42px;
 	margin: 4px 5px 0;
@@ -1352,6 +1357,9 @@ body .Editor-TabbedPaneC .TabbedPane > .body {
 		height: 230px;
 		margin-bottom: 10px;
 	}
+		#ePublishC .imgC img {
+			display: block;
+		}
 body .SplitPane-horizontal .left-pane {
 	position: fixed;
 	top: auto;

@@ -37,11 +37,11 @@ jCube(function(){
 			if ( typeof ASP.tabIndex != 'number') {
 				jCube.Document.Cookie.set( 'admin-'+ ASP.cardListerName +'-crrTabIndex', tab.getNodeIndex(), 0.5);
 			}
-			if ( card.query(':input')) {
-				window.setTimeout(function(){
+			window.setTimeout(function(){
+				if ( card.query(':input')) {
 					card.query(':input').setFocus().setSelection();
-				}, 150);
-			}
+				}
+			}, 150);
 		}
 		jCube( ":.TabbedPane").onTabbedPaneInitialization	= function( e, tabbedPane) {
 			if ( typeof ASP.tabIndex == 'number') {

@@ -1084,6 +1084,9 @@ a.href-button-disabled span {
 		height: 100%;
 		width: auto;
 	}
+img.auto-sprite {
+	background-repeat: no-repeat;
+}
 /************************************* CARDS **********************************/
 .cards {
 	
@@ -1588,6 +1591,9 @@ label.increaser.side-by-side {
 }
 .text-align-left {
 	text-align: left !important;
+}
+.text-align-justify {
+	text-align: justify !important;
 }
 .text-indent-none {
 	text-indent: 0px !important;

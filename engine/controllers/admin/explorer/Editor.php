@@ -376,11 +376,8 @@
 		}
 		public function update() {
 			//sleep(5);
-			$result	= parent::update( $field, $value);
-			if ( $result) {
-				require_once( SROOT .'engine/queries/explorer/updateFile.php');
-				updateFile($this->id, $field, $value, 'JSON');
-			}
+			require_once( SROOT .'engine/queries/explorer/updateFile.php');
+			updateFile($this->id, $_GET['field'], isset($_GET['value'])? $_GET['value']: $_POST['value'], 'JSON');
 			exit;
 		}
 		public function newFile() {

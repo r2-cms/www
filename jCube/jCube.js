@@ -128,7 +128,7 @@ var jCube	= (function( $, $$) {
 				jCube.Element.pMethods[fxName]	= function() {
 					allowTags = allowTags || '*';
 					disallowTags = disallowTags || ['window'];
-					for ( var i=0, allow, j=0, len=this.length, len2=disallowTags.length, len3=allowTags.length; i<len; i++ ) {
+					for ( var i=0, crr, allow, j=0, len=this.length, len2=disallowTags.length, len3=allowTags.length; i<len; i++ ) {
 						
 						if ( allowTags != '*' && typeof allowTags != 'object') {
 							throw new Error('"allowTags" must be an Array');
@@ -162,7 +162,7 @@ var jCube	= (function( $, $$) {
 			SetMethods:	function( fxName) {
 				jCube.Element.pMethods[fxName]	= function() {
 					var objs	= [];
-					for ( var i=0, len=this.length; i<len; i++ ) {
+					for ( var i=0, crr, len=this.length; i<len; i++ ) {
 						if ( (crr = this[i][fxName].apply( this[i], arguments))) {
 							objs[objs.length]	= crr;
 						}

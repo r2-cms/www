@@ -49,8 +49,7 @@ var GT8	= {
 			this.title	= props[0];
 			this.setStyle("width", Number(props[1].split('x')[0]));
 		});
-		//SELECT (SPAN.e-select)
-		jCube("::span.e-select select").each(function(){
+		jCube("::span.e-select select,label.select-encapsuled select").each(function(){//SELECT (SPAN.e-select)
 			this.addEvent('updateValue', function() {
 				this.getNextSibling().getFirstChild().innerHTML	= this.getOption().innerHTML;
 			});
@@ -59,16 +58,18 @@ var GT8	= {
 			});
 		}).trigger('updateValue');
 		//GROUP-BUTTONs listener: onGroupButtonActive( A), onGroupButtonToggle( A)
-		jCube('::span.group-button a').each(function(){
+		jCube('::span.group-button a, span.group-button button').each(function(){
 			if ( this.getPreviousSibling()) {
 				jCube(document.createElement('SMALL')).setHTML('<span>&nbsp;</span>').injectBefore( this);
 			}
 			this.onclick	= function() {
 				var cls	= this.getParent().className;
 				var isSelected	= this.className.split(/\s/).contains('selected');
-				
+				if ( this.className.contains('disabled')) {
+					return false;
+				}
 				if ( cls.contains('group-unique') ) {
-					this.getParent().query('::a').removeClass('selected');
+					this.getParent().query('::a,button').removeClass('selected');
 					
 					if ( cls.contains('group-toggle')) {
 						if ( isSelected) {
@@ -91,6 +92,10 @@ var GT8	= {
 						if ( isSelected && this.getParent().onGroupButtonActive ) {
 							this.getParent().onGroupButtonActive( this);
 						}
+					} else if ( cls.contains('group-trigger-only') ) {
+						this.addClass('selected');
+						var This	= this;
+						window.setTimeout(function(){ This.removeClass('selected');}, 250);
 					} else {
 						this.addClass('selected');
 						if ( this.getParent().onGroupButtonActive ) {
@@ -137,7 +142,7 @@ var GT8	= {
 		jCube('::.imgC img').each(function(){//imgC img: centralize images
 			GT8.adjustImgSize(this);
 		});
-		jCube('::img.auto-sprite').each(function(){//img.auto-sprite
+		jCube('::.auto-sprite').each(function(){//img.auto-sprite
 			var sett	= this.title.split('|');
 			this.setStyle({
 				backgroundImage: 'url('+ sett[1] +')',
