@@ -3,9 +3,9 @@
 		die('Undefined GT8: a1i32->a114e00->e1i1o4->Home');
 	}
 	require_once( SROOT ."engine/functions/CheckLogin.php");
-	require_once( SROOT ."engine/classes/Editor.php");
+	require_once( SROOT ."engine/classes/CardLister.php");
 	
-	class Index extends Editor {
+	class Index extends CardLister {
 		public $name	= 'security-scanner/';
 		public $tableType	= null;
 		
@@ -17,6 +17,15 @@
 			$this->checkReadPrivileges();
 			
 		}
+		public function returnScanDomain(){
+			$Pager	= Pager( array(
+				'sql'		=> 'security.listDomains'
+			));
+			$this->data['domains'] = $Pager['rows'];
+			return $this->data['domains'];
+		}
+		
+		
 		public function on404() {
 			if ( !$this->id ) {
 				parent::on404();
