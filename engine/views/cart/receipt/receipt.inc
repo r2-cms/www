@@ -62,7 +62,7 @@
 							<div class="grid-9 omega" >
 								<div class="grid-12 omega border-bottom margin-bottom-small" >
 									<h4 class="grid-7 alpha margin-bottom-none" class="title" >##title##</h4>
-									<div class="grid-2" >R$ $$price_boleto$$</div>
+									<div class="grid-2" >R$ $$price$$</div>
 									<div class="grid-1 text-align-center" >{{qty}}</div>
 									<div class="grid-2 omega text-align-right" >R$ $$subtotal$$</div>
 								</div>

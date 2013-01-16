@@ -30,12 +30,8 @@
 			$this->data	= $Pager['rows'][0];
 			$this->id	= $id;
 			$this->setFields();
-			
-			CheckPrivileges( 0, 'OBJECT','orders/', 1);
-			
-			
 			$this->checkActionRequest();
-			
+			$this->checkReadPrivileges('orders/');
 		}
 		public function on404() {
 			if ( !$this->id ) {
@@ -45,21 +41,22 @@
 		private function checkActionRequest() {
 			if ( isset($_GET['action']) && $_GET['action']) {
 				switch($_GET['action']) {
-					case '@set-pass': {
-						$this->update( 'pass', $_POST['pass']);
+					case 'change-status': {
+						require_once( SROOT .'engine/queries/orders/UpdateOrders.php');
+						$_GET	= array_merge($_GET, array(
+							'field'		=> 'id_stts',
+							'value'		=> $_GET['status'],
+							'id'		=> $this->id,
+							'format'	=> isset($_GET['format'])? $_GET['format']: null
+						));
+						new UpdateOrders($_GET);
+						break;
 					}
 				}
 			}
-		}
-		public function update( $field, $value) {
-			require_once(SROOT.'engine/queries/users/UpdateUsers.php');
-			new UpdateUsers(array(
-				"id"		=> $this->id,
-				"field"		=> $field,
-				"value"		=> $value,
-				'format'	=> 'JSON'
-			));
-			die();
+			if ( isset($_GET['format']) && $_GET['format']=='JSON') {
+				die('//fim');
+			}
 		}
 		public function getLevelArray( $table, $field) {
 			require_once( SROOT .'engine/functions/CreateComboLevels.php');

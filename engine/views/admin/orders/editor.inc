@@ -29,13 +29,13 @@
 						<div class="tab" ><div title="Histórico de compras" >Pedidos ({{orders-succeed}}/{{orders-total}})</div></div>
 					</div>
 					<div class="body" >
-						<div class="card resumo line-height input-validation" id="card-sumary" >
+						<div class="card resumo line-height-medium input-validation" id="card-sumary" >
 							<div class="line bg-head" >
 								<div class="col-15" ><strong>Pedido</strong></div>
 							</div>
 							<div class="line" >
 								<div class="col-6" ><strong>Status</strong></div>
-								<div class="col-9" >##status##</div>
+								<div class="col-9" id="eSumaryStatus" >({{id_stts}}) ##status##</div>
 							</div>
 							<div class="line" >
 								<div class="col-6" ><strong>ID</strong></div>
@@ -53,7 +53,7 @@
 								<div class="col-6" ><strong>Frete</strong></div>
 								<div class="col-9" >R$ $$price_freight$$</div>
 							</div>
-							<div class="line bg-head" >
+							<div class="line bg-head margin-top" >
 								<div class="col-15" ><strong>Produtos adquiridos</strong></div>
 							</div>
 							{{FOREACH:products}}
@@ -62,7 +62,7 @@
 								<span class="col-3" >R$ $$subtotal$$</span>
 							</a>
 							{{/FOREACH}}
-							<div class="line bg-head" >
+							<div class="line bg-head margin-top" >
 								<div class="col-15" ><strong>Cliente</strong></div>
 							</div>
 							<div class="line" >
@@ -85,7 +85,7 @@
 								<div class="col-6" ><strong>CPF / CNPJ</strong></div>
 								<div class="col-9" >{{customer.cpfcnpj}}</div>
 							</div>
-							<div class="line bg-head" >
+							<div class="line bg-head margin-top" >
 								<div class="col-6" ><strong>Endereço</strong></div>
 								<div class="col-9" ></div>
 							</div>
@@ -99,20 +99,13 @@
 								<div class="col-6" ><strong></strong></div>
 								<div class="col-9" ></div>
 							</div>
-							<div class="line" >
-								<div class="col-6" ><strong></strong></div>
-								<div class="col-9" ></div>
-							</div>
-							<div class="line" >
-								<div class="col-6" ><strong></strong></div>
-								<div class="col-9" ></div>
-							</div>
+							<div class="clearfix" ></div>
 						</div>
 						<div class="card input-validation" id="card-pay" >
 							{{FOREACH:pays}}
 							<div class="line" >
-								<div class="col-3 product imgC" >
-									<img src="{{CROOT}}imgs/shopping/{{type}}-small.png" alt="" />
+								<div class="col-3 product" >
+									<img src="{{CROOT}}imgs/shopping/{{type}}-small.png" alt="" style="max-height:68px; max-width:100px;" />
 								</div>
 								<div class="col-12 alpha omega clearfix-child" >
 									<div class="col-12" >
@@ -129,8 +122,8 @@
 						<div class="card input-validation" id="card-products" >
 							{{FOREACH:products}}
 							<a class="col-15 border-bottom margin-bottom" href="{{CROOT}}{{l_path}}" >
-								<span class="col-3 position-relative product imgC" >
-									<img src="{{CROOT}}{{l_path}}?translate-img=1&small" alt="" />
+								<span class="col-3 position-relative product overflow-hidden" >
+									<img src="{{CROOT}}{{l_path}}?translate-img=1&amp;small" alt="" style="max-height:112px; max-width:100px;" />
 								</span>
 								<span class="col-11 clearfix-child" >
 									<strong class="col-11" >##title## - ##brand##</strong>

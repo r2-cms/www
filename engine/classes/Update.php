@@ -12,7 +12,7 @@
 			value:		all
 			print
 	*/
-	class Update {
+	class Update extends GT8 {
 		public $privilegeName;
 		
 		public $name;

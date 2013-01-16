@@ -63,7 +63,7 @@
 								<h5 class="marginless border-bottom line-height-large margin-bottom" >Forma de Pagamento utilizada</h5>
 								{{FOREACH:pays}}
 								<div class="grid-12 marginless padding-top padding-bottom clearfix-child sumary-item border-bottom" >
-									<div class="grid-3 omega clearfix-child product imgC" >
+									<div class="grid-3 alpha clearfix-child product imgC" >
 										<img src="{{CROOT}}imgs/shopping/{{type}}-small.png" alt="" />
 									</div>
 									<div class="grid-9 marginless" >

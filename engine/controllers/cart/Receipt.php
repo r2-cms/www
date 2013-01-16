@@ -42,8 +42,10 @@
 				unset($_SESSION['shopping']['cart']);
 				
 			}
+			$isBoleto	= $this->data['pays'][0]['type'] === 'boleto';
 			for ( $i=0; $i<count($this->data['products']); $i++) {
-				$this->data['products'][$i]['subtotal']	= $this->data['products'][$i]['qty'] * $this->data['products'][$i]['price_boleto'];
+				$this->data['products'][$i]['price']	= $this->data['products'][$i]['price'. ($isBoleto?'_boleto': '_selling')];
+				$this->data['products'][$i]['subtotal']	= $this->data['products'][$i]['qty'] * $this->data['products'][$i]['price'];
 			}
 			
 			//ADDRESS

@@ -8,7 +8,7 @@
 		public $copyOnDb	= true;
 		public $format	= 'JSON';
 		public $printAfterSending	= false;
-		public $from	= array();//array('contato@gt8.com.br', 'GT8 | Desenvolvimento');
+		public $from	= array();
 		public $statusId		= 0;
 		public $statusCode	= 0;
 		public $statusTitle	= '';
@@ -52,10 +52,10 @@
 			
 			//data params
 			if ( isset($data['from'])) {
-				$data['from']	= RegExp($data['from'], '[a-zA-Z0-9\.\-\_\@]+');
+				$data['from']	= array(RegExp($data['from'][0], '[a-zA-Z0-9\.\-\_\@]+'), $data['from'][1]);
 			}
 			if ( isset($data['to'])) {
-				$data['to']	= RegExp($data['to'], '[a-zA-Z0-9\.\-\_\@]+');
+				$data['to']	= array(RegExp($data['to'][0], '[a-zA-Z0-9\.\-\_\@]+'), $data['to'][1]);
 			}
 			if ( isset($data['name'])) {
 				$data['name']	= str_replace(str_split('<>%$&;{}[]'), '-', $data['name']);
@@ -103,7 +103,7 @@
 					die();
 				} else if ( !isset($to[0])) {
 					if ( $this->format == 'JSON') {
-						print('//#error: a destination send a mail!'. PHP_EOL);
+						print('//#error: missing the destination of the e-mail!'. PHP_EOL);
 					}
 					die();
 				} else if ( !$content) {

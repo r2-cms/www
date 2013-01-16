@@ -93,7 +93,7 @@
 					$this->setProducts();
 					$items	= array();
 					for ( $i=0; $i<count($this->data['products']); $i++) {
-						$items[]	= array( $this->data['products'][$i]['id'], $this->data['products'][$i]['qty'], $this->data['products'][$i]['price_boleto']);
+						$items[]	= array( $this->data['products'][$i]['id'], $this->data['products'][$i]['qty'], $this->data['products'][$i]['price_selling']);
 					}
 					$options	= array(
 						'id_user'		=> $_SESSION['login']['id'],
@@ -103,9 +103,10 @@
 						'price_total'	=> $this->data['total_price'] + $_SESSION['shopping']['freight'],
 						'status'		=> 22,//pagamento não concluído. Após confirmação (na captura), altere para o próximo passo
 						'pays'			=> array(
-							array('card', $this->data['total_price'] + $_SESSION['shopping']['freight'],1)
+							array($_GET['card-type'], $this->data['total_price'] + $_SESSION['shopping']['freight'],1)
 						)
 					);
+					$this->data['pay-method']	= $_POST['card-type'];
 					if ( isset($_SESSION['shopping']['last-order-failed']) && $_SESSION['shopping']['last-order-failed']) {
 						$idOrder	= $_SESSION['shopping']['last-order-failed']['id-order'];
 						$options['price_total']	= $_SESSION['shopping']['last-order-failed']['price_total'];
@@ -163,17 +164,21 @@
 										id = $idOrder
 								") or die($_SESSION['login']['level']>7? "//#error: SQL INSERT Error:". mysql_error() . PHP_EOL: '//#error: Erro ao processar a consulta!<br />Por favor, contate o administrador do site.'. PHP_EOL);
 								
+								//caso haja erros, mesmo assim a página será redirecionada para o recibo
+								header('location: ../'. $GT8['cart']['receipt']['root']);
+								
 								require_once( SROOT .'engine/mail/Mail.php');
-								$m	= new Mail(100, 'JSON');
-								$m->statusId	= 23;
-								$m->printAfterSending	= !false;
+								$m	= new Mail(23, 'OBJECT');
+								$m->printAfterSending	= false;
 								$m->copyOnDb	= true;
 								$this->data['id-order']	= $idOrder;
-								
-								print("<pre>". print_r($this->data, 1) ."</pre>". PHP_EOL);
-								$m->send($this->data);
-								die();
-								
+								$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
+								$this->data['now']		= date('Y-m-d H:i:s');
+								$this->data['name']		= $_SESSION['login']['name'];
+								$this->data['mail']		= $_SESSION['login']['login'];
+								$this->data['freight']	= $_SESSION['shopping']['freight'];
+								$this->data['id-address']	= $_SESSION['shopping']['address'];
+								$m->send($this->data);								
 								
 								unset($_SESSION['shopping']);
 								$this->cookieCart();
@@ -182,7 +187,6 @@
 									'last-order'	=> $options
 								);
 								
-								header('location: ../'. $GT8['cart']['receipt']['root']);
 								die();
 							}
 						}
