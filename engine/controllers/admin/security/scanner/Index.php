@@ -4,6 +4,7 @@
 	}
 	require_once( SROOT ."engine/functions/CheckLogin.php");
 	require_once( SROOT ."engine/classes/CardLister.php");
+	require_once( SROOT ."engine/queries/security/ScanDomain.php");
 	
 	class Index extends CardLister {
 		public $name	= 'security-scanner/';
@@ -11,13 +12,20 @@
 		
 		function __construct() {
 			global $GT8;
-			parent::Editor();
+			parent::CardLister();
 			
 			$this->checkActionRequest();
 			$this->checkReadPrivileges();
 			
+			
+			//teste
+			$ScanDomain = new ScanDomain();
+			$ScanDomain->getDomains(
+				array(field=>array(id=>'id', name=>'name', creation=>)'creation')
+			);
 		}
 		public function returnScanDomain(){
+			//&action=new-domain&value=elefante.com.br
 			$Pager	= Pager( array(
 				'sql'		=> 'security.listDomains'
 			));
