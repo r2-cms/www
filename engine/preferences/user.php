@@ -91,5 +91,5 @@
 	$GT8['order-number-prefix']	= 'S44W280';
 	$GT8['phone-number']	= '(11) 3539-2258';
 	$GT8['search-key-words']	= '';
-	
+	$GT8['mail-main']	= array('atendimento@salaodocalcado.com.br', 'Serviço automático de e-mail.');
 ?>

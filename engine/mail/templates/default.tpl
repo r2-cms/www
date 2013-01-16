@@ -33,7 +33,7 @@
 						Se você não solicitou este e-mail, ignore-o e exclua-o de sua caixa-postal.
 					</p>
 					<p style="font-size:10px; " >
-						<a href="http://www.salaodocalcado.com.br/" style="color:#1A92B8;" >Salão do calçado</a> &copy; 2012 | Todos os direitos reservados.
+						<a href="http://www.salaodocalcado.com.br/" style="color:#1A92B8;" >Salão do calçado</a> &copy; 2013 | Todos os direitos reservados.
 					</p>
 				</td>
 			</tr>

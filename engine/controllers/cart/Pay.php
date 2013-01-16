@@ -163,12 +163,25 @@
 										id = $idOrder
 								") or die($_SESSION['login']['level']>7? "//#error: SQL INSERT Error:". mysql_error() . PHP_EOL: '//#error: Erro ao processar a consulta!<br />Por favor, contate o administrador do site.'. PHP_EOL);
 								
+								require_once( SROOT .'engine/mail/Mail.php');
+								$m	= new Mail(100, 'JSON');
+								$m->statusId	= 23;
+								$m->printAfterSending	= !false;
+								$m->copyOnDb	= true;
+								$this->data['id-order']	= $idOrder;
+								
+								print("<pre>". print_r($this->data, 1) ."</pre>". PHP_EOL);
+								$m->send($this->data);
+								die();
+								
+								
 								unset($_SESSION['shopping']);
 								$this->cookieCart();
 								setcookie('cart-items', '', time()+10, '/');
 								$_SESSION['shopping']	= array(
 									'last-order'	=> $options
 								);
+								
 								header('location: ../'. $GT8['cart']['receipt']['root']);
 								die();
 							}

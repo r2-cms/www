@@ -96,6 +96,14 @@
 		private function checkActionRequest() {
 			if ( isset($_GET['action']) ) {
 				$_GET['format']	= 'JSON';
+				
+				if ( $_GET['field'] == 'description' ) {
+					$_POST['value']	= str_replace(
+						array(CROOT),
+						array('{{CROOT}}'),
+						$_POST['value']
+					);
+				}
 				if ( $_GET['action'] == 'new-folder' && $_GET['name'] == 'filename') {
 					require_once( SROOT .'engine/queries/explorer/createNewFile.php');
 					$_GET['type']	= 'directory';

@@ -21,8 +21,6 @@
 							url: './?action=new-file&useIndexFilename=1&idDir={{$this->id}}&name=filename&approved=1',
 							onComplete: function(){
 								this.ret;
-								xx=this;
-								console.log(this)
 								if ( this.ret.insertId) {
 									//crie o iframe
 									var div	= document.createElement('DIV');

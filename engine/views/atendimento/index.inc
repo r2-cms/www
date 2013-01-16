@@ -5,6 +5,18 @@
 		<title>{{GT8:atendimento.title}} | Salão do Calçado</title>
 		{{VIEW:head}}
 		<script type="text/javascript" src="{{CROOT}}js/institucional.js" ></script>
+		<style type="text/css" >
+			.Accordion {
+				
+			}
+				.Accordion .header {
+					cursor: pointer;
+					margin: 0;
+				}
+					.Accordion .header {
+						
+					}
+		</style>
 	</head>
 	<body>
 		<div id="eMain" >

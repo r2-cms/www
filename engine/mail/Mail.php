@@ -8,14 +8,20 @@
 		public $copyOnDb	= true;
 		public $format	= 'JSON';
 		public $printAfterSending	= false;
-		public $from	= array('contato@gt8.com.br', 'GT8 | Desenvolvimento');
+		public $from	= array();//array('contato@gt8.com.br', 'GT8 | Desenvolvimento');
 		public $statusId		= 0;
 		public $statusCode	= 0;
 		public $statusTitle	= '';
 		public $statusDescription	= '';
 		
 		public function Mail( $status, $format='JSON') {
+			global $GT8;
+			
 			$this->statusCode	= (integer)$status;
+			
+			if ( !count($this->from) && isset($GT8['mail-main'])) {
+				$this->from	= array( $GT8['mail-main'][0], $GT8['mail-main'][1]);
+			}
 			
 			if ( !$this->statusCode) {
 				return;
@@ -49,21 +55,25 @@
 				$data['from']	= RegExp($data['from'], '[a-zA-Z0-9\.\-\_\@]+');
 			}
 			if ( isset($data['to'])) {
-				$data['to']	= RegExp($data['from'], '[a-zA-Z0-9\.\-\_\@]+');
+				$data['to']	= RegExp($data['to'], '[a-zA-Z0-9\.\-\_\@]+');
 			}
 			if ( isset($data['name'])) {
 				$data['name']	= str_replace(str_split('<>%$&;{}[]'), '-', $data['name']);
 			}
 			
 			//required fields from status.inc
-			$title	= $this->statusDescription;
+			$title		= $this->statusDescription;
 			$subject	= $this->statusTitle;
 			$content;
 			$mail;
 			$from;
 			$to;
 			$idRef	= 0;
-			include( SROOT .'engine/mail/status/'. $this->statusCode .'.inc');
+			if ( file_exists( SROOT .'engine/mail/status/'. $this->statusCode .'.inc')) {
+				include( SROOT .'engine/mail/status/'. $this->statusCode .'.inc');
+			} else if ( file_exists( SROOT .'engine/mail/status/index.inc')) {
+				include( SROOT .'engine/mail/status/index.inc');
+			}
 			
 			$from[0]	= isset($from[0]) && $from[0]? $from[0]: $this->from[0];
 			$from[1]	= isset($from[1]) && $from[1]? $from[1]: $this->from[1];

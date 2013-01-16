@@ -253,7 +253,8 @@ var jCube	= (function( $, $$) {
 				(function(  url, charset, async, onLoad){
 					var options	= {};
 					if ( typeof url == 'object') {
-						url	= option.url;
+						options	= url;
+						url	= options.url;
 					} else if ( typeof charset == 'object') {
 						options	= charset;
 						options.url	= url;

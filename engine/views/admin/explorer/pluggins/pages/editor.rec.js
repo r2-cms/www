@@ -448,7 +448,7 @@
 									return;
 								}
 								if ( eImg) {
-									eImg.src	= '/downloads/'+ eA.query(':.hidden .path').innerHTML + eA.query(':.hidden .filename').innerHTML +'/?regular';
+									eImg.src	= '{{CROOT}}downloads/'+ eA.query(':.hidden .path').innerHTML + eA.query(':.hidden .filename').innerHTML +'/?regular';
 								}
 								Modal.hide();
 							}
