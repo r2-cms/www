@@ -35,7 +35,7 @@
 				$row	= mysql_fetch_assoc(mysql_query("SELECT id, ttl, dscrptn FROM gt8_stts WHERE stts = {$this->statusCode}"));
 				$this->statusId				= $row['id'];
 				$this->statusDescription	= $row['dscrptn'];
-				$this->statusTitle			= utf8_decode($row['ttl']);
+				$this->statusTitle			= utf8_encode($row['ttl']);
 			}
 		}
 		public function send($data) {

@@ -50,6 +50,7 @@
 							</tr>
 			';
 		}
+		$products	= utf8_encode($products);
 	}
 	{//PAY
 		$Pay	= Pager(array(
