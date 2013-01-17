@@ -55,7 +55,7 @@
 				}
 			}
 			if ( isset($_GET['format']) && $_GET['format']=='JSON') {
-				die('//fim');
+				die();
 			}
 		}
 		public function getLevelArray( $table, $field) {

@@ -51,8 +51,21 @@
 			';
 		}
 	}
+	{//PAY
+		$Pay	= Pager(array(
+			'sql'		=> 'orders.list-pays',
+			'ids'		=> array(
+				array('p.id_orders', $data['id-order'])
+			)
+		));
+		$Pay	= $Pay['rows'][0];
+	}
 	$to	= array($Order['login'], $Order['name']);
+	$data['now']			= date('Y-m-d H:i:s');
 	$data['name']			= $Order['name'];
+	$data['price_freight']	= $Order['price_freight'];
+	$data['price_total']	= $Order['price_total'];
+	$data['pay-method']		= $Pay[0]['type'];
 	$data['creation']		= $Order['creation'];
 	
 	$content = "
@@ -60,8 +73,9 @@
 			##message##
 		</p>
 		<p>Prezado(a) ##name##,</p>
-		<p>Seu pedido, conforme registrado em nosso sistema sob o número <strong>{$GT8['order-number-prefix']}{$Order['id']}</strong>, realizado em //creation\\\\, foi cancelado automaticamente pelo sistema, em decorrência do vencimento do boleto bancário.</p>
-		<p>Caso deseje comprar o produto novamente, consulte a disponibilidade do produto.</p>
+		<p>Infelizmente seu pedido, conforme registrado em nosso sistema sob o número <strong>{$GT8['order-number-prefix']}{$Order['id']}</strong>, realizado em //creation\\\\, não foi aprovado pelo departamento de crédito.</p>
+		<p>O estorno do pagamento realizado através de <b>boleto</b> bancário ocorrerá em até 7 dias úteis.</p>
+		<p>O estorno do pagamento realizado através de <b>cartão de crédito</b> ocorrerá até o recebimento de sua segunda fatura. Lembramos que esse procedimento é de responsabilidade da administradora do cartão, dependendo da data do vencimento de sua fatura.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>
@@ -75,8 +89,10 @@
 			</tr>
 			$products
 		</table>
+		<p><strong>Valor do Frete</strong>: R$ ".'$$price_freight$$'."</p>
+		<p><strong>Valor total</strong>: R$ ".'$$price_total$$'."</p>
 		
-		<p><strong>Forma de Pagamento</strong>: <b>Boleto bancário</b></p>
+		<p><strong>Forma de Pagamento</strong>: {{pay-method}}</p>
 		
 		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/meu-cadastro/pedidos/{$GT8['order-number-prefix']}{$Order['id']}/'>clique aqui</a></p>
 		
@@ -84,7 +100,7 @@
 		<p>
 			<br>&nbsp;<br>
 		</p>
-		<p>Obrigado por escolher o <a href='http://www.salaodocalcado.com.br/' >Salão do Calçado</a></p>
+		<p>Obrigado por comprar no <a href='http://www.salaodocalcado.com.br/' >Salão do Calçado</a></p>
 	";
 	$altBody	= '';
 ?>

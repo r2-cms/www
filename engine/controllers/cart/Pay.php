@@ -106,7 +106,6 @@
 							array($_GET['card-type'], $this->data['total_price'] + $_SESSION['shopping']['freight'],1)
 						)
 					);
-					$this->data['pay-method']	= $_POST['card-type'];
 					if ( isset($_SESSION['shopping']['last-order-failed']) && $_SESSION['shopping']['last-order-failed']) {
 						$idOrder	= $_SESSION['shopping']['last-order-failed']['id-order'];
 						$options['price_total']	= $_SESSION['shopping']['last-order-failed']['price_total'];
@@ -173,13 +172,7 @@
 								$m->copyOnDb	= true;
 								$this->data['id-order']	= $idOrder;
 								$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
-								$this->data['now']		= date('Y-m-d H:i:s');
-								$this->data['name']		= $_SESSION['login']['name'];
-								$this->data['mail']		= $_SESSION['login']['login'];
-								$this->data['freight']	= $_SESSION['shopping']['freight'];
-								$this->data['id-address']	= $_SESSION['shopping']['address'];
-								$m->send($this->data);								
-								
+								$m->send($this->data);
 								unset($_SESSION['shopping']);
 								$this->cookieCart();
 								setcookie('cart-items', '', time()+10, '/');

@@ -51,22 +51,33 @@
 			';
 		}
 	}
+	{//PAY
+		$Pay	= Pager(array(
+			'sql'		=> 'orders.list-pays',
+			'ids'		=> array(
+				array('p.id_orders', $data['id-order'])
+			)
+		));
+		$Pay	= $Pay['rows'][0];
+	}
 	$to	= array($Order['login'], $Order['name']);
+	$data['now']			= date('Y-m-d H:i:s');
 	$data['name']			= $Order['name'];
-	$data['creation']		= $Order['creation'];
-	
+	$data['price_freight']	= $Order['price_freight'];
+	$data['price_total']	= $Order['price_total'];
+	$data['pay-method']		= $Pay[0]['type'];
 	$content = "
 		<p style='padding:10px; padding-left:20px; ' >
 			##message##
 		</p>
 		<p>Prezado(a) ##name##,</p>
-		<p>Seu pedido, conforme registrado em nosso sistema sob o número <strong>{$GT8['order-number-prefix']}{$Order['id']}</strong>, realizado em //creation\\\\, foi cancelado automaticamente pelo sistema, em decorrência do vencimento do boleto bancário.</p>
-		<p>Caso deseje comprar o produto novamente, consulte a disponibilidade do produto.</p>
+		<p>Seu pedido foi registrado em nosso sistema sob o número <strong>{$GT8['order-number-prefix']}{{id-order}}</strong>, realizado em //now\\\\ e aguardando o pagamento do boleto bancário.</p>
+		<p>Após a conciliação automática, seu pedido será liberado para entrega.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>
-		
 		<p><strong>DADOS DO PEDIDO</strong></p>
+		
 		<table border='1' bordercolor='#E8E8E8' cellpadding='0' cellspacing='0' style='font-size:12px; text-indent:10px;' >
 			<tr align='center' style='font-weight:bold; background:#EEE;' >
 				<td width='430' style='padding:5px 0; text-indent:0px;' >Item</td>
@@ -75,16 +86,28 @@
 			</tr>
 			$products
 		</table>
+		<p><strong>Valor do Frete</strong>: R$ ".'$$price_freight$$'."</p>
+		<p><strong>Valor total</strong>: R$ ".'$$price_total$$'."</p>
 		
-		<p><strong>Forma de Pagamento</strong>: <b>Boleto bancário</b></p>
+		<p><strong>Forma de Pagamento</strong>: {{pay-method}}</p>
 		
-		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/meu-cadastro/pedidos/{$GT8['order-number-prefix']}{$Order['id']}/'>clique aqui</a></p>
+		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{$GT8['account.root']}{$GT8['account.order.root']}{$GT8['order-number-prefix']}{$Order['id']}/'>clique aqui</a></p>
 		
+		<p>
+			<br>&nbsp;<br>
+		</p>
+		<p style='font-weight:bold;' >DADOS DA ENTREGA</p>
+				<span>Endereço: ". $Order['street'] .", ". $Order['number'] ."</span><span>". (!empty($Order['complement'])?'('.$Order['complement'].')':'') ."</span><br />
+				<span>Bairro: ". $Order['district'] ."</span><br />
+				<span>Cidade: {$Order['city']} - {$Order['stt']}</span><br />
+				<span>CEP: ". $Order['zip'] ."</span><br /><br />
+		</p>
+		<br>
 		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número {{phone-number}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>
-		<p>Obrigado por escolher o <a href='http://www.salaodocalcado.com.br/' >Salão do Calçado</a></p>
+		<p>Obrigado por comprar no <a href='http://www.salaodocalcado.com.br/' >Salão do Calçado</a></p>
 	";
 	$altBody	= '';
 ?>

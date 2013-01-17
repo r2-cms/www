@@ -246,12 +246,12 @@
 					<h3 title="8">Gerenciar</h3>
 					<h4 title="8">Alterar status para:</h4>
 					<div id="eMailActionC" class="line margin-top-small" >
-						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=40" ><span>(40) Liberado para entrega</span></a>
-						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=49" ><span>(49) Pedido entregue</span></a>
-						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=30" ><span>(30) Entrega em atraso</span></a>
-						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=31" ><span>(31) Pedido extraviado</span></a>
-						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=39" ><span>(39) Atendimento especial</span></a>
-						<a class="full-width href-button href-button-warning margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=29" ><span>(29) Pedido cancelado</span></a>
+						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=40" id="stt-40" ><span >(40) Liberado para entrega</span></a>
+						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=49" id="stt-49" ><span >(49) Pedido entregue</span></a>
+						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=30" id="stt-30" ><span >(30) Prazo de entrega prorrogado</span></a>
+						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=31" id="stt-31" ><span >(31) Extravio na entrega</span></a>
+						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=39" id="stt-39" ><span >(39) Atendimento especial</span></a>
+						<a class="full-width href-button href-button-warning margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=29" id="stt-29" ><span >(29) Cancelar pedido</span></a>
 					</div>
 					
 				</section>

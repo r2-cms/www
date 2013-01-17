@@ -18,13 +18,86 @@
 				$idStatus	= (integer)$options['value'];
 				
 				if ( file_exists( SROOT .'engine/mail/status/'. $idStatus .'.inc')) {
+					
+					if ( $idStatus == 40) {//liberado para entrega, calcule a data
+						$Order	= $this->getOrder();
+						$Products	= $this->getProducts();
+						$weight		= 0;
+						$width		= 0;
+						$length		= 0;
+						for ( $i=0; $i<count($Products); $i++) {
+							$weight		+= isset($Products[$i]['weight'])&&$Products[$i]['weight']? $Products[$i]['weight']: 1000;
+							$height		+= isset($Products[$i]['height'])&&$Products[$i]['height']? $Products[$i]['height']: 20;
+						}
+						//calcule o prazo de entrega
+						require_once( SROOT .'engine/queries/address/getCifByZip.php');
+						$Zip	= getCifByZip(array(
+							'zip'			=> $Order['a_zip'],
+							'price'			=> $Order['price_total'],
+							'weight'		=> $weight,
+							'width'			=> $width,
+							'height'		=> $height,
+							'length'		=> $length
+						));
+						$deliveryDate	= $this->getDeliveryDate(null, $Zip['deliveryTime']);
+						$options['field']	= 'delivery_expected';
+						$options['value']	= $deliveryDate;
+						$this->Update($options);
+					}
+					
 					require_once( SROOT .'engine/mail/Mail.php');
 					$m	= new Mail($idStatus, 'OBJECT');
 					$m->printAfterSending	= false;
 					$m->copyOnDb	= true;
-					$m->send($this->data);								
+					$this->data['id-order']	= $this->id;
+					$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
+					$m->send($this->data);
 				}
 			}
+		}
+		protected function getOrder() {
+			$Order	= Pager(array(
+				'sql'		=> 'orders.list-orders',
+				'addSelect'	=> ', t.type, o.a_zip',
+				'addFrom'	=> '
+					INNER JOIN gt8_address_type t	ON t.id = o.a_id_type
+				',
+				'ids'		=> array(
+					array('o.id', $this->id)
+				),
+				'foundRows'	=> 0
+			));
+			$Order	= $Order['rows'][0];
+			
+			return $Order;
+		}
+		protected function getProducts() {
+			$Products	= Pager(array(
+				'sql'		=> 'orders.list-orders',
+				'addSelect'	=> ',
+					i.id_explorer, e.path, e.filename, e.title, i.id_orders, SUBSTRING(e.path, 10) AS l_path,
+					i.qty, i.price, (i.price * i.qty) AS subtotal,
+					(
+						SELECT
+							title
+						FROM
+							gt8_explorer e3
+						WHERE
+							e3.id = e.id_dir
+					) AS title,
+					o.creation AS creation2
+				',
+				'addFrom'	=> '
+					INNER JOIN gt8_orders_items i	ON o.id = i.id_orders
+					INNER JOIN gt8_explorer e		ON e.id = i.id_explorer
+				',
+				'ids'		=> array(
+					array('o.id', $this->id)
+				)
+			));
+			$Products	= $Products['rows'];
+			
+			return $Products;
 		}
 		public function getValue( $field, $value) {
 			if ( $field == 'stt') {
@@ -35,6 +108,58 @@
 		public function checkPrivileges( $field, $value) {
 			$this->checkWritePrivileges( 'orders/', '*', $this->options['format']);
 			
+		}
+		protected function isHoliday( $date='yyyy/mm/dd') {
+			$holidays;
+			if ( !$this->holidays) {
+				$Pager	= Pager(array(
+					'select'	=> 'h.date',
+					'from'		=> 'gt8_holidays h',
+					'order'		=> 'h.date DESC',
+					'foundRows'	=> 1
+				));
+				$this->holidays	= array();
+				foreach( $Pager['rows'] AS $name=>$value) {
+					$this->holidays[]	= $value['date'];
+				}
+			}
+			$holidays	= $this->holidays;
+			
+			$date	= str_replace('/','-', substr($date, 0, 10));
+			foreach( $holidays AS $i=>$value) {
+				if ( $value === $date) {
+					return true;
+					break;
+				}
+			}
+			
+			return false;
+		}
+		protected function getDeliveryDate( $startDate='yyyy-mm-dd', $days) {
+			preg_match('/([0-9]{4}).([0-9]{2}).([0-9]{2})/', $startDate, $startDate);
+			
+			if ( !$startDate || $startDate === 'yyyy-mm-dd') {
+				$startDate	= date('Y-m-d');
+			}
+			
+			$startDate	= explode('-', $startDate);
+			$hour		= date('G', time());
+			
+			//pedidos analisados após as 12:00 terá acréscimo de 1 dia
+			if ( $hour > 12) {
+				$days++;
+			}
+			$tstart	= mktime( 0,0,0, $startDate[1], $startDate[2], $startDate[0]);
+			for ( $i=0; $i<$days; $i++) {
+				$tcrr	= ($tstart+(($i+1)*86400));
+				if ( date("w", $tcrr) == 6 || date("w", $tcrr) == 0 || $this->isHoliday(date('Y-m-d', $tcrr))) {
+					$days++;
+				}
+				
+			}
+			$time		= $tstart + 86400 * $days;
+			
+			return date("Y-m-d", $time);
 		}
 	}
 ?>

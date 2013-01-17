@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	if ( $_SESSION['GT8']) {
+	if ( isset($_SESSION['GT8']) && $_SESSION['GT8']) {
 		
 	} else {
 		$_SESSION['GT8']	= array(

@@ -36,7 +36,6 @@ jCube(function(){//CHANGE STATUS
 	});
 	jCube(':#eModalChangeStatus a.href-button-ok').addEvent('onclick', function(E){
 		E.stop();
-		var eBt	= this;
 		var req	= new jCube.Server.HttpRequest({
 			url: href + '&format=JSON',
 			noCache: true,
@@ -61,7 +60,7 @@ jCube(function(){//CHANGE STATUS
 		eModal.showOverlay();
 	});
 	jCube('::#eMailActionC a').each(function(){
-		if ( this.getFirstChild().innerHTML.contains(jCube(':#eSumaryStatus').innerHTML)) {
+		if ( jCube(':#eSumaryStatus').innerHTML.contains( '('+this.id.substring(4)+')') ) {
 			this.addClass('href-button-ok').removeClass('href-button-cancel');
 		}
 	});

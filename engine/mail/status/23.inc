@@ -1,30 +1,77 @@
 <?php
 	$products	= '';
-	require_once( SROOT .'engine/functions/Pager.php');
-	$Address	= Pager(array(
-		'sql'	=> 'address.list',
-		'ids'	=> array(
-			array('a.id', $data['id-address'])
-		)
-	));
-	$Address	= $Address['rows'][0];
-	
-	for ( $i=0; $i<count($data['products']); $i++) {
-		$crr	= $data['products'][$i];
-		$products	.= '
-						<tr>
-							<td style="padding:5px 0;" >'. $crr['title'] .'</td>
-							<td style="padding:5px 0; text-align:center; " >'. $crr['qty'] .'</td>
-							<td style="padding:5px 10px 5px 0; text-align:right;" >'. number_format($crr['subtotal'],2,',', '.') .'</td>
-						</tr>
-		';
+	{//ORDER
+		$Order	= Pager(array(
+			'sql'		=> 'orders.list-orders',
+			'addSelect'	=> ', t.type',
+			'addFrom'	=> '
+				INNER JOIN gt8_address_type t	ON t.id = o.a_id_type
+			',
+			'ids'		=> array(
+				array('o.id', $data['id-order'])
+			),
+			'foundRows'	=> 0
+		));
+		$Order	= $Order['rows'][0];
 	}
+	{//PRODUCTS
+		$Products	= Pager(array(
+			'sql'		=> 'orders.list-orders',
+			'addSelect'	=> ',
+				i.id_explorer, e.path, e.filename, e.title, i.id_orders, SUBSTRING(e.path, 10) AS l_path,
+				i.qty, i.price, (i.price * i.qty) AS subtotal,
+				(
+					SELECT
+						title
+					FROM
+						gt8_explorer e3
+					WHERE
+						e3.id = e.id_dir
+				) AS title,
+				o.creation AS creation2
+			',
+			'addFrom'	=> '
+				INNER JOIN gt8_orders_items i	ON o.id = i.id_orders
+				INNER JOIN gt8_explorer e		ON e.id = i.id_explorer
+			',
+			'ids'		=> array(
+				array('o.id', $data['id-order'])
+			)
+		));
+		$Products	= $Products['rows'];
+		$products	= '';
+		for ( $i=0; $i<count($Products); $i++) {
+			$crr	= $Products[$i];
+			$products	.= '
+							<tr>
+								<td style="padding:5px 0;" >'. $crr['title'] .'</td>
+								<td style="padding:5px 0; text-align:center; " >'. $crr['qty'] .'</td>
+								<td style="padding:5px 10px 5px 0; text-align:right;" >'. number_format($crr['subtotal'],2,',', '.') .'</td>
+							</tr>
+			';
+		}
+	}
+	{//PAY
+		$Pay	= Pager(array(
+			'sql'		=> 'orders.list-pays',
+			'ids'		=> array(
+				array('p.id_orders', $data['id-order'])
+			)
+		));
+		$Pay	= $Pay['rows'][0];
+	}
+	$to	= array($Order['login'], $Order['name']);
+	$data['now']			= date('Y-m-d H:i:s');
+	$data['name']			= $Order['name'];
+	$data['price_freight']	= $Order['price_freight'];
+	$data['price_total']	= $Order['price_total'];
+	$data['pay-method']		= $Pay[0]['type'];
 	$content = "
 		<p style='padding:10px; padding-left:20px; ' >
 			##message##
 		</p>
 		<p>Prezado(a) ##name##,</p>
-		<p>Seu pedido foi registrado em nosso sistema sob o número <strong>{$GT8['order-number-prefix']}{{id-order}}</strong>, realizado em //now\\\\ e está em análise de crédito junto à operadora do seu cartão de.</p>
+		<p>Seu pedido foi registrado em nosso sistema sob o número <strong>{$GT8['order-number-prefix']}{{id-order}}</strong>, realizado em //now\\\\ e está em análise de crédito junto à operadora do seu cartão de crédito.</p>
 		<p>Após aprovação, seu pedido será liberado para entrega.</p>
 		<p>
 			<br>&nbsp;<br>
@@ -39,24 +86,24 @@
 			</tr>
 			$products
 		</table>
-		<p><strong>Valor do Frete</strong>: R$ ".'$$freight$$'."</p>
-		<p><strong>Valor total</strong>: R$ ".'$$total_price$$'."</p>
+		<p><strong>Valor do Frete</strong>: R$ ".'$$price_freight$$'."</p>
+		<p><strong>Valor total</strong>: R$ ".'$$price_total$$'."</p>
 		
-		<p><strong>Forma de Pagamento</strong>: Cartão de crédito {{pay-method}}</p>
+		<p><strong>Forma de Pagamento</strong>: {{pay-method}}</p>
 		
-		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/meu-cadastro/pedidos/{$GT8['order-number-prefix']}{$data['id-order']}/'>clique aqui</a></p>
+		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/meu-cadastro/pedidos/{$GT8['order-number-prefix']}{$Order['id']}/'>clique aqui</a></p>
 		
 		<p>
 			<br>&nbsp;<br>
 		</p>
 		<p style='font-weight:bold;' >DADOS DA ENTREGA</p>
-				<span>Endereço: ". $Address['street'] .", ". $Address['number'] ."</span><span>". (!empty($Address['complement'])?'('.$Address['complement'].')':'') ."</span><br />
-				<span>Bairro: ". $Address['district'] ."</span><br />
-				<span>Cidade: {$Address['city']} - {$Address['stt']}</span><br />
-				<span>CEP: ". $Address['zip'] ."</span><br /><br />
-				
-				<p>As entregas do Salão do Calçado são realizadas de segunda à sexta, das  8h à s 21h. É necessário que haja alguém no endereço escolhido para entrega.</p>
-				<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número {{phone-number}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
+				<span>Endereço: ". $Order['street'] .", ". $Order['number'] ."</span><span>". (!empty($Order['complement'])?'('.$Order['complement'].')':'') ."</span><br />
+				<span>Bairro: ". $Order['district'] ."</span><br />
+				<span>Cidade: {$Order['city']} - {$Order['stt']}</span><br />
+				<span>CEP: ". $Order['zip'] ."</span><br /><br />
+		</p>
+		<p>As entregas do Salão do Calçado são realizadas de segunda à sexta, das  8h à s 21h. É necessário que haja alguém no endereço escolhido para entrega.</p>
+		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número {{phone-number}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>

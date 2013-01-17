@@ -73,6 +73,8 @@
 				include( SROOT .'engine/mail/status/'. $this->statusCode .'.inc');
 			} else if ( file_exists( SROOT .'engine/mail/status/index.inc')) {
 				include( SROOT .'engine/mail/status/index.inc');
+			} else {
+				die('//#error: Erro inconsistence. Por favor, contate o administrador do site!'. PHP_EOL);
 			}
 			
 			$from[0]	= isset($from[0]) && $from[0]? $from[0]: $this->from[0];
@@ -100,17 +102,17 @@
 					if ( $this->format == 'JSON') {
 						print('//#error: status id is required to copy mail into db!'. PHP_EOL);
 					}
-					die();
+					die('Erro: id de pedido ausente!');
 				} else if ( !isset($to[0])) {
 					if ( $this->format == 'JSON') {
 						print('//#error: missing the destination of the e-mail!'. PHP_EOL);
 					}
-					die();
+					die('Erro: destinatário ausente!');
 				} else if ( !$content) {
 					if ( $this->format == 'JSON') {
 						print('//#error: Cannot send a mail without content!'. PHP_EOL);
 					}
-					die();
+					die('Erro: conteúdo ausente!');
 				}
 				mysql_query("
 					INSERT INTO
@@ -162,7 +164,6 @@
 					print('//#error: '. $this->ErrorInfo . PHP_EOL);
 				}
 			}
-			
 			if ( $this->printAfterSending) {
 				print(utf8_encode($body)); 
 			}
