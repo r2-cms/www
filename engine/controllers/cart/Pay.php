@@ -62,13 +62,24 @@
 						);
 						die();
 					}
+					
+					
+					header('location: ../'. $GT8['cart']['receipt']['root']);
+					
+					require_once( SROOT .'engine/mail/Mail.php');
+					$m	= new Mail(21, 'OBJECT');
+					$m->printAfterSending	= true;
+					$m->copyOnDb	= true;
+					$this->data['id-order']	= $idOrder;
+					$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
+					$m->send($this->data);
+					
 					unset($_SESSION['shopping']);
 					$this->cookieCart();
 					setcookie('cart-items', '', time()+10, '/');
 					$_SESSION['shopping']	= array(
 						'last-order'	=> $options
 					);
-					header('location: ../'. $GT8['cart']['receipt']['root']);
 					die();
 				}
 				
@@ -173,13 +184,13 @@
 								$this->data['id-order']	= $idOrder;
 								$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
 								$m->send($this->data);
+								
 								unset($_SESSION['shopping']);
 								$this->cookieCart();
 								setcookie('cart-items', '', time()+10, '/');
 								$_SESSION['shopping']	= array(
 									'last-order'	=> $options
 								);
-								
 								die();
 							}
 						}
