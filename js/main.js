@@ -617,8 +617,12 @@ var GT8	= {
 			height: h
 		});
 		
+		eImg.addEvent('onload', function(){
+			GT8.adjustImgSize(this);
+		});
+		
 		if ( w < W) {
-			eImg.setStyle('left', (W-w)/2);
+			//eImg.setStyle('left', (W-w)/2);
 		}
 		if ( h < H) {
 			eImg.setStyle('top', (H-h)/2);

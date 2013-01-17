@@ -516,6 +516,8 @@
 						a.attribute = '$attribute' AND v.id_explorer = $dbColumn.id AND v.id_attributes = a.id 
 				) AS `$alias`
 			";
+			
+			return $options;
 		}
 		public function getCategories() {
 			if ( !isset($this->data['categories']) && count($this->data['categories'])==0) {
@@ -537,7 +539,7 @@
 				//replace fullpath
 				foreach( $Pager['rows'] AS $i=>$row) {
 					$Pager['rows'][$i]['fullpath']	= CROOT . str_replace(
-						array('explorer/catalogo/'),
+						array('downloads/catalogo/'),
 						array(''),
 						$Pager['rows'][$i]['fullpath']
 					);
@@ -690,8 +692,8 @@
 			$options['where']		= str_replace('AND e.stock > 0', '', $options['where']);
 			//$options['debug']	= 1;
 			
-			$this->addAttributeInSelect('link', '', &$options, 'ez');
-			$this->addAttributeInSelect('style-banner', '', &$options, 'ez');
+			$options	= $this->addAttributeInSelect('link', '', $options, 'ez');
+			$options	= $this->addAttributeInSelect('style-banner', '', $options, 'ez');
 			$Pager	= Pager($options);
 			$Pager['rows']	= str_replace(
 				array('0x0', 'privilege-r', '/type=directory',	'/type=file'),

@@ -67,7 +67,7 @@
 					<div class="row-12 fluid-12 block clearfix-child mobile-hidden" >
 						<div class="grid-12" >
 							<p class="text-light" >
-								<small>O <a href="http://www.salaodocalcado.com.br" class="link" >Salãodocalcado.com.br</a> é especializado no comércio eletrônico de calçados nobre, de de alta qualidade, todos fabricados com couro legítimo. O site busca constantemente a satisfação do consumidor, oferecendo o melhor atendimento possível, rapidez nas entregas, segurança e simplicidade nas compras. Estamos sempre pesquisando tendências na moda feminina para poder lhe oferecer o que há de mais novo e melhor.</small>
+								<small>O <a href="{{CROOT}}" class="link" >Salãodocalcado.com.br</a> é especializado no comércio eletrônico de calçados nobre, de de alta qualidade, todos fabricados com couro legítimo. O site busca constantemente a satisfação do consumidor, oferecendo o melhor atendimento possível, rapidez nas entregas, segurança e simplicidade nas compras. Estamos sempre pesquisando tendências na moda feminina para poder lhe oferecer o que há de mais novo e melhor.</small>
 							</p>
 						</div>
 					</div>
@@ -78,7 +78,7 @@
 					</p>
 					<p class="grid-12 row-2" >
 						<small>
-							<a href="http://www.salaodocalcado.com.br/" >SALÃO DO CALÇADO (C) 2012</a> | Todos os direitos reservados  |  <a href="{{CROOT}}institucional/politica-de-privacidade/" >Privacidade</a>  |  <a href="{{CROOT}}institucional/seguranca/" >Segurança</a>  |  <a href="{{CROOT}}{{GT8:atendimento.root}}" >SAC</a>
+							<a href="{{CROOT}}" >SALÃO DO CALÇADO (C) 2012</a> | Todos os direitos reservados  |  <a href="{{CROOT}}institucional/politica-de-privacidade/" >Privacidade</a>  |  <a href="{{CROOT}}institucional/seguranca/" >Segurança</a>  |  <a href="{{CROOT}}{{GT8:atendimento.root}}" >SAC</a>
 						</small>
 					</p>
 				</div>

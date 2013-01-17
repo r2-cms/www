@@ -31,9 +31,7 @@
 					{{FOREACH:products}}
 					<div class="row padding-top padding-bottom clearfix-child cart-items" >
 						<div class="grid-4h omega clearfix-child product" >
-							<div class="imgC grid-4h alpha" >
-								<a href="{{CROOT}}{{l_path}}" ><img src="{{CROOT}}{{l_path}}?translate-img=1&amp;small" alt="" /></a>
-							</div>
+							<a class="imgC grid-4h alpha" href="{{CROOT}}{{l_path}}" ><img src="{{CROOT}}{{l_path}}?translate-img=1&amp;small" alt="" /></a>
 							<div class="grid-7h" >
 								<h4 class="title" >##title##</h4>
 								<div class="code" ><small title="{{id}}" >Código: ##filename##</small></div>

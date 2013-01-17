@@ -193,7 +193,7 @@
 						INNER JOIN gt8_explorer e		ON e.id = i.id_explorer
 					',
 					'ids'		=> array(
-						array('o.id_users', $_SESSION['login']['id'])
+						array('o.id_users', $this->Pager['rows'][0]['id_users'])
 					),
 					'group'	=> 'o.id'
 				));
