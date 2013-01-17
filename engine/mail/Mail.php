@@ -3,6 +3,7 @@
 		die('Invalid Mail request!');
 	}
 	require_once(SROOT .'engine/classes/PHPMailer.php');
+	require_once(SROOT .'engine/classes/PHPMailer.smtp.php');
 	
 	class Mail extends PHPMailer {
 		public $copyOnDb	= true;
@@ -20,13 +21,13 @@
 			$this->statusCode	= (integer)$status;
 			
 			if ( !count($this->from) && isset($GT8['mail-main'])) {
-				$this->from	= array( $GT8['mail-main'][0], $GT8['mail-main'][1]);
+				$this->from	= array( $GT8['mail-main'][0], utf8_decode($GT8['mail-main'][1]));
 			}
 			
 			if ( !$this->statusCode) {
 				return;
 			}
-			
+			parent::__construct(true);
 			$this->format	= $format;
 		}
 		protected function retrieveStatus() {
@@ -34,7 +35,7 @@
 				$row	= mysql_fetch_assoc(mysql_query("SELECT id, ttl, dscrptn FROM gt8_stts WHERE stts = {$this->statusCode}"));
 				$this->statusId				= $row['id'];
 				$this->statusDescription	= $row['dscrptn'];
-				$this->statusTitle			= $row['ttl'];
+				$this->statusTitle			= utf8_decode($row['ttl']);
 			}
 		}
 		public function send($data) {

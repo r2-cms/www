@@ -9,7 +9,7 @@
 	
 	$subject = "Salão do calçado | Solicitação para redefinir a senha";
 	$content = "
-		<p>Prezado(a) {{name}},</p>
+		<p>Prezado(a) ##name##,</p>
 		<p>Este e-mail foi-lhe enviado conforme sua solicitação para recuperar seu acesso ao site salaodocalcado.com.br. Para redefinir sua senha, basta clicar no link abaixo e você será conduzido à uma página web que lhe permitirá redefinir uma nova senha.</p>
 		<p>Para sua segurança, este link expirará em 30 minutos após o envio deste e-mail.</p>
 		<p>

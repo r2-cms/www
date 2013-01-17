@@ -97,10 +97,10 @@
 			<br>&nbsp;<br>
 		</p>
 		<p style='font-weight:bold;' >DADOS DA ENTREGA</p>
-				<span>Endereço: ". $Order['street'] .", ". $Order['number'] ."</span><span>". (!empty($Order['complement'])?'('.$Order['complement'].')':'') ."</span><br />
-				<span>Bairro: ". $Order['district'] ."</span><br />
-				<span>Cidade: {$Order['city']} - {$Order['stt']}</span><br />
-				<span>CEP: ". $Order['zip'] ."</span><br /><br />
+				<span>Endereço: ". utf8_encode($Order['street']) .", ". $Order['number'] ."</span><span>". (!empty($Order['complement'])?'('.$Order['complement'].')':'') ."</span><br />
+				<span>Bairro: ". utf8_encode($Order['district']) ."</span><br />
+				<span>Cidade: ". utf8_encode($Order['city']) ." - {$Order['stt']}</span><br />
+				<span>CEP: {$Order['zip']}</span><br /><br />
 		</p>
 		<p>As entregas do Salão do Calçado são realizadas de segunda à sexta, das  8h à s 21h. É necessário que haja alguém no endereço escolhido para entrega.</p>
 		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número {{phone-number}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
