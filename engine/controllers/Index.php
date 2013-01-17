@@ -635,6 +635,7 @@
 				ez.price_selling / ez.price_parts AS price_finantial
 			';
 			$options['group']		= 'e.dirpath';
+			$options['limit']		= $Config['limit'];
 			$options['foundRows']		= count($ids);
 			//$options['debug']	= 1;
 			
