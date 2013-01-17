@@ -159,7 +159,7 @@
 			}
 			$time		= $tstart + 86400 * $days;
 			
-			return date("Y-m-d", $time);
+			return date("d-m-Y", $time);
 		}
 	}
 ?>
