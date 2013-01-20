@@ -97,7 +97,7 @@
 				NOW(), NOW(),
 				'$pass'
 			)
-		") or die($_SESSION['login']['level']>7? "//#error: SQL INSERT Error:". mysql_error() . PHP_EOL: '//#error: Erro ao acessar o banco de dados!'. PHP_EOL);
+		") or die($_SESSION['login']['level']>7? "//#error: SQL INSERT Error:". mysql_error() . PHP_EOL . '//#error: Erro ao acessar o banco de dados!'. PHP_EOL);
 		
 		$id	= mysql_insert_id();
 		if ( $id ) {
