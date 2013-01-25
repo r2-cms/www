@@ -88,7 +88,11 @@ function SortablesInit() {
 				
 				var s	= '';
 				jCube('::.page-container .home-cards-container .card').each(function(){
-					s	+= this.query(':.module-name').innerHTML +','+ this.getParent('.page-container').getNodeIndex() +','+ this.getNodeIndex() +'|';
+					if ( this.query(':.module-name')) {
+						s	+= this.query(':.module-name').innerHTML +','+ this.getParent('.page-container').getNodeIndex() +','+ this.getNodeIndex() +'|';
+					} else {
+						//s	+= '';
+					}
 				});
 				s	= s.substring(0, s.length-1);
 				

@@ -21,7 +21,7 @@
 					case 'save-admin-icon-position': {
 						require_once(SROOT.'engine/queries/modules/SaveAdminIconPosition.php');
 						
-						$s	= RegExp($_GET['value'], '[a-z0-9\-\.\|\,]+');
+						$s	= RegExp($_GET['value'], '[a-zA-Z\_0-9\-\.\|\,\/]+');
 						if ( $s) {
 							$s	= explode('|', $s);
 							for( $i=0; $i<count($s); $i++) {
@@ -63,7 +63,8 @@
 				'privileges'			=> array("p",		"Privilégios de acesso", ''),
 				'orders'				=> array("o",		"Pedidos de compra", ''),
 				'offers-config/home'	=> array("och",		"Ofertas Especiais na Home", ''),
-				'banners-config/home'	=> array("bch",		"Configuração de banners na Home", '')
+				'banners-config/home'	=> array("bch",		"Configuração de banners na Home", ''),
+				'security/scanner'		=> array("ss",		"Scanner de arquivos", '')
 			);
 			
 			$Pager	= Pager(array(
@@ -134,6 +135,10 @@
 				if ( $crr['page_index'] != $pindex) {
 					if ( $pindex > -1) {
 					$html	.= '
+						<div class="card invisible" ><div class="spacing bg-linear-gray" ></div></div>
+						<div class="card invisible" ><div class="spacing bg-linear-gray" ></div></div>
+						<div class="card invisible" ><div class="spacing bg-linear-gray" ></div></div>
+						<div class="card invisible" ><div class="spacing bg-linear-gray" ></div></div>
 					</div>
 				</div>
 					';

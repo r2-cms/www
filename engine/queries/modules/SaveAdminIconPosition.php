@@ -36,6 +36,8 @@
 						gt8_modules( id_users, module, card_index, page_index)
 					SELECT
 						{$options['id_users']}, '{$options['module']}', {$options['card_index']}, {$options['page_index']}
+					FROM
+						gt8_modules
 					WHERE
 						id_users = {$options['id_users']} AND
 						module = '{$options['module']}'
