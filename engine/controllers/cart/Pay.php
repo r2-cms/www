@@ -64,6 +64,12 @@
 					}
 					
 					
+					unset($_SESSION['shopping']);
+					$this->cookieCart();
+					setcookie('cart-items', '', time()+10, '/');
+					$_SESSION['shopping']	= array(
+						'last-order'	=> $options
+					);
 					header('location: ../'. $GT8['cart']['receipt']['root']);
 					
 					require_once( SROOT .'engine/mail/Mail.php');
@@ -74,12 +80,6 @@
 					$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
 					$m->send($this->data);
 					
-					unset($_SESSION['shopping']);
-					$this->cookieCart();
-					setcookie('cart-items', '', time()+10, '/');
-					$_SESSION['shopping']	= array(
-						'last-order'	=> $options
-					);
 					die();
 				}
 				
@@ -175,6 +175,12 @@
 								") or die($_SESSION['login']['level']>7? "//#error: SQL INSERT Error:". mysql_error() . PHP_EOL: '//#error: Erro ao processar a consulta!<br />Por favor, contate o administrador do site.'. PHP_EOL);
 								
 								//caso haja erros, mesmo assim a página será redirecionada para o recibo
+								unset($_SESSION['shopping']);
+								$this->cookieCart();
+								setcookie('cart-items', '', time()+10, '/');
+								$_SESSION['shopping']	= array(
+									'last-order'	=> $options
+								);
 								header('location: ../'. $GT8['cart']['receipt']['root']);
 								
 								require_once( SROOT .'engine/mail/Mail.php');
@@ -185,12 +191,6 @@
 								$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
 								$m->send($this->data);
 								
-								unset($_SESSION['shopping']);
-								$this->cookieCart();
-								setcookie('cart-items', '', time()+10, '/');
-								$_SESSION['shopping']	= array(
-									'last-order'	=> $options
-								);
 								die();
 							}
 						}
