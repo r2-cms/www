@@ -30,6 +30,12 @@
 			$value	= $options["value"];
 			$format	= isset($options["format"])? $options["format"]: 'OBJECT';
 			
+			if ( isset($options['privilegeName']) && $options['privilegeName'] ) {
+				$this->privilegeName	= $options['privilegeName'];
+			}
+			if(isset($options['name']) && $options['name']){
+				$this->name = $options['name'];
+			}
 			if ( !$this->id) {
 				die( PHP_EOL ."//#error: ID ausente!". PHP_EOL);
 			} else if ( !$field) {
