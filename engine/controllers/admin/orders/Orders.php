@@ -8,7 +8,7 @@
 	
 	CheckPrivileges( null, null, 'orders/', 1);
 	require_once( SROOT .'engine/classes/CardLister.php');
-	$_SESSION['login']['level']=6;
+	
 	class Orders extends CardLister {
 		public $name		= 'orders';
 		public $orderFilter	= array(
