@@ -19,7 +19,7 @@
 					<div id="eModule-{{card_index}}-{{page_index}}" class="card" >
 						<div class="spacing bg-linear-gray" >
 							<a href="{{module}}/" >
-								<img src="{{module2}}/imgs/large.png" alt="##sumary##" />
+								<img src="{{img}}" alt="##sumary##" />
 							</a>
 							<span>##sumary##</span>
 							<span class="hidden module-name" >{{module}}</span>

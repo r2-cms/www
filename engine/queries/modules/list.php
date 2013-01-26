@@ -6,7 +6,8 @@
 				m.module,
 				m.card_index,
 				m.page_index,
-				m.views 
+				m.views,
+				IF ( LENGTH(m.img)>0, m.img, CONCAT(m.module, '/imgs/large.png')) AS img
 		",
 		"from"	=> "
 				gt8_modules m
