@@ -9,8 +9,11 @@
 	class Index extends ScanDomain {
 		public $name	= 'security-scanner/';
 		public $tableType	= null;
-		private $fieldsDefault = array("id", "id_user", "ftp", "domain", "login", "pass", "port", "scan_frequency", "creation", "modification");
+		private $fieldsDefault = array("id", "id_user", "ftp", "domain", "login", "pass", "port", "scan_frequency", "creation", "modification");	//eg: COUNT(modification) AS modif
 		protected $fields = array();
+		protected $values = array();
+		private $idDomain = 0;
+		private $args = array();
 		protected $format = "";
 		protected $where = "";
 		protected $clauseAnd = "";
@@ -22,10 +25,11 @@
 			parent::__construct();
 			global $GT8;
 			
+			$this->format = isset($_GET['format']) && ($_GET['format'])? $_GET['format']: 'OBJECT';
 			$this->checkActionRequest();
 			$this->checkReadPrivileges();
 			$fieldsArgs = array();
-			$fieldsArgs[] = isset($_GET['fields']) & $_GET['fields']!=null & $_GET['fields']!=""? count(explode(",", $_GET['fields']))>0? explode(",", $_GET['fields']): "": "";
+			$fieldsArgs[] = isset($_GET['fields']) && $_GET['fields']!=null && $_GET['fields']!=""? count(explode(",", $_GET['fields']))>0? explode(",", $_GET['fields']): "": "";
 			$fieldsDiff = array_diff($fieldsArgs, $this->fieldsDefault);
 			
 			foreach($fieldsDiff as $key=>$value){
@@ -49,12 +53,17 @@
 			$this->limit = isset($_GET['limit'])? (integer)($_GET['limit']): 50;
 			$this->index = isset($_GET['index'])? (integer)($_GET['index']): 0;
 			$this->group = isset($_GET['group'])? mysql_real_escape_string($_GET['group']): "";
-			//$this->returnScanDomain();
-			$this->addScanDomain();
+			
+			//$this->getScanDomain();
+			//$this->addScanDomain();
+			//$this->updateScanDomain();
+			//$this->deleteScanDomains();
+			
 		}
 		
-		public function returnScanDomain(){
+		public function getScanDomains($template){
 			//&action=new-domain&value=elefante.com.br
+			$this->format = 'TEMPLATE';
 			$getDomains = $this->getDomains(
 				array(
 					field=>$this->fields,
@@ -63,24 +72,47 @@
 					limit=>$this->limit,
 					index=>$this->index,
 					group=>$this->group,
-					format=>$this->format
+					format=>$this->format,
+					template=>$template
 				)
 			);
 			
 			$this->data['domains'] = $getDomains['rows'];
-			print_r($this->data['domains']);
-			die('admin/security/scanner/Index.php');
+			//print_r($this->data['domains']);
+			//die('admin/security/scanner/Index.php');
 			return $this->data['domains'];
 		}
 		
 		public function addScanDomain(){
 			print(
 				$this->addDomains(
-					array(creation=>"2013/01/20")
-				)	
+					array(
+						id_user=>1,
+						ftp=>"ftp.r2cms.com.br",
+						domain=>"www.r2cms.com.br",
+						login=>"master",
+						pass=>"123456",
+						port=>21,
+						scan_frequency=>4,
+						creation=>"NOW()",
+						modification=>"NOW()"
+					)
+				)
 			);
 			die();
-		}		
+		}
+		public function updateScanDomain(){
+			$this->idDomain = $this->idDomain;
+			$this->args['field'] = $this->fields;
+			$this->args['value'] = $this->values;
+			$this->args['format'] = $this->format;
+			
+			$this->updateDomains($this->idDomain, $this->args);
+		}
+		public function deleteScanDomains(){
+			print_r($this->deleteDomains(array()));
+			die('Index');
+		}
 		public function on404() {
 			if ( !$this->id ) {
 				parent::on404();
