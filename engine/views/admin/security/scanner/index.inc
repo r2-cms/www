@@ -21,7 +21,7 @@
 				'toolbar'	=> $this->toolbarItems
 			)); ?>
 			<div class="cards-container clearfix-child" >
-				{{METHOD:getDomains}}
+				{{METHOD:getScanDomains}}
 				<a href="{{domain}}/" class="card grid-3 box-shadow border-radius" >
 					<span class="block" >{{title}}</span>
 				</a>
