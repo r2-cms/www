@@ -16,12 +16,19 @@
 	<body class="{{modal-class}}" >
 		<div id="eMain" >
 			<?php $this->printHeader(array(
-				"h1" 		=> 'Vazio',
+				"h1" 		=> 'Domínios disponíveis',
 				'directory'	=> $this->getDirLocation(),
 				'toolbar'	=> $this->toolbarItems
 			)); ?>
+			<div class="cards-container clearfix-child" >
+				{{METHOD:getDomains}}
+				<a href="{{domain}}/" class="card grid-3 box-shadow border-radius" >
+					<span class="block" >{{title}}</span>
+				</a>
+				{{/METHOD}}
+			</div>
 			<footer class="footer-clear-height" >&nbsp;</footer>
-			<?php $this->printFooter(); ?>
+			{{$this->getFooter()}}
 		</div>
 	</body>
 </html>
