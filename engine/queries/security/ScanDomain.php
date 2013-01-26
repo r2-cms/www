@@ -4,8 +4,21 @@
 	require_once( SROOT ."engine/functions/validDateTime.php");
 	
 	class ScanDomain extends Security implements IScanDomain{
+		private $idDomain = 0;
+		private $args = array();
+		private $currentDomain = "";
+		public $privilegeName	= 'security/scanner/';
+		
+		//Params para ajax:
+		//#message: Campo atualizado com sucesso!
+		//#affected rows: 1
+		//#affected
+		//#error:
+		//#message:
+		
+		
 		function __construct(){
-			
+			$this->currentDomain = $_SERVER['SERVER_NAME'];
 		}
 		public function getDomains($props = array(full=> "*")){
 			$format = isset($props['format'])? strtoupper($props['format']): "OBJECT";
@@ -25,6 +38,7 @@
 			$limit = isset($props['limit'])? (integer)$props['limit']: 50;
 			$index = isset($props['index'])? (integer)$props['index']: 0;
 			$group = isset($props['group'])? mysql_real_escape_string($props['group']): "";
+			$template = isset($props['template']) && $props['template']? $props['template']: null;
 			
 			switch ($format){
 				case 'OBJECT':
@@ -63,13 +77,12 @@
 				'index' => $index,
 				'limit' => $limit,
 				'group' => $group,
-				'format' => $format
+				'format' => $format,
+				'template' => $template
 			));
-			
 			return $Pager;
 		}
 		public function addDomains($props = array()){
-			
 			$id_user = isset($props['id_user'])? (integer)$props['id_user']: 0;
 			$ftp = isset($props['ftp'])? mysql_real_escape_string($props['ftp']): null;
 			$domain = isset($props['domain'])? mysql_real_escape_string($props['domain']): null;
@@ -77,18 +90,137 @@
 			$pass = isset($props['pass'])? mysql_real_escape_string($props['pass']): null;
 			$port = isset($props['port'])? (integer)$props['port']: 0;
 			$scan_frequency = isset($props['scan_frequency'])? (integer)$props['scan_frequency']: 0;
-			$creation = isset($props['creation'])? validDateTime("date", $props['creation']): "NOW()";
+			$creation = isset($props['creation'])? $props['creation']=="NOW()"? "NOW()": validDateTime("datetime", $props['creation']): "NOW()";
 			$modification = "NOW()";
 			$sqlInsert = "";
 			
-			return $creation;
+			$sqlInsert = mysql_query("
+				INSERT INTO
+					gt8_scan_domains(
+						id_user,
+						ftp,
+						domain,
+						login,
+						pass,
+						port,
+						scan_frequency,
+						creation,
+						modification
+					)VALUES(
+						$id_user,
+						'$ftp',
+						'$domain',
+						'$login',
+						'$pass',
+						$port,
+						$scan_frequency,
+						'$creation',
+						'$modification'
+					)
+			") or die($_SESSION['login']['level']>7? "//#error: SQL INSERT Error:". mysql_error() . PHP_EOL : '//#error: Erro ao acessar o banco de dados!'. PHP_EOL);
+			$this->id = mysql_insert_id();
 			
+			if($this->id){
+				print('//#affected rows: 1!'. PHP_EOL);
+				return $this->id;
+			}
 		}
-		public function updateDomains($props = array()){
+		public function updateDomains($id = 0, $props = array()){
+			require_once( SROOT .'engine/classes/Update.php');
 			
+			$this->idDomain = (integer)$id;
+			$field = isset($props['field'])? RegExp($props['field'], '[a-zA-Z_\-]+') . ", ": null;
+			$value = isset($props['value'])? mysql_real_escape_string($props['value']): null;
+			$FieldValue = isset($props['FIeldValue'])? $props['FIeldValue']: null;
+			$format = 'OBJECT';
+			
+			if(!$this->idDomain || $this->idDomain==0){
+				print('//#error: ID do domínio é obrigatório!'. PHP_EOL);
+				die();
+			}
+			if($field === "id_user"){
+				$value = (integer)$value;
+				if(!$value || $value<1){
+					print('//#error: valor para o campo ' . $field . ' não definido!');
+					die();
+				}
+			}
+			if($field === "ftp"){
+				if(!$value){
+					print("//#error: valor para o campo ' . $field . ' não definido!");
+					die();
+				}
+				$value = RegExp($value, '[a-zA-Z@\-\.\_0-9]+');
+			}
+			if($field === "domain"){
+				print("//#error: Esse campo não pode ser alterado!");
+				die();
+			}
+			if($field === "login"){
+				print("//#error: Esse campo não pode ser alterado!");
+				die();
+			}
+			if($field === "pass"){
+				if(!$value){
+					print("//#error: valor para o campo ' . $field . ' não definido!");
+					die();
+				}
+			}
+			if($field === "port"){
+				$value = (integer)$value;
+				if(!$value || $value==0){
+					$value = 21;
+				}
+			}
+			if($field === "scan_frequency"){
+				$value = (integer)$value;
+				if($value || $value==0){
+					$value == 4;
+				}
+			}
+			if($field === "creation"){
+				print("//#error: Esse campo não pode ser alterado!");
+				die();
+			}
+			if($field === "modification"){
+				$value = "NOW()";
+			}
+			$this->args['id'] = $this->idDomain;
+			$this->args['field'] = $field;
+			$this->args['value'] = $value;
+			$this->args['format'] = 'OBJECT';
+			$this->args['privilegeName'] = $this->privilegeName;
+			$this->args['name'] = 'scan_domains';
+			$Update = new Update($this->args);
+			
+			if($Update){
+				print("//#msg: Registro alterado com sucesso!");
+				die();
+			}else{
+				print("//#error: Erro ao alterar registro!");
+				die();
+			}
 		}
-		public function deleteDomains($props = array()){
+		public function deleteDomains($id = 0, $props = array()){
+			if(!$id && $id==0){
+				print('//#error: ID do domínio é obrigatório!'. PHP_EOL);
+				die();
+			}
+			$sqlDelete = "";
+			$this->idDomain = (integer)$id;
+			$this->args['format'] = "OBJECT";
+			$this->args['field']['id'] = "id";
+			$this->args['field']['domain'] = "domain";
+			$this->args['clauseWhere'] = "WHERE id = " . $this->idDomain;
+			$getDomains = $this->getDomains(
+				array(
+					field=>$this->args['field'],
+					clauseWhere => $this->args['clauseWhere']
+				)
+			);
 			
+			
+			return $getDomains['rows'][''];
 		}
 	}
 ?>
