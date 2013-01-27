@@ -1,4 +1,16 @@
 <?php
+    /**
+     * @author: Robson Cândido
+     * @version: 1.0
+     * @package: Esta classe faz parte do sistema R2-CMS
+     * @method: getDomains()
+     * 		Params: $props['field']['@campo']:
+     * 			Dentro da chave @campo pode ser passado o campo no qual se deseja o retorno;
+     * 			Caso o campo desejado não esteja na lista pode-se usar o parâmetro 'others' em @campo;
+     * 			Como essa query faz um JOIN entre as tabelas gt8_scan_domains e gt8_users é necessário utilizar os prefixos:
+     * 				sd.campo para a tabela gt8_scan_domains e u.campo para a tabela gt8_users;
+    **/
+
 	require_once( SROOT ."engine/queries/security/Security.php");
 	require_once( SROOT ."engine/functions/Pager.php");
 	require_once( SROOT ."engine/functions/validDateTime.php");
@@ -16,29 +28,41 @@
 		//#error:
 		//#message:
 		
-		
 		function __construct(){
 			$this->currentDomain = $_SERVER['SERVER_NAME'];
 		}
 		public function getDomains($props = array(full=> "*")){
 			$format = isset($props['format'])? strtoupper($props['format']): "OBJECT";
-			$props['full'] = $props['full'] != null? $props['full']: $props['full'] = "*";
-			$fields = isset($props['field']['id'])? RegExp($props['field']['id'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['id_user'])? RegExp($props['field']['id_user'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['ftp'])? RegExp($props['field']['ftp'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['domain'])? RegExp($props['field']['domain'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['login'])? RegExp($props['field']['login'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['pass'])? RegExp($props['field']['pass'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['port'])? RegExp($props['field']['port'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['scan_frequency'])? RegExp($props['field']['scan_frequency'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['creation'])? RegExp($props['field']['creation'], '[a-zA-Z_\-]+') . ", ": "";
-			$fields .= isset($props['field']['modification'])? RegExp($props['field']['modification'], '[a-zA-Z_\-]+'): "";
-			$fields = count(explode(",", rtrim($fields)))>0 && $fields != ""? substr(rtrim($fields), -1) === ","? substr(rtrim($fields), 0, -1): $fields: $props['full'];
+			$sqlFull = "
+				sd.id AS idDomain, sd.id_user, sd.ftp, sd.domain, sd.login AS domainLogin, sd.pass AS domainPass, sd.port, sd.scan_frequency,
+				sd.creation AS domainCreation, sd.modification AS domainModification,
+				u.id AS idUser, u.natureza, u.name, u.cpfcnpj, u.document, u.genre, u.birth, u.login AS userLogin, u.hlogin AS userhLogin,
+				u.pass AS userPass, u.level, u.enabled, u.approval_level_required, u.creation AS userCreation, u.modification AS userModification,
+				u.last_access, u.access_counter, u.agent, u.sign, u.remarks
+			";
+			$fields = isset($props['field']['id'])? RegExp($props['field']['id'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['id_user'])? RegExp($props['field']['id_user'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['ftp'])? RegExp($props['field']['ftp'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['domain'])? RegExp($props['field']['domain'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['login'])? RegExp($props['field']['login'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['pass'])? RegExp($props['field']['pass'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['port'])? RegExp($props['field']['port'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['scan_frequency'])? RegExp($props['field']['scan_frequency'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['creation'])? RegExp($props['field']['creation'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['modification'])? RegExp($props['field']['modification'], '[a-zA-Z_\-\.\s]+') . ", ": "";
+			$fields .= isset($props['field']['others'])? RegExp($props['field']['others'], '[a-zA-Z_\-\.\s]+'): "";
+			$fields = count(explode(",", rtrim($fields)))>0 && $fields != ""? substr(rtrim($fields), -1) === ","? substr(rtrim($fields), 0, -1): $fields: $sqlFull;
 			$where = "";
 			$limit = isset($props['limit'])? (integer)$props['limit']: 50;
 			$index = isset($props['index'])? (integer)$props['index']: 0;
-			$group = isset($props['group'])? mysql_real_escape_string($props['group']): "";
+			$group = isset($props['group'])? mysql_real_escape_string($props['group']): null;
 			$template = isset($props['template']) && $props['template']? $props['template']: null;
+			
+			if(substr($props['field']['others'], 0, 5) == "COUNT"){
+				if(!isset($group) || !$group){
+					die("//#error: COUNT necessita da cláusula GROUP definida!");
+				}
+			}
 			
 			switch ($format){
 				case 'OBJECT':
@@ -72,7 +96,13 @@
 			
 			$Pager = Pager(array(
 				'select' => $fields,
-				'from' => 'gt8_scan_domains',
+				'from' => '
+					gt8_scan_domains sd
+						INNER JOIN
+							gt8_users u
+								ON
+									u.id = sd.id_user
+				',
 				'where' => $where,
 				'index' => $index,
 				'limit' => $limit,
@@ -129,7 +159,7 @@
 			require_once( SROOT .'engine/classes/Update.php');
 			
 			$this->idDomain = (integer)$id;
-			$field = isset($props['field'])? RegExp($props['field'], '[a-zA-Z_\-]+') . ", ": null;
+			$field = isset($props['field'])? RegExp($props['field'], '[a-zA-Z_\-]+'): null;
 			$value = isset($props['value'])? mysql_real_escape_string($props['value']): null;
 			$FieldValue = isset($props['FIeldValue'])? $props['FIeldValue']: null;
 			$format = 'OBJECT';
@@ -194,7 +224,7 @@
 			$Update = new Update($this->args);
 			
 			if($Update){
-				print("//#msg: Registro alterado com sucesso!");
+				print("//#message: Registro alterado com sucesso!");
 				die();
 			}else{
 				print("//#error: Erro ao alterar registro!");
@@ -202,25 +232,39 @@
 			}
 		}
 		public function deleteDomains($id = 0, $props = array()){
-			if(!$id && $id==0){
+			$id = (integer)$id;
+			if(!$id || $id==0){
 				print('//#error: ID do domínio é obrigatório!'. PHP_EOL);
 				die();
 			}
 			$sqlDelete = "";
 			$this->idDomain = (integer)$id;
 			$this->args['format'] = "OBJECT";
-			$this->args['field']['id'] = "id";
-			$this->args['field']['domain'] = "domain";
-			$this->args['clauseWhere'] = "WHERE id = " . $this->idDomain;
+			$this->args['field']['id'] = "sd.id";
+			$this->args['field']['domain'] = "sd.domain";
+			$this->args['clauseWhere'] = "WHERE sd.id = " . $this->idDomain;
 			$getDomains = $this->getDomains(
 				array(
 					field=>$this->args['field'],
 					clauseWhere => $this->args['clauseWhere']
 				)
 			);
-			
-			
-			return $getDomains['rows'][''];
+			for($i=0; $i<count($getDomains['rows']); $i++){
+				if($getDomains['rows'][$i]['domain'] == $this->currentDomain){
+					print('//#error: Não é permitido excluir seu próprio domínio!!');
+					die();
+				}	
+			}
+			$sqlDelete = "
+				DELETE
+					FROM
+						gt8_scan_domains
+					WHERE
+						id = " . $this->idDomain . "
+			";
+			mysql_query($sqlDelete) or die("//#error: Erro ao excluir o domínio informado!");
+			print("//#message: Domínio excluído com sucesso!");
+			return;
 		}
 	}
 ?>
