@@ -9,7 +9,12 @@
 	class Index extends ScanDomain {
 		public $name	= 'security-scanner/';
 		public $tableType	= null;
-		private $fieldsDefault = array("id", "id_user", "ftp", "domain", "login", "pass", "port", "scan_frequency", "creation", "modification");	//eg: COUNT(modification) AS modif
+		private $fieldsDefault = array(
+			"sd.id AS idDomain", "sd.id_user", "sd.ftp", "sd.domain", "sd.login", "sd.pass", "sd.port", "sd.scan_frequency", "sd.creation", "sd.modification",
+			"u.id AS idUser", "u.natureza", "u.name", "u.cpfcnpj", "u.document", "u.genre", "u.birth", "u.login", "u.hlogin", "u.pass", "u.LEVEL", "u.enabled",
+			"u.approval_level_required", "u.creation", "u.modification", "u.last_access", "u.access_counter", "u.agent", "u.SIGN", "u.remarks",
+			"others"
+		);	//eg: COUNT(modification) AS modif
 		protected $fields = array();
 		protected $values = array();
 		private $idDomain = 0;
@@ -20,6 +25,15 @@
 		protected $limit = "";
 		protected $index = "";
 		protected $group = "";
+		protected $id_user = 0;
+		protected $ftp = null;
+		protected $domain = null;
+		protected $login = null;
+		protected $pass = null;
+		protected $port = 0;
+		protected $scan_frequency = 0;
+		protected $creation = 'NOW()';
+		protected $modification = 'NOW()';
 		
 		function __construct() {
 			parent::__construct();
@@ -53,6 +67,7 @@
 			$this->limit = isset($_GET['limit'])? (integer)($_GET['limit']): 50;
 			$this->index = isset($_GET['index'])? (integer)($_GET['index']): 0;
 			$this->group = isset($_GET['group'])? mysql_real_escape_string($_GET['group']): "";
+			$this->idDomain = isset($_GET['idDomain'])? (integer)$_GET['idDomain']: 0;
 			
 			//$this->getScanDomain();
 			//$this->addScanDomain();
@@ -78,8 +93,6 @@
 			);
 			
 			$this->data['domains'] = $getDomains['rows'];
-			//print_r($this->data['domains']);
-			//die('admin/security/scanner/Index.php');
 			return $this->data['domains'];
 		}
 		
@@ -87,15 +100,15 @@
 			print(
 				$this->addDomains(
 					array(
-						id_user=>1,
-						ftp=>"ftp.r2cms.com.br",
-						domain=>"www.r2cms.com.br",
-						login=>"master",
-						pass=>"123456",
-						port=>21,
-						scan_frequency=>4,
-						creation=>"NOW()",
-						modification=>"NOW()"
+						id_user=>$this->id_user,
+						ftp=>$this->ftp,
+						domain=>$this->domain,
+						login=>$this->login,
+						pass=>$this->pass,
+						port=>$this->port,
+						scan_frequency=>$this->scan_frequency,
+						creation=>$this->creation,
+						modification=>$this->modification
 					)
 				)
 			);
@@ -106,12 +119,10 @@
 			$this->args['field'] = $this->fields;
 			$this->args['value'] = $this->values;
 			$this->args['format'] = $this->format;
-			
 			$this->updateDomains($this->idDomain, $this->args);
 		}
 		public function deleteScanDomains(){
-			print_r($this->deleteDomains(array()));
-			die('Index');
+			$this->deleteDomains($this->idDomain, array());
 		}
 		public function on404() {
 			if ( !$this->id ) {
