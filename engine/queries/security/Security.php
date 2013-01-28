@@ -7,14 +7,13 @@
 	interface IScanDomain{
 		public function getDomains($props = array());
 		public function addDomains($props = array());
-		public function updateDomains($props = array());
-		public function deleteDomains($props = array());
+		public function updateDomains($id = 0, $props = array());
+		public function deleteDomains($id = 0, $props = array());
 	}
 	interface IScanFilesDomain{
-		public function addUser($props = array());
-		public function updateUser($props = array());
-		public function getUser($props = array());
-		public function deleteUser($idUser);
-		public function setProfile($idUser);
+		public function getFilesDomains($props = array());
+		public function addFilesDomains($props = array());
+		public function updateFilesDomains($id = 0, $props = array());
+		public function deleteFilesDomains($id = 0, $props = array());
 	}	
 ?>
