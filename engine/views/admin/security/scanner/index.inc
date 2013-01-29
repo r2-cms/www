@@ -23,12 +23,12 @@
 			<div class="cards-container clearfix-child row-12 fluid-12" >
 				{{METHOD:getScanDomains}}
 				<a href="{{domain}}/" class="card grid-3 box-shadow border-radius" >
-					<span class="block" >{{id}}</span>
+					<span class="block" >{{idDomain}}</span>
 					<span class="block" >{{id_user}}</span>
 					<span class="block" >{{ftp}}</span>
 					<span class="block" >{{domain}}</span>
 					<span class="block" >{{login}}</span>
-					<span class="block" >{{pass}}</span>
+					<span class="block" >{{userPass}}</span>
 					<span class="block" >{{port}}</span>
 					<span class="block" >{{scan_frequency}}</span>
 					<span class="block" >//creation\\</span>
