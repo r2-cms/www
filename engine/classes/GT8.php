@@ -8,6 +8,7 @@
 		public $data	= array();
 		public $jsVars	= array();
 		public $isAdmin	= false;
+		public $name;
 		public function GT8() {
 			//GT8::canonizeUrl();
 			
@@ -1042,6 +1043,29 @@
 			if ( $format == 'OBJECT' && $prv < $min) {
 				$this->redirect('forbidden');
 			}
+		}
+		public function getType( $field) {
+			//type
+			$result	= mysql_query('
+				DESCRIBE `gt8_'. $this->name .'`
+			') or die('Table not found!');
+			
+			$Field	= array();
+			while( $row = mysql_fetch_assoc($result)) {
+				$Field[]	= $row;
+			}
+			$fieldFound	= false;
+			for ($i=0; $i<count($Field); $i++) {
+				if ( $Field[$i]['Field'] == $field ) {
+					$Field	= $Field[$i];
+					$fieldFound	= true;
+					break;
+				}
+			}
+			if ( !$fieldFound) {
+				$Field	= null;
+			}
+			return $Field;
 		}
 	}
 ?>
