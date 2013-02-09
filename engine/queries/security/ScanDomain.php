@@ -4,11 +4,11 @@
      * @version: 1.0
      * @package: Esta classe faz parte do sistema R2-CMS
      * @method: getDomains()
-     * 		Params: $props['field']['@campo']:
-     * 			Dentro da chave @campo pode ser passado o campo no qual se deseja o retorno;
-     * 			Caso o campo desejado não esteja na lista pode-se usar o parâmetro 'others' em @campo;
+     * 		Params: $props['field']
+     * 			Nesta chave os campos devem ser passados por vírgula;
      * 			Como essa query faz um JOIN entre as tabelas gt8_scan_domains e gt8_users é necessário utilizar os prefixos:
      * 				sd.campo para a tabela gt8_scan_domains e u.campo para a tabela gt8_users;
+     * 				Caso o parâmetro $props['field'] venha indefinido a propriedade $sqlFull será passada como padrão
     **/
 
 	require_once( SROOT ."engine/queries/security/Security.php");
@@ -20,6 +20,13 @@
 		private $args = array();
 		private $currentDomain = "";
 		public $privilegeName	= 'security/scanner/';
+		protected $sqlFull = "
+			sd.id AS idDomain, sd.id_user, sd.ftp, sd.domain, sd.login AS domainLogin, sd.pass AS domainPass, sd.port, sd.scan_frequency,
+			sd.creation AS domainCreation, sd.modification AS domainModification,
+			u.id AS idUser, u.natureza, u.name, u.cpfcnpj, u.document, u.genre, u.birth, u.login AS userLogin, u.hlogin AS userhLogin,
+			u.pass AS userPass, u.level, u.enabled, u.approval_level_required, u.creation AS userCreation, u.modification AS userModification,
+			u.last_access, u.access_counter, u.agent, u.sign, u.remarks
+		";
 		
 		//Params para ajax:
 		//#message: Campo atualizado com sucesso!
@@ -30,40 +37,81 @@
 		
 		function __construct(){
 			$this->currentDomain = $_SERVER['SERVER_NAME'];
+			$this->name = 'scan_domains';
 		}
-		public function getDomains($props = array(full=> "*")){
+		public function getDomains($props = array()){
 			$format = isset($props['format'])? strtoupper($props['format']): "OBJECT";
-			$sqlFull = "
-				sd.id AS idDomain, sd.id_user, sd.ftp, sd.domain, sd.login AS domainLogin, sd.pass AS domainPass, sd.port, sd.scan_frequency,
-				sd.creation AS domainCreation, sd.modification AS domainModification,
-				u.id AS idUser, u.natureza, u.name, u.cpfcnpj, u.document, u.genre, u.birth, u.login AS userLogin, u.hlogin AS userhLogin,
-				u.pass AS userPass, u.level, u.enabled, u.approval_level_required, u.creation AS userCreation, u.modification AS userModification,
-				u.last_access, u.access_counter, u.agent, u.sign, u.remarks
-			";
-			$fields = isset($props['field']['id'])? RegExp($props['field']['id'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['id_user'])? RegExp($props['field']['id_user'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['ftp'])? RegExp($props['field']['ftp'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['domain'])? RegExp($props['field']['domain'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['login'])? RegExp($props['field']['login'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['pass'])? RegExp($props['field']['pass'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['port'])? RegExp($props['field']['port'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['scan_frequency'])? RegExp($props['field']['scan_frequency'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['creation'])? RegExp($props['field']['creation'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['modification'])? RegExp($props['field']['modification'], '[a-zA-Z_\-\.\s]+') . ", ": "";
-			$fields .= isset($props['field']['others'])? RegExp($props['field']['others'], '[a-zA-Z_\-\.\s]+'): "";
-			$fields = count(explode(",", rtrim($fields)))>0 && $fields != ""? substr(rtrim($fields), -1) === ","? substr(rtrim($fields), 0, -1): $fields: $sqlFull;
+			$field = isset($props['fields']) && $props['fields']? $props['fields']: $this->sqlFull;
+			$fields = null;
 			$where = "";
 			$limit = isset($props['limit'])? (integer)$props['limit']: 50;
 			$index = isset($props['index'])? (integer)$props['index']: 0;
 			$group = isset($props['group'])? mysql_real_escape_string($props['group']): null;
 			$template = isset($props['template']) && $props['template']? $props['template']: null;
 			
-			if(substr($props['field']['others'], 0, 5) == "COUNT"){
-				if(!isset($group) || !$group){
-					die("//#error: COUNT necessita da cláusula GROUP definida!");
+			if(count(explode(",", $field))> 0){
+				$field = explode(",", $field);
+				$position = 0;
+				$length = 0;
+				$Field = null;
+				$table = null;
+				$alias = null;
+				
+				for($i=0; $i<count($field); $i++){
+					$field[$i] = ltrim($field[$i]);
+					
+					//$this->validField($field, $table, $alias);
+					
+					if(substr($field[$i], 0, 6) == "COUNT("){
+						if(!isset($group) || !$group){
+							die("//#error: COUNT necessita da cláusula GROUP definida!");
+						}
+						if(substr($field[$i], 6, 3) == "sd."){
+							$this->name = 'scan_domains';
+							$position = 9;
+							$length = strpos(substr($field[$i], $position), ")");
+						}elseif(substr($field[$i], 6, 2) == "u."){
+							$this->name = 'users';
+							$position = 8;
+							$length = strpos(substr($field[$i], $position), ")");
+						}else{
+							$position = 6;
+							$length = strpos(substr($field[$i], $position), ")");
+						}
+					}
+					
+					if(substr($field[$i], 0, 3) == "sd."){
+						$this->name = 'scan_domains';
+						$position = 3;
+						
+						if(strpos(substr($field[$i], $position), " ")){
+							$length = strpos(substr($field[$i], $position), " ");
+						}elseif(strpos(substr($field[$i], $position), ",")){
+							$length = strpos(substr($field[$i], $position), ",");
+						}else{
+							$length = strpos(substr($field[$i], $position), substr($field[$i], -1)) + 1;
+						}
+					}
+					if(substr($field[$i], 0, 2) == "u."){
+						$this->name = 'users';
+						$position = 2;
+						if(strpos(substr($field[$i], $position), " ")){
+							$length = strpos(substr($field[$i], $position), " ");
+						}elseif(strpos(substr($field[$i], $position), ",")){
+							$length = strpos(substr($field[$i], $position), ",");
+						}else{
+							$length = strpos(substr($field[$i], $position), substr($field[$i], -1)) + 1;
+						}
+					}
+					if(!$this->getType(RegExp(substr($field[$i], $position, $length),  '[a-zA-Z0-9_\-\.\s]+'))){
+						print("//#error: Campo " . strtoupper(substr($field[$i], $position, $length)) . " não encontrado em " . $this->name .  "!");
+						die();
+					}
+					$fields .= $field[$i] . ",";
 				}
+				$fields = substr(rtrim($fields), -1) === ","? substr(rtrim($fields), 0, -1): $fields;
 			}
-			
+			die(PHP_EOL . 'Stop Debug!');
 			switch ($format){
 				case 'OBJECT':
 					$format = "OBJECT";
@@ -114,14 +162,14 @@
 		}
 		public function addDomains($props = array()){
 			$id_user = isset($props['id_user'])? (integer)$props['id_user']: 0;
-			$ftp = isset($props['ftp'])? mysql_real_escape_string($props['ftp']): null;
-			$domain = isset($props['domain'])? mysql_real_escape_string($props['domain']): null;
+			$ftp = isset($props['ftp'])? RegExp($props['ftp'], '[a-zA-Z_\-\.]+'): null;
+			$domain = isset($props['domain'])? RegExp($props['domain'], '[a-zA-Z_\-\.]+'): null;
 			$login = isset($props['login'])? mysql_real_escape_string($props['login']): null;
 			$pass = isset($props['pass'])? mysql_real_escape_string($props['pass']): null;
 			$port = isset($props['port'])? (integer)$props['port']: 0;
 			$scan_frequency = isset($props['scan_frequency'])? (integer)$props['scan_frequency']: 0;
-			$creation = isset($props['creation'])? $props['creation']=="NOW()"? "NOW()": validDateTime("datetime", $props['creation']): "NOW()";
-			$modification = "NOW()";
+			$creation = isset($props['creation'])? validDateTime("datetime", $props['creation'])? $props['creation']: date("Y-m-d H:i:s"): date("Y-m-d H:i:s");
+			$modification = date("Y-m-d H:i:s");
 			$sqlInsert = "";
 			
 			$sqlInsert = mysql_query("
@@ -161,7 +209,7 @@
 			$this->idDomain = (integer)$id;
 			$field = isset($props['field'])? RegExp($props['field'], '[a-zA-Z_\-]+'): null;
 			$value = isset($props['value'])? mysql_real_escape_string($props['value']): null;
-			$FieldValue = isset($props['FIeldValue'])? $props['FIeldValue']: null;
+			$FieldValue = isset($props['FieldValue'])? $props['FieldValue']: null;
 			$format = 'OBJECT';
 			
 			if(!$this->idDomain || $this->idDomain==0){
@@ -213,7 +261,7 @@
 				die();
 			}
 			if($field === "modification"){
-				$value = "NOW()";
+				$value = date("Y-m-d H:i:s");
 			}
 			$this->args['id'] = $this->idDomain;
 			$this->args['field'] = $field;
@@ -238,7 +286,7 @@
 				die();
 			}
 			$sqlDelete = "";
-			$this->idDomain = (integer)$id;
+			$this->idDomain = $id;
 			$this->args['format'] = "OBJECT";
 			$this->args['field']['id'] = "sd.id";
 			$this->args['field']['domain'] = "sd.domain";
