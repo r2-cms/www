@@ -1046,6 +1046,7 @@
 		}
 		public function getType( $field) {
 			//type
+			$field = trim($field);
 			$result	= mysql_query('
 				DESCRIBE `gt8_'. $this->name .'`
 			') or die('Table not found!');
