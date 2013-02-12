@@ -22,7 +22,7 @@
 					if(substr($field[$i], 0, 6) == "COUNT("){
 						$position = 6 + strlen(RegExp($alias, '[a-zA-Z0-9]+'))+1;
 						$length = strpos(substr($field[$i], $position), ")");
-						//Conforme a necessidade pode-se adicionar mais condicionais para encontrar campos dentro de funções do mysql
+					//elseif(Conforme a necessidade pode-se adicionar mais condicionais para encontrar campos dentro de funções do mysql)
 					}else{
 						$position = strlen(RegExp($alias, '[a-zA-Z0-9]+'))+1;
 						if(strpos(substr($field[$i], $position), " ")){
@@ -30,9 +30,10 @@
 						}elseif(strpos(substr($field[$i], $position), ",")){
 							$length = strpos(substr($field[$i], $position), ",");
 						}else{
-							$length = strpos(substr($field[$i], $position), substr($field[$i], -1)) + 1;
+							$length = strrpos(substr($field[$i], $position), substr($field[$i], -1)) + 1;
 						}
 					}
+					
 					$Field = $this->getType(RegExp(substr($field[$i], $position, $length),  '[a-zA-Z0-9_\-\.\s]+'));
 					if(!$Field){
 						print("//#error: Campo " . strtoupper(substr($field[$i], $position, $length)) . " não encontrado em " . $this->name .  "!");
