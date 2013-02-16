@@ -1,4 +1,25 @@
 <?php
+	/**
+	 * @author: Robson Cândido
+     * @version: 1.0
+     * @package: Esta classe faz parte do sistema R2-CMS
+     * @method: updateScanDomain()
+     * 		@param: Esse método assim como  diversos outros dessa calsse não recebe parâmetro porém antes de ser chamado é obrigatório ser
+     * 			definido valores às seguintes propriedades:
+     * 				@property: idDomain (integer)
+     * 				@property: fields (string)
+     * 				@property: values (n valores de acordo com o campo (field) informado)
+     * 				@property: format (Formato de retorno [OBJECT,TABLE,CARD,JSON,GRID,TEMPLATE])
+     *
+     * 	@method: updateScanFilesDomain()
+	 *		@param:Esse método assim como  diversos outros dessa calsse não recebe parâmetro porém antes de ser chamado é obrigatório ser
+     * 			definido valores às seguintes propriedades:
+     * 				@property: idFileDomain (integer)
+     * 				@property: fields (string)
+     * 				@property: values (n valores de acordo com o campo (field) informado)
+	 *				@property: format (Formato de retorno [OBJECT,TABLE,CARD,JSON,GRID,TEMPLATE])
+	**/
+	
 	if ( !defined('CROOT')) {
 		die('Undefined GT8: a1i32->a114e00->e1i1o4->Home');
 	}
@@ -41,7 +62,6 @@
 		function __construct() {
 			parent::__construct();
 			global $GT8;
-			
 			$this->checkActionRequest();
 			$this->checkReadPrivileges();
 			$this->fields = isset($_GET['fields']) && $_GET['fields']? $_GET['fields']: null;
@@ -77,7 +97,7 @@
 			$this->creation = date('Y-m-d H:i:s');
 			$this->modification = date('Y-m-d H:i:s');
 		}
-		public function getScanDomains($template){
+		public function getScanDomains($template=null){
 			//&action=new-domain&value=elefante.com.br
 			
 			$getDomains = $this->getDomains(
@@ -119,12 +139,12 @@
 			$this->args['field'] = $this->fields;
 			$this->args['value'] = $this->values;
 			$this->args['format'] = $this->format;
-			$this->updateDomains($this->idDomain, $this->args);
+			$this->updateDomains($this->id_domain, $this->args);
 		}
 		public function deleteScanDomains(){
 			$this->deleteDomains($this->idDomain, array());
 		}
-		public function getScanFilesDomains($template){
+		public function getScanFilesDomains($template=null){
 			$getFilesDomains = $this->getFilesDomains(
 				array(
 					fields=>$this->fields,
@@ -161,11 +181,11 @@
 			die();
 		}
 		public function updateScanFilesDomain(){
-			$this->id_domain = $this->idDomain;
+			$this->id_file_domain = $this->idFileDomain;
 			$this->args['field'] = $this->fields;
 			$this->args['value'] = $this->values;
 			$this->args['format'] = $this->format;
-			$this->updateDomains($this->id_domain, $this->args);
+			$this->updateFilesDomains($this->id_file_domain, $this->args);
 		}
 		public function deleteScanFilesDomain(){
 			$this->deleteFilesDomains($this->idFileDomain, array());
