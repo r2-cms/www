@@ -4,11 +4,13 @@
      * @version: 1.0
      * @package: Esta classe faz parte do sistema R2-CMS
      * @method: getDomains()
-     * 		Params: $props['field']
-     * 			Nesta chave os campos devem ser passados por vírgula;
-     * 			Como essa query faz um JOIN entre as tabelas gt8_scan_domains e gt8_users é necessário utilizar os prefixos:
-     * 				sd.campo para a tabela gt8_scan_domains e u.campo para a tabela gt8_users;
-     * 				Caso o parâmetro $props['field'] venha indefinido a propriedade $sqlFull será passada como padrão
+     * 		Params:
+     * 			- $props['field']
+     * 				Nesta chave os campos devem ser passados separados por vírgula;
+     * 				Como essa query faz um JOIN entre as tabelas gt8_scan_domains e gt8_users é necessário utilizar os alias:
+	 * 					gt8_scan_domains = sd;
+     * 					gt8_users = u;
+     * 				Caso o parâmetro $props['field'] venha indefinido a propriedade $sqlFull será passada como padrão;
     **/
 
 	require_once( SROOT ."engine/queries/security/Security.php");
@@ -16,11 +18,11 @@
 	require_once( SROOT ."engine/functions/validDateTime.php");
 	
 	class ScanDomain extends Security implements IScanDomain{
-		private $idDomain = 0;
+		private $id_domain = 0;
 		private $args = array();
 		private $currentDomain = "";
 		public $privilegeName	= 'security/scanner/';
-		protected $sqlFull = "
+		private $sqlFull = "
 			sd.id AS idDomain, sd.id_user, sd.ftp, sd.domain, sd.login AS domainLogin, sd.pass AS domainPass, sd.port, sd.scan_frequency,
 			sd.creation AS domainCreation, sd.modification AS domainModification,
 			u.id AS idUser, u.natureza, u.name, u.cpfcnpj, u.document, u.genre, u.birth, u.login AS userLogin, u.hlogin AS userhLogin,
@@ -28,19 +30,11 @@
 			u.last_access, u.access_counter, u.agent, u.sign, u.remarks
 		";
 		
-		//Params para ajax:
-		//#message: Campo atualizado com sucesso!
-		//#affected rows: 1
-		//#affected
-		//#error:
-		//#message:
-		
 		function __construct(){
 			$this->currentDomain = $_SERVER['SERVER_NAME'];
-			$this->name = 'scan_domains';
 		}
 		public function getDomains($props = array()){
-			$format = isset($props['format'])? strtoupper($props['format']): "OBJECT";
+			$format = in_array($props['format'], explode(',', 'OBJECT,TABLE,CARD,JSON,GRID,TEMPLATE'))? $props['format']: 'OBJECT';
 			$field = isset($props['fields']) && $props['fields']? $props['fields']: $this->sqlFull;
 			$fields = null;
 			$where = "";
@@ -60,79 +54,37 @@
 				for($i=0; $i<count($field); $i++){
 					$field[$i] = ltrim($field[$i]);
 					
-					//$this->validField($field, $table, $alias);
-					
 					if(substr($field[$i], 0, 6) == "COUNT("){
 						if(!isset($group) || !$group){
 							die("//#error: COUNT necessita da cláusula GROUP definida!");
 						}
 						if(substr($field[$i], 6, 3) == "sd."){
-							$this->name = 'scan_domains';
-							$position = 9;
-							$length = strpos(substr($field[$i], $position), ")");
+							$table = "scan_domains";
+							$alias = "sd";
 						}elseif(substr($field[$i], 6, 2) == "u."){
-							$this->name = 'users';
-							$position = 8;
-							$length = strpos(substr($field[$i], $position), ")");
+							$table = 'users';
+							$alias = "u";
 						}else{
-							$position = 6;
-							$length = strpos(substr($field[$i], $position), ")");
+							$table = "scan_domains";
+							$alias = "sd";
 						}
 					}
-					
 					if(substr($field[$i], 0, 3) == "sd."){
-						$this->name = 'scan_domains';
-						$position = 3;
-						
-						if(strpos(substr($field[$i], $position), " ")){
-							$length = strpos(substr($field[$i], $position), " ");
-						}elseif(strpos(substr($field[$i], $position), ",")){
-							$length = strpos(substr($field[$i], $position), ",");
-						}else{
-							$length = strpos(substr($field[$i], $position), substr($field[$i], -1)) + 1;
-						}
+						$table = "scan_domains";
+						$alias = "sd";
 					}
 					if(substr($field[$i], 0, 2) == "u."){
-						$this->name = 'users';
-						$position = 2;
-						if(strpos(substr($field[$i], $position), " ")){
-							$length = strpos(substr($field[$i], $position), " ");
-						}elseif(strpos(substr($field[$i], $position), ",")){
-							$length = strpos(substr($field[$i], $position), ",");
-						}else{
-							$length = strpos(substr($field[$i], $position), substr($field[$i], -1)) + 1;
-						}
+						$table = "users";
+						$alias = "u";
 					}
-					if(!$this->getType(RegExp(substr($field[$i], $position, $length),  '[a-zA-Z0-9_\-\.\s]+'))){
-						print("//#error: Campo " . strtoupper(substr($field[$i], $position, $length)) . " não encontrado em " . $this->name .  "!");
+					if($this->validField($field[$i], $table, $alias)){
+						$fields .= $field[$i] . ",";
+					}else{
+						print("<br />" . __FUNCTION__ . PHP_EOL . 'say: Stop Debug!');
 						die();
 					}
-					$fields .= $field[$i] . ",";
 				}
 				$fields = substr(rtrim($fields), -1) === ","? substr(rtrim($fields), 0, -1): $fields;
-			}
-			die(PHP_EOL . 'Stop Debug!');
-			switch ($format){
-				case 'OBJECT':
-					$format = "OBJECT";
-					break;
-				case 'TABLE':
-					$format = "TABLE";
-					break;
-				case 'CARD':
-					$format = "CARD";
-					break;
-				case 'JSON':
-					$format = "JSON";
-					break;
-				case 'GRID':
-					$format = "GRID";
-					break;
-				case 'TEMPLATE':
-					$format = "TEMPLATE";
-					break;
-				default:
-					$format = "OBJECT";
 			}
 			
 			if(isset($props['clauseWhere'])){
@@ -196,23 +148,23 @@
 						'$modification'
 					)
 			") or die($_SESSION['login']['level']>7? "//#error: SQL INSERT Error:". mysql_error() . PHP_EOL : '//#error: Erro ao acessar o banco de dados!'. PHP_EOL);
-			$this->id = mysql_insert_id();
+			$id = mysql_insert_id();
 			
-			if($this->id){
-				print('//#affected rows: 1!'. PHP_EOL);
-				return $this->id;
+			if($id){
+				print('//#affected rows: '. mysql_affected_rows() . PHP_EOL);
+				return $id;
 			}
 		}
 		public function updateDomains($id = 0, $props = array()){
 			require_once( SROOT .'engine/classes/Update.php');
 			
-			$this->idDomain = (integer)$id;
+			$this->id_domain = (integer)$id;
 			$field = isset($props['field'])? RegExp($props['field'], '[a-zA-Z_\-]+'): null;
 			$value = isset($props['value'])? mysql_real_escape_string($props['value']): null;
 			$FieldValue = isset($props['FieldValue'])? $props['FieldValue']: null;
-			$format = 'OBJECT';
+			$format = in_array($props['format'], explode(',', 'OBJECT,TABLE,CARD,JSON,GRID'))? $props['format']: 'OBJECT';
 			
-			if(!$this->idDomain || $this->idDomain==0){
+			if(!$this->id_domain || $this->id_domain==0){
 				print('//#error: ID do domínio é obrigatório!'. PHP_EOL);
 				die();
 			}
@@ -263,7 +215,7 @@
 			if($field === "modification"){
 				$value = date("Y-m-d H:i:s");
 			}
-			$this->args['id'] = $this->idDomain;
+			$this->args['id'] = $this->id_domain;
 			$this->args['field'] = $field;
 			$this->args['value'] = $value;
 			$this->args['format'] = 'OBJECT';
@@ -281,19 +233,20 @@
 		}
 		public function deleteDomains($id = 0, $props = array()){
 			$id = (integer)$id;
+			$format = in_array($props['format'], explode(',', 'OBJECT,TABLE,CARD,JSON,GRID'))? $props['format']: 'OBJECT';
+			
 			if(!$id || $id==0){
 				print('//#error: ID do domínio é obrigatório!'. PHP_EOL);
 				die();
 			}
 			$sqlDelete = "";
-			$this->idDomain = $id;
-			$this->args['format'] = "OBJECT";
-			$this->args['field']['id'] = "sd.id";
-			$this->args['field']['domain'] = "sd.domain";
-			$this->args['clauseWhere'] = "WHERE sd.id = " . $this->idDomain;
+			$this->id_domain = $id;
+			$this->args['format'] = $format;
+			$this->args['fields'] = "sd.id, sd.domain";
+			$this->args['clauseWhere'] = "WHERE sd.id = " . $this->id_domain;
 			$getDomains = $this->getDomains(
 				array(
-					field=>$this->args['field'],
+					fields=>$this->args['fields'],
 					clauseWhere => $this->args['clauseWhere']
 				)
 			);
@@ -303,16 +256,24 @@
 					die();
 				}	
 			}
-			$sqlDelete = "
+			$sqlDeleteDomain = "
 				DELETE
 					FROM
 						gt8_scan_domains
 					WHERE
-						id = " . $this->idDomain . "
+						id = " . $this->id_domain . "
 			";
-			mysql_query($sqlDelete) or die("//#error: Erro ao excluir o domínio informado!");
+			$sqlDeleteFilesDomain = "
+				DELETE
+					FROM
+						gt8_scan_files
+					WHERE
+						id_scan_domain = " . $this->id_domain . "
+			";
+			mysql_query($sqlDeleteDomain) or die("//#error: Erro ao excluir o domínio informado!");
+			mysql_query($sqlDeleteFilesDomain) or die("//#error: Erro ao excluir os arquivos do domínio!");
 			print("//#message: Domínio excluído com sucesso!");
-			return;
+			return true;
 		}
 	}
 ?>
