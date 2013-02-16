@@ -4,13 +4,20 @@
      * @version: 1.0
      * @package: Esta classe faz parte do sistema R2-CMS
      * @method: getDomains()
-     * 		Params:
+     * 		@Paramss:
      * 			- $props['field']
      * 				Nesta chave os campos devem ser passados separados por vírgula;
      * 				Como essa query faz um JOIN entre as tabelas gt8_scan_domains e gt8_users é necessário utilizar os alias:
 	 * 					gt8_scan_domains = sd;
      * 					gt8_users = u;
      * 				Caso o parâmetro $props['field'] venha indefinido a propriedade $sqlFull será passada como padrão;
+     *
+     * 	@method: updateDomains()
+     * 		@params:
+     * 			- $id (id do domínio à ser atualizado)
+     * 			- $field (campo a ser atualizado)
+     * 			- $value (valor de field. Valor do campo a ser atualizado)
+     * 			- $format (formato de retorno [OBJECT,TABLE,CARD,JSON,GRID,TEMPLATE])
     **/
 
 	require_once( SROOT ."engine/queries/security/Security.php");
@@ -209,8 +216,8 @@
 				}
 			}
 			if($field === "creation"){
-				print("//#error: Esse campo não pode ser alterado!");
-				die();
+				//print("//#error: Esse campo não pode ser alterado!");
+				//die();
 			}
 			if($field === "modification"){
 				$value = date("Y-m-d H:i:s");
