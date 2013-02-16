@@ -1,5 +1,6 @@
 <?php
     /**
+	 *
      * @author: Robson Cândido
      * @version: 1.0
      * @package: Esta classe faz parte do sistema R2-CMS
