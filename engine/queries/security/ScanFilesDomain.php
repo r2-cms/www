@@ -1,11 +1,34 @@
 <?php
+	/**
+	 * @name: ScanFilesDomain
+	 * @author: Robson Cândido
+	 * @version: 1.0
+	 * @package: Esta classe faz parte do sistema R2-CMS
+	 * @method: getFilesDomains()
+	 * 		@Paramss:
+	 * 			- $props['field']
+	 * 				Nesta chave os campos devem ser passados separados por vírgula;
+	 * 				Como essa query faz um JOIN tamnto com a tabela gt8_scan_domains quanto com a gt8_users é necessário utilizar os alias:
+	 * 					gt8_scan_files = sf;
+	 * 					gt8_scan_domains = sd;
+	 * 					gt8_users = u;
+	 * 				Caso o parâmetro $props['field'] venha indefinido a propriedade $sqlFull será passada como padrão;
+	 *
+	 * 	@method: updateFilesDomains()
+	 * 		@params:
+	 * 			- $id (id do arquivo à ser atualizado)
+	 * 			- $field (campo a ser atualizado)
+	 * 			- $value (valor de field. Valor do campo a ser atualizado)
+	 * 			- $format (formato de retorno [OBJECT,TABLE,CARD,JSON,GRID,TEMPLATE])
+    **/
+
 	require_once( SROOT ."engine/queries/security/ScanDomain.php");
 	require_once( SROOT ."engine/functions/Pager.php");
 	require_once( SROOT ."engine/functions/validDateTime.php");
 	
 	class ScanFilesDomain extends ScanDomain implements IScanFilesDomain{
 		private $id_domain = 0;
-		private $idFileDomain = 0;
+		private $id_file_domain = 0;
 		private $currentDomain = "";
 		private $args = array();
 		public $privilegeName = 'security/scanner/';
@@ -166,12 +189,12 @@
 			//Melhorias:
 			//	Atualizar mais de um campo de uma vez
 			
-			$this->idFileDomain = (integer)$id;
+			$this->id_file_domain = (integer)$id;
 			$field = isset($props['field'])? RegExp($props['field'], '[a-zA-Z_\-]+'): null;
 			$value = isset($props['value'])? mysql_real_escape_string($props['value']): null;
 			$format = in_array($props['format'], explode(',', 'OBJECT,TABLE,CARD,JSON,GRID'))? $props['format']: 'OBJECT';
 			
-			if(!isset($this->idFileDomain) || !$this->idFileDomain || $this->idFileDomain < 1){
+			if(!isset($this->id_file_domain) || !$this->id_file_domain || $this->id_file_domain < 1){
 				print('//#error: ID do arquivo é obrigatório!'. PHP_EOL);
 				die();
 			}
@@ -203,7 +226,7 @@
 				die();
 			}
 			
-			$this->args['id'] = $this->idFileDomain;
+			$this->args['id'] = $this->id_file_domain;
 			$this->args['field'] = $field;
 			$this->args['value'] = $value;
 			$this->args['format'] = $format;
@@ -228,10 +251,10 @@
 				die();
 			}
 			$sqlDelete = "";
-			$this->idFileDomain = $id;
+			$this->id_file_domain = $id;
 			$this->args['format'] = $format;
 			$this->args['field'] = "sf.id, sf.filename, sd.domain";
-			$this->args['clauseWhere'] = "WHERE sf.id = " . $this->idFileDomain;
+			$this->args['clauseWhere'] = "WHERE sf.id = " . $this->id_file_domain;
 			$getFilesDomains = $this->getFilesDomains(
 				array(
 					field=>$this->args['field'],
@@ -249,7 +272,7 @@
 					FROM
 						gt8_scan_files
 					WHERE
-						id = " . $this->idFileDomain . "
+						id = " . $this->id_file_domain . "
 			";
 			mysql_query($sqlDelete) or die("//#error: Erro ao excluir o arquivo informado!");
 			print("//#message: Arquivo excluído com sucesso!");
