@@ -1,26 +1,26 @@
 <?php
-	require_once( SROOT ."engine/queries/security/Security.php");
+	require_once( SROOT ."engine/queries/security/ScanDomain.php");
 	require_once( SROOT ."engine/functions/Pager.php");
 	require_once( SROOT ."engine/functions/validDateTime.php");
 	
-	class ScanFilesDomain extends Security implements IScanFilesDomain{
-		private $idDomain = 0;
+	class ScanFilesDomain extends ScanDomain implements IScanFilesDomain{
+		private $id_domain = 0;
 		private $idFileDomain = 0;
 		private $currentDomain = "";
 		private $args = array();
 		public $privilegeName = 'security/scanner/';
-		protected $sqlFull = "
-			sf.id AS idFilesDomain, sf.id_scan_domain, sf.filename, sf.type, sf.status, sf.size, sf.version, sf.location, sf.function, sf.description,
+		private $sqlFull = "
+			sf.id AS idFilesDomain, sf.id_scan_domain, sf.filename, sf.type, sf.status, sf.size, sf.version, sf.location, sf.functionality, sf.description,
 			sf.creation AS creationFilesDomain, sf.modification AS modifFIleDomain, sd.id AS idDomain, sd.id_user, sd.ftp, sd.domain, sd.login, sd.pass,
 			sd.port, sd.scan_frequency, sd.creation AS creationDomain, sd.modification AS modifDomain, u.name AS userName"
 		;
-		public $sttsDefault = 0; //Obs.: Sé esse valor for = 0, é necessário o quanto antes definí-lo com um valor >0 de acordo com o Banco	
+		public $sttsDefault = 0; //Obs.: Sé esse valor for = 0, é necessário o quanto antes definí-lo com um valor >0 de acordo com o Banco
+		
 		public function __construct(){
 			$this->currentDomain = $_SERVER['SERVER_NAME'];
-			$this->name = 'scan_files';
 		}
 		public function getFilesDomains($props = array()){
-			$format = isset($props['format'])? strtoupper($props['format']): "OBJECT";
+			$format = in_array($props['format'], explode(',', 'OBJECT,TABLE,CARD,JSON,GRID'))? $props['format']: 'OBJECT';
 			$field = isset($props['fields']) && $props['fields']? $props['fields']: $this->sqlFull;
 			$fields = null;
 			$where = "";
@@ -31,38 +31,54 @@
 			
 			if(count(explode(",", $field))> 0){
 				$field = explode(",", $field);
-				if(substr($field, 0, 6) == "COUNT("){
-					if(!isset($group) || !$group){
-						die("//#error: COUNT necessita da cláusula GROUP definida!");
+				$position = 0;
+				$length = 0;
+				$Field = null;
+				$table = null;
+				$alias = null;
+				
+				for($i=0; $i<count($field); $i++){
+					$field[$i] = ltrim($field[$i]);
+					
+					if(substr($field[$i], 0, 6) == "COUNT("){
+						if(!isset($group) || !$group){
+							die("//#error: COUNT necessita da cláusula GROUP definida!");
+						}
+						if(substr($field[$i], 6, 3) == "sf."){
+							$table = "scan_files";
+							$alias = "sf";
+						}elseif(substr($field[$i], 6, 3) == "sd."){
+							$table = "scan_domains";
+							$alias = "sd";
+						}elseif(substr($field[$i], 6, 2) == "u."){
+							$table = 'users';
+							$alias = "u";
+						}else{
+							$table = "scan_files";
+							$alias = "sf";
+						}
+					}
+					
+					if(substr($field[$i], 0, 3) == "sf."){
+						$table = "scan_files";
+						$alias = "sf";
+					}
+					if(substr($field[$i], 0, 3) == "sd."){
+						$table = "scan_domains";
+						$alias = "sd";
+					}
+					if(substr($field[$i], 0, 2) == "u."){
+						$table = "users";
+						$alias = "u";
+					}
+					if($this->validField($field[$i], $table, $alias)){
+						$fields .= $field[$i] . ",";
+					}else{
+						print("<br />" . __FUNCTION__ . PHP_EOL . 'say: Stop Debug!');
+						die();
 					}
 				}
-				for($i=0; $i<count($field); $i++){
-					$fields .= RegExp($field[$i], '[a-zA-Z0-9_\-\.\s]+') . ",";
-				}
 				$fields = substr(rtrim($fields), -1) === ","? substr(rtrim($fields), 0, -1): $fields;
-			}
-			
-			switch ($format){
-				case 'OBJECT':
-					$format = "OBJECT";
-					break;
-				case 'TABLE':
-					$format = "TABLE";
-					break;
-				case 'CARD':
-					$format = "CARD";
-					break;
-				case 'JSON':
-					$format = "JSON";
-					break;
-				case 'GRID':
-					$format = "GRID";
-					break;
-				case 'TEMPLATE':
-					$format = "TEMPLATE";
-					break;
-				default:
-					$format = "OBJECT";
 			}
 			
 			if(isset($props['clauseWhere']) && $props['clauseWhere']){
@@ -103,7 +119,7 @@
 			$size = isset($props['size']) && $props['size']? (integer)$props['size']: 0;
 			$version = isset($props['version']) && $props['version']? RegExp($props['version'], '[0-9\.]+'): 0;
 			$location = isset($props['location']) && $props['location']? RegExp($props['location'], '[a-zA-Z0-9_\-\.\/]+'): null;
-			$function = isset($props['function']) && $props['function']? mysql_real_escape_string($props['function']): null;
+			$functionality = isset($props['functionality']) && $props['functionality']? mysql_real_escape_string($props['functionality']): null;
 			$description = isset($props['description']) && $props['description']? mysql_real_escape_string($props['description']): null;
 			$creation = isset($props['creation'])? $props['creation']: date('Y-m-d H:i:s');
 			$modification = date('Y-m-d H:i:s');
@@ -119,7 +135,7 @@
 						size,
 						version,
 						location,
-						function,
+						functionality,
 						description,
 						creation,
 						modification
@@ -131,7 +147,7 @@
 						$size,
 						$version,
 						'$location',
-						'$function',
+						'$functionality',
 						'$description',
 						'$creation',
 						'$modification'
@@ -140,7 +156,7 @@
 			$id = mysql_insert_id();
 			
 			if($id){
-				print('//#affected rows: 1!'. PHP_EOL);
+				print('//#affected rows: '. mysql_affected_rows() . PHP_EOL);
 				return $id;
 			}
 		}
@@ -205,13 +221,15 @@
 		}
 		public function deleteFilesDomains($id = 0, $props = array()){
 			$id = (integer)$id;
+			$format = in_array($props['format'], explode(',', 'OBJECT,TABLE,CARD,JSON,GRID'))? $props['format']: 'OBJECT';
+			
 			if(!$id || $id==0){
 				print('//#error: ID do arquivo é obrigatório!'. PHP_EOL);
 				die();
 			}
 			$sqlDelete = "";
 			$this->idFileDomain = $id;
-			$this->args['format'] = "OBJECT";
+			$this->args['format'] = $format;
 			$this->args['field'] = "sf.id, sf.filename, sd.domain";
 			$this->args['clauseWhere'] = "WHERE sf.id = " . $this->idFileDomain;
 			$getFilesDomains = $this->getFilesDomains(
@@ -229,13 +247,13 @@
 			$sqlDelete = "
 				DELETE
 					FROM
-						gt8_scan_domains
+						gt8_scan_files
 					WHERE
 						id = " . $this->idFileDomain . "
 			";
-			mysql_query($sqlDelete) or die("//#error: Erro ao excluir o domínio informado!");
-			print("//#message: Domínio excluído com sucesso!");
-			return;
+			mysql_query($sqlDelete) or die("//#error: Erro ao excluir o arquivo informado!");
+			print("//#message: Arquivo excluído com sucesso!");
+			return true;
 		}
 	}
 ?>
