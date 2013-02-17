@@ -44,55 +44,39 @@
 				die();
 			}
 		}
-		private $countPrintCards	= 0;
 		public function getServerJSVars() {
 			$this->jsVars[]	= array('adminPageIndex', (integer)$this->getParam('admin-page-index', 'admin'), true);
 			
 			return parent::getServerJSVars();
 		}
-		public function printCards($template) {
+		public function getCards($template) {
 			require_once(SROOT.'engine/functions/Pager.php');
 			
-			//format: shortcut, title, ??, iprivilege
-			$cards		= array(
-				'explorer'				=> array("e",		"Gerenciamento de arquivos", ''),
-				'users'					=> array("u",		"Gerenciamento de usuários e privilégios de acesso", ''),
-				'address'				=> array("ad",		"Endereços", ''),
-				'calendar'				=> array("c",		"Calendário - eventos e tarefas agendadas", ''),
-				'analytics'				=> array("a",		"Relatórios de acessos", ''),
-				'privileges'			=> array("p",		"Privilégios de acesso", ''),
-				'orders'				=> array("o",		"Pedidos de compra", ''),
-				'offers-config/home'	=> array("och",		"Ofertas Especiais na Home", ''),
-				'banners-config/home'	=> array("bch",		"Configuração de banners na Home", ''),
-				'security/scanner'		=> array("ss",		"Scanner de arquivos", '')
-			);
-			
-			$Pager	= Pager(array(
-				'sql'	=> 'privileges.list',
-				'ids'	=> array(
-					array('f.id_users', $_SESSION['login']['id'])
-				)
-			));
-			$Pager	= $Pager['rows'];
-			for( $i=0; $i<count($Pager); $i++) {
-				$crr	= $Pager[$i];
-				if ( isset($cards[substr($crr['url'], 0, -1)])) {
-					$cards[substr($crr['url'], 0, -1)][3]	= $crr['iprivilege'];
-				}
-			}
-			$Pager	= Pager(array(
+			$Base	= Pager(array(
 				'sql'	=> 'modules.list',
-				'addSelect'	=> ' SUBSTRING_INDEX(m.module, "/", 1) AS module2',
+				'where'	=> 'AND m.id_users = 0'
+			));
+			$Base	= $Base['rows'];
+			$Modules	= Pager(array(
+				'sql'	=> 'modules.list',
+				'addSelect'	=> ' SUBSTRING_INDEX(m.module, "/", 1) AS module2, m.custom',
 				'order'	=> 'm.page_index, m.card_index'
 			));
-			$Pager	= $Pager['rows'];
 			
-			if ( count($Pager) < count($cards)) {
-				if ( $this->countPrintCards > 0) {
-					die('<pre class="gt8-debug-error" >Loop infinito!<img src="'.CROOT.'imgs/gt8/delete-small.png" width="22" height="22" ></pre>');
-					return;
+			$Modules	= $Modules['rows'];
+			for($i=0; $i<count($Base); $i++) {
+				$crr	= $Base[$i];
+				
+				$found	= false;
+				for ( $j=0; $j<count($Modules); $j++) {
+					$crrJ	= $Modules[$j];
+					
+					if ( $crr['module'] === $crrJ['module']) {
+						$found	= true;
+						break;
+					}
 				}
-				foreach($cards as $name=>$row) {
+				if ( !$found) {
 					mysql_query("
 						INSERT INTO
 							gt8_modules (
@@ -101,37 +85,59 @@
 								page_index,
 								card_index,
 								views,
+								shortcut,
 								sumary,
-								description
+								description,
+								img
 							)
 							SELECT
 								{$_SESSION['login']['id']},
-								'{$name}',
+								'{$crr['module']}',
 								0,
 								0,
 								1,
-								'{$row[1]}',
-								'{$row[2]}'
+								'{$crr['shortcut']}',
+								'". (mysql_real_escape_string($crr['sumary'])) ."',
+								'". (mysql_real_escape_string($crr['description'])) ."',
+								'". (mysql_real_escape_string($crr['img'])) ."'
 							FROM
 								gt8_modules
 							WHERE
 								id_users	= {$_SESSION['login']['id']} AND
-								module		= '{$name}'
+								module		= '{$crr['module']}'
 							HAVING
 								COUNT(*) = 0
 					");
+					$Modules[]	= $crr;
 				}
-				$this->countPrintCards++;
-				
-				return $this->printCards($template);
 			}
-			
+			$Privileges	= Pager(array(
+				'sql'	=> 'privileges.list',
+				'ids'	=> array(
+					array('f.id_users', $_SESSION['login']['id'])
+				)
+			));
+			$Privileges	= $Privileges['rows'];
+			for( $i=0; $i<count($Privileges); $i++) {
+				$crr	= $Privileges[$i];
+				for ($j=0; $j<count($Modules); $j++) {
+					if ( $Modules[$j]['module'] === substr($crr['url'], 0, -1) ) {
+						$Modules[$j]['iprivilege']	= $crr['iprivilege'];
+						break;
+					}
+				}
+			}
 			$html	= '
 			';
 			$pindex	= -1;
-			
-			for ( $i=0; $i<count($Pager); $i++) {
-				$crr	= $Pager[$i];
+			for ( $i=0; $i<count($Modules); $i++) {
+				$crr	= $Modules[$i];
+				$crr['url']	= $crr['module'].'/';
+				if ( isset($crr['custom']) && $crr['custom'] == 1) {
+					$crr['iprivilege']	= 1;
+					$crr['url']	= substr($crr['url'], 0, -1);
+				}
+				
 				if ( $crr['page_index'] != $pindex) {
 					if ( $pindex > -1) {
 					$html	.= '
@@ -148,11 +154,11 @@
 					<div class="home-cards-container row" >
 					';
 				}
-				if ( isset($cards[$crr['module']]) && $cards[$crr['module']][3]>0) {
+				if ( $crr['iprivilege'] > 0 ) {
 					$crr['CROOT']	= CROOT;
 					$crr	= array_merge($crr, $_SESSION['login']);
-					$crr['sumary']	= utf8_decode($cards[$crr['module']][1]);
-					$crr['shortcut']	= $cards[$crr['module']][0];
+					//$crr['sumary']	= utf8_decode($crr['sumary']);
+					$crr['shortcut']	= $crr['module']['shortcut'];
 					$html	.= $this->getMatchPairs($template, $crr);
 				}
 				$pindex	= $crr['page_index'];
@@ -161,47 +167,11 @@
 				</div>
 			</div>
 			';
-			print($html);
+			return $html;
 		}
 		private function createData() {
 			$this->data['h1']	= '';
 			$this->data['title']	= 'Administrativo';
 		}
-	}
-	function PrintHomeCards() {
-		$cards		= array(
-			array("e",	"explorer/",	"Gerenciamento de arquivos"),
-			array("u",	"users/",	"Gerenciamento de usuários e privilégios de acesso"),
-			array("ad",	"address/",	"Endereços"),
-			array("c",	"calendar/",	"Calendário - eventos e tarefas agendadas"),
-			array("i",	"",		"Teste e"),
-			array("j",	"",		"Teste e")
-		);
-		$html		= '';
-		for ($i=0; $i<count($cards); $i++) {
-			list( $id, $page, $title) = $cards[$i];
-			
-			$img	= $page .'imgs/large.png';
-			if ( ($prv = CheckPrivileges("*", null, $page)) < 1) {
-				$url	= $page;
-			} else {
-				$url	= $page;
-			}
-			$attr	= "";
-			if ( $page ) {
-				if ($prv == 1) {
-					$attr	= 'lock';
-				} else if ($prv < 1 ) {
-					$attr	= 'forbidden';
-				}
-			} else {
-				$attr	= 'invisible';
-				$img	= 'imgs/blank.gif';
-			}
-			$html		.= "
-				<div id='$id' class='card $attr' ><a href='$url' ><img src='$img' alt='$title' /></a><span>$title</span><span class='hidden module-name' >$page</span><div>&nbsp;</div></div>
-			";
-		}
-		print($html);
 	}
 ?>

@@ -29,7 +29,7 @@
 			Apenas 3% das entregas sofrem este tipo de prorrogação. Os motivos podem envolver extravio do produto, endereço não encontrado, ninguém na casa e até roubo.
 		</p>
 		<p>Estamos com nossa atenção concentrada em sua entrega e providenciaremos que seu pedido ainda seja entregue o quanto antes.</p>
-		<p>Pedimos desculpas pelo ocorrido e mas colocamo-nos à disposição para dirimir quaisquer dúvidas, que você talvez tenha, pelo número {{phone-number}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
+		<p>Pedimos desculpas pelo ocorrido e mas colocamo-nos à disposição para dirimir quaisquer dúvidas, que você talvez tenha, pelo número {{PARAM:phone-comercial}}, {{PARAM:opening-hours}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>

@@ -137,7 +137,7 @@
 					'foundRows'	=> 1
 				));
 				$this->data['products']	= $Pager['rows'];
-				$expireDate	= $this->getExpireDate($Pager['rows'][0]['creation2'], $GT8['order-boleto-expires']);
+				$expireDate	= $this->getExpireDate($Pager['rows'][0]['creation2'], $this->getParam('order-boleto-expires', 'system', 0));
 			}
 			{//PAY
 				$Pager	= Pager(array(

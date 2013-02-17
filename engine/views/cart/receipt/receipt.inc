@@ -18,7 +18,10 @@
 				{{IF:$this->data['pays'][0]['type'] == 'boleto'}}
 				<div class="grid-12 bg-white box-shadow margin-bottom-large line-height-large" >
 					<div class="padding clearfix-child" >
-						<div class="grid-6" >
+						<div class="grid-8" >
+							<p>
+								O número do seu pedido é <a href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}{{PARAM:order-number-prefix}}{{id-order}}/" class="link text-extra-large" >{{PARAM:order-number-prefix}}{{id-order}}</a>
+							</p>
 							<p>
 								Para podermos processar seu pedido, você deverá completar o pagamento do boleto bancário.
 							</p>
@@ -26,27 +29,38 @@
 								Assim que o pagamento for realizado, sua compra será despachada o mais rápido possível.
 							</p>
 							<p>
-								<a class="grid-6 href-button href-button-blue line-height-large" href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}{{GT8:order-number-prefix}}{{id-order}}/boleto/" ><span>Imprimir Boleto</span></a>
+								<a class="grid-6 href-button href-button-blue line-height-large" href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}{{PARAM:order-number-prefix}}{{id-order}}/boleto/" ><span>Imprimir Boleto</span></a>
 							</p>
 						</div>
 					</div>
 					<div class="grid-12 bg-light border-top clearfix-child marginless" >
 						<div class="grid-12" >
 							<div class="grid-12" >
-								<small>Número do pedido: {{GT8:order-number-prefix}}{{id-order}}</small>
+								<small>Número do pedido: {{PARAM:order-number-prefix}}{{id-order}}</small>
 								<a class="float-right link" href="javascript:window.print()" ><small>Imprimir esta página</small></a>
 							</div>
 						</div>
 					</div>
 				</div>
 				{{/IF}}
-				{{IF: $this->data['pays'][0]['type']!= 'boleto'}}
+				{{IF: $this->data['pays'][0]['type'] != 'boleto'}}
 				<div class="grid-12 bg-white box-shadow margin-bottom-large line-height-large" >
 					<div class="padding clearfix-child" >
 						<div class="grid-6" >
 							<p>
+								O número do seu pedido é <a href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}{{PARAM:order-number-prefix}}{{id-order}}/" class="link text-extra-large" >{{PARAM:order-number-prefix}}{{id-order}}</a>
+							</p>
+							<p>
 								Para sua segurança, seu pedido passará por análise de crédito e será despachado o mais rápido possível
 							</p>
+						</div>
+					</div>
+					<div class="grid-12 bg-light border-top clearfix-child marginless" >
+						<div class="grid-12" >
+							<div class="grid-12" >
+								<small>Número do pedido: {{PARAM:order-number-prefix}}{{id-order}}</small>
+								<a class="float-right link" href="javascript:window.print()" ><small>Imprimir esta página</small></a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -121,7 +135,7 @@
 					</h5>
 					<div class="padding-large clearfix-child" >
 						<p class="grid-6" >
-							Você poderá acompanhar a situação do seu pedido através na página <a href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}{{GT8:order-number-prefix}}{{id-order}}/" class="link text-lower-case" >{{GT8:account.orders.title}}</a> a qualquer momento. Se preferir entrar em contato com a central de atendimento, ligue no telefone {{GT8:phone-number}}.
+							Você poderá acompanhar a situação do seu pedido através na página <a href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}{{PARAM:order-number-prefix}}{{id-order}}/" class="link text-lower-case" >{{GT8:account.orders.title}}</a> a qualquer momento. Se preferir entrar em contato com a central de atendimento, ligue no telefone {{PARAM:phone-comercial}}, {{PARAM:opening-hours}}.
 						</p>
 					</div>
 				</div>

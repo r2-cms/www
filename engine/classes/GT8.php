@@ -3,7 +3,6 @@
 		require_once('../connect.php');
 	}
 	class GT8 {
-		static $compilationInitialized	= false;
 		protected $row;
 		public $data	= array();
 		public $jsVars	= array();
@@ -359,7 +358,100 @@
 				$contents	= $content;
 			}
 			
-			if ( strpos('#'.$contents, '{{$this->') > 0) {//Properties and methods
+			
+			preg_match_all('/\{\{([a-zA-Z0-9_]+)\((.*)\)\}\}/', $contents, $fxsCall);
+			$countFx	= 0;//qts x uma fx ($fxsCall) foi processada
+			
+			$count		= 0;//avoid infinite loop
+			while ( 1) {
+				$options	= null;
+				$crr		= null;
+				$pos		= strlen($contents);
+				if ( ($_pos=strpos('#'.$contents, '{{$this->')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'properties';}
+				if ( ($_pos=strpos('#'.$contents, '{{METHOD:')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'method';}
+				if ( ($_pos=strpos('#'.$contents, '{{FOREACH:')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'foreach';}
+				if ( ($_pos=strpos('#'.$contents, '{{tag:')) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'tag';}
+				if ( ($_pos=strpos('#'.$contents, '{{VIEW:')) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'view';}
+				if ( ($_pos=strpos('#'.$contents, '{{IF:')) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'if';}
+				if ( ($_pos=strpos('#'.$contents, '{{COMBO-OPTIONS:')) < $pos && $_pos > 0 )	{ $pos	= $_pos; $crr	= 'combo-options';}
+				if ( ($_pos=strpos('#'.$contents, '{{GET:')) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'get';}
+				if ( ($_pos=strpos('#'.$contents, '{{PARAM:')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'param';}
+				if ( ($_pos=strpos('#'.$contents, '{{COOKIE:')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'cookie';}
+				if ( ($_pos=strpos('#'.$contents, '{{GT8:')) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'gt8';}
+				if ( ($_pos=strpos('#'.$contents, '{{SESSION:')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'session';}
+				if ( ($_pos=strpos('#'.$contents, '{{$g')) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'evil';}
+				if ( $countFx < count($fxsCall)) {
+					
+					for ( $i=0; $i<count($fxsCall[0]); $i++) {
+						$fullFx	= $fxsCall[0][$i];
+						if ( ($_pos=strpos('#'.$contents, $fullFx)) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'function';$options=array($fxsCall[0][$i], $fxsCall[1][$i], $fxsCall[2][$i]);}
+					}
+				}
+				if ( $count > 100) {
+					die('666666');
+				}
+				if ( $crr && $pos > 0) {
+					$return	= GT8::compile( $crr, $contents, $OBJ, $data, $options);
+					$contents	= $return[0];
+					$data		= $return[1];
+				} else {
+					break;
+				}
+				$count++;
+			}
+			$contents	= GT8::getMatchPairs(
+				$contents,
+				$data
+			);
+			//lazily compilation
+			$count	= 0;
+			preg_match_all('/\{\{\?\?([a-zA-Z0-9_]+)\((.*)\)\}\}/', $contents, $fxsCall);
+			$countFx	= 0;//qts x uma fx ($fxsCall) foi processada
+			while ( 1) {
+				$options	= null;
+				$crr		= null;
+				$pos		= strlen($contents);
+				$contents	= str_replace(
+					array('{{?$this->',	'{{?FOREACH:'),
+					array('{{$this->',	'{{FOREACH:'),
+					$contents
+				);
+				
+				if ( ($_pos=strpos('#'.$contents, '{{$this->')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'properties';}
+				if ( ($_pos=strpos('#'.$contents, '{{FOREACH:')) < $pos && $_pos > 0 )			{ $pos	= $_pos; $crr	= 'foreach';}
+				
+				if ( $countFx < count($fxsCall)) {
+					for ( $i=0; $i<count($fxsCall[0]); $i++) {
+						$fullFx	= $fxsCall[0][$i];
+						if ( ($_pos=strpos('#'.$contents, $fullFx)) < $pos && $_pos > 0 )				{ $pos	= $_pos; $crr	= 'function';$options=array($fxsCall[0][$i], $fxsCall[1][$i], $fxsCall[2][$i]);}
+					}
+				}
+				
+				if ( $crr && $pos > 0) {
+					$return	= GT8::compile( $crr, $contents, $OBJ, $data, $options);
+					$contents	= $return[0];
+					$data		= $return[1];
+				} else {
+					break;
+				}
+				if ( $count > 100) {
+					die('666666');
+				}
+			}
+			$contents	= GT8::getMatchPairs(
+				$contents,
+				$data
+			);
+			
+			if ( $print) {
+				print($contents);
+			}
+			return $contents;
+		}
+		private function compile($type, $contents, $OBJ, $data, $options=null) {
+			global $GT8;
+			
+			if ( $type === 'properties' ) {
 				preg_match_all('/\{\{\$this\-\>([a-zA-Z0-9\_\[\]\'\(.*?\'\"\,\ \)\-]+)}\}/', $contents, $result);
 				
 				if ( $result && isset($result[1])) {
@@ -375,6 +467,10 @@
 								//params
 								$params	= explode(',', substr($reg[4], 1, -1));
 								$var	= call_user_func_array( array($OBJ, $reg[2]), $params);
+								
+								if ( isset($OBJ->data)) {
+									$data	= array_merge($data, $OBJ->data);
+								}
 								break;
 							} else {//property
 								$var	= $var[$reg[2]];
@@ -388,10 +484,14 @@
 							}
 						}
 						$contents	= str_replace($result[0][$i], $var, $contents);
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{METHOD:') > 0) {//METHOD
+			if ( $type === 'method' ) {
 				preg_match_all('#\{\{METHOD\:(.+?)\}\}(.*?)\{\{\/METHOD\}\}#s', $contents, $result);
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
@@ -403,13 +503,17 @@
 							call_user_func_array( array($OBJ, $result[1][$i]), array($result[2][$i])) .
 							substr($contents, $end+strlen('{{/METHOD}}'))
 						;
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 					if ( isset($OBJ->data) && $data !== $OBJ->data) {
 						$data	= array_merge($data, $OBJ->data);
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{FOREACH:') > 0) {//LOOP
+			if ( $type === 'foreach' ) {
 				//format: {{FOREACH:array's name|optional required fields}}. Sample: {{FOREACH:attributes|value}}...{{/FOREACH}}
 				preg_match_all('/\{\{FOREACH\:([a-zA-Z\.\-0-9\_\/]+)(\|)?([a-zA-Z0-9\-\_\ ]+)?\}\}/', $contents, $result);
 				if ( $result && isset($result[1])) {
@@ -472,10 +576,14 @@
 							}
 							$contents	= substr( $contents, 0, $start-strlen('{{FOREACH:'.$result[1][$i].$result[2][$i].$result[3][$i].'}}')) . $crrContent . substr($contents, $end+strlen('{{/FOREACH}}'));
 						}
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{tag:') > 0) {//tag-helper
+			if ( $type === 'tag' ) {
 				preg_match_all('/\{\{tag:([\|a-zA-Z0-9\.\-_]+)\:(.*)\}\}/', $contents, $result);
 				if ( $result && isset($result[2])) {
 					for ( $i=0; $i<count($result[2]); $i++) {
@@ -504,15 +612,14 @@
 							.'<img src="'.CROOT.'imgs/gt8/delete-small.png" width="22" height="22" ></pre>');
 						}
 						$contents	= str_replace($result[0][$i], $tag, $contents);
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			$contents	= GT8::getMatchPairs(
-				$contents,
-				$data
-			);
-			$proccessDataAgain	= false;
-			if ( strpos('#'.$contents, '{{VIEW:') > 0) {
+			if ( $type === 'view' ) {
 				preg_match_all('/\{\{VIEW:([a-zA-Z\.\-0-9\_\/]+)\}\}/', $contents, $result);
 				if ( $result && isset($result[1])) {
 					$result[1]	= str_replace('.', '/', $result[1]);
@@ -527,10 +634,14 @@
 						$contents	= str_replace('{{VIEW:'. str_replace('/', '.', $result[1][$i]) .'}}', ob_get_contents(), $contents);
 						ob_end_clean();
 						$proccessDataAgain	= true;
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{IF:') > 0) {//IF
+			if ( $type === 'if' ) {
 				preg_match_all('#\{\{IF\:(.+?)\}\}(.+?)\{\{\/IF\}\}#s', $contents, $result);
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
@@ -543,10 +654,14 @@
 							($teste? $result[2][$i]: '') .
 							substr($contents, $end+strlen('{{/IF}}'))
 						;
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{COMBO-OPTIONS:') > 0) {//COMBO-OPTIONS
+			if ( $type === 'combo-options' ) {
 				preg_match_all('#\{\{COMBO\-OPTIONS\:([A-Za-z0-9\-\_\.\ ]+)(\|)?([a-zA-Z0-9_]+)?(\|)?([a-zA-Z0-9_]+)?(\|)?([a-zA-Z0-9_]+)?(\|)?([a-zA-Z0-9_\,]+)?\}\}#s', $contents, $result);//options: array|name|value|selectedColumn
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
@@ -565,11 +680,15 @@
 							$crr	.= '<option value="'. $nam .'" '. ($selected!==null&&$arr[$selected]?'selected="selected"':'') .'>'. $val .'</option>';
 						}
 						$contents	= str_replace('{{COMBO-OPTIONS:'.$result[1][$i].$result[2][$i].$result[3][$i].$result[4][$i].$result[5][$i].$result[6][$i].$result[7][$i].$result[8][$i].$result[9][$i].'}}', $crr, $contents);
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{GET:') > 0) {//allow: default
-				preg_match_all('/\{\{GET:([a-zA-Z\.\-0-9\_\/]+)\}\}/', $contents, $result);
+			if ( $type === 'get' ) {
+				preg_match_all('/\{\{GET:([a-zA-Z\.\-0-9\_\/\|]+)\}\}/', $contents, $result);
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
 						$name		= $result[1][$i];
@@ -579,10 +698,35 @@
 							$name	= substr($name, 0, strpos($name, '|'));
 						}
 						$contents	= str_replace('{{GET:'.$result[1][$i].'}}', (isset($_GET[$name])? $_GET[$name]: $default), $contents);
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{COOKIE:') > 0) {//allow: default
+			if ( $type === 'param' ) {
+				preg_match_all('/\{\{PARAM:([a-zA-Z\.\-0-9\_\/\|]+)\}\}/', $contents, $result);
+				if ( $result && isset($result[1])) {
+					for ( $i=0; $i<count($result[1]); $i++) {
+						$name		= $result[1][$i];
+						$default	= '';
+						if ( strpos('#'.$name, '|')>0) {
+							$default	= explode('|', $name);
+							$name		= $default[0];
+							$default	= $default[1];
+						}
+						$param		= GT8::getParam($name, 'system', 0);
+						$param		= $param? $param: $default;
+						$contents	= str_replace('{{PARAM:'.$result[1][$i].'}}', $param, $contents);
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
+					}
+				}
+				return array( $contents, $data);
+			}
+			if ( $type === 'cookie' ) {
 				preg_match_all('/\{\{COOKIE:([a-zA-Z\.\-0-9\_\/\|]+)\}\}/', $contents, $result);
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
@@ -594,10 +738,14 @@
 							$default	= $default[1];
 						}
 						$contents	= str_replace('{{COOKIE:'.$result[1][$i].'}}', (isset($_COOKIE[$name])? $_COOKIE[$name]: $default), $contents);
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{GT8:') > 0) {
+			if ( $type === 'gt8' ) {
 				preg_match_all('/\{\{GT8:([a-zA-Z\.\-0-9\_\/\|]+)\}\}/', $contents, $result);
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
@@ -628,10 +776,14 @@
 							}
 						}
 						$contents	= str_replace('{{GT8:'.$result[1][$i].'}}', ($value? $value: $default), $contents);
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '{{SESSION:') > 0) {
+			if ( $type === 'session' ) {
 				preg_match_all('/\{\{SESSION:(.+?)\}\}/', $contents, $result);
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
@@ -667,15 +819,16 @@
 							$value	= $default;
 						}
 						$value		= ($value? $value: $default);
-						$value		= $proccessDataAgain? utf8_encode($value): $value;
+						$value		= 1? utf8_encode($value): $value;
 						$contents	= str_replace('{{SESSION:'.$result[1][$i].'}}', $value, $contents);//aparentemente, não é necessário encodificar aqui. Quando o fiz, no header deu dupla encodificação. Se der problemas, experimente condicionar a encodificação com a variável: $proccessDataAgain
+						
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			if ( strpos('#'.$contents, '$thisd') > 0) {//var $this
-				$contents	= preg_replace('/(\{\{.*?)(\$this\b)(.*?\}\})/', '$1\$Index$3', $contents);
-			}
-			if ( strpos('#'.$contents, '{{$g') > 0) {//EVIL VARIABLES
+			if ( $type === 'evil' ) {
 				preg_match_all('/\{\{\$([a-zA-Z\.\-0-9\/\[\]\'\-\>\(\)\"\$_]+)\\|?([a-zA-Z0-9\.\,\-_]+)?}\}/', $contents, $result);
 				global $ev;
 				if ( $result && isset($result[1])) {
@@ -683,66 +836,56 @@
 						$raw	= '$'. $result[1][$i];
 						eval('$ev	= '. $raw .';');
 						$contents	= str_replace($result[0][$i], $ev, $contents);
-					}
-				}
-			}
-			if ( 1) {//function call
-				preg_match_all('/\{\{([a-zA-Z0-9_]+)\((.*)\)\}\}/', $contents, $result);
-				if ( $result && isset($result[1])) {
-					for ( $i=0; $i<count($result[1]); $i++) {
-						$name	= $result[1][$i];
-						$params	= $result[2][$i];
-						$default	= '';
 						
-						$args	= array();
-						for ( $j=0, $jlen=strlen($params); $j<$jlen; $j++) {
-							$crr	= substr($params, $j, 1);
-							$chr	= ord($crr);
-							
-							if ( $crr == ' ') {
-								
-							} else if ( $chr>47 && $chr<58 || $crr=='-' || $chr=='+' || $chr=='.' ) {
-								$crr	= RegExp(substr($params, $j), '[\-\+\.0-9]+');
-								$j		+= strlen($crr);
-								if ( strpos('#'.$crr, '.') > 0) {
-									$crr	= (float)$crr;
-								} else {
-									$crr	= (integer)$crr;
-								}
-								$args[]	= $crr;
-							} else if ( $crr=='"' || $crr=="'" ) {
-								$crr	= GT8::getStringBlock(substr($params, $j));
-								$j		+= strlen($crr) + 1;
-								$args[]	= $crr;
-							} else {
-								
-							}
-						}
-						$contents	= str_replace($result[0][$i], call_user_func_array( $name, $args), $contents);
+						//depois do método compile, não é mais permitido loop!
+						break;
 					}
 				}
+				return array( $contents, $data);
 			}
-			
-			if ( $proccessDataAgain ) {
-				$contents	= GT8::getMatchPairs(
-					$contents,
-					$data
-				);
-			}
-			
-			if ( !GT8::$compilationInitialized) {
-				GT8::$compilationInitialized	= true;
-				if ( isset($this) ) {
-					$contents	= $this->printView(null, $data, $Editor, $Index, $print, $contents);
-				} else {
-					$contents	= GT8::printView(null, $data, $Editor, $Index, $print, $contents);
+			if ( $type === 'function' ) {
+				$name	= $options[1];
+				$params	= $options[2];
+				$default	= '';
+				
+				$args	= array();
+				for ( $j=0, $jlen=strlen($params); $j<$jlen; $j++) {
+					$crr	= substr($params, $j, 1);
+					$chr	= ord($crr);
+					
+					if ( $crr == ' ') {
+						
+					} else if ( $chr>47 && $chr<58 || $crr=='-' || $chr=='+' || $chr=='.' ) {
+						$crr	= RegExp(substr($params, $j), '[\-\+\.0-9]+');
+						$j		+= strlen($crr);
+						if ( strpos('#'.$crr, '.') > 0) {
+							$crr	= (float)$crr;
+						} else {
+							$crr	= (integer)$crr;
+						}
+						$args[]	= $crr;
+					} else if ( $crr=='"' || $crr=="'" ) {
+						$crr	= GT8::getStringBlock(substr($params, $j));
+						$j		+= strlen($crr) + 1;
+						$args[]	= $crr;
+					} else {
+						
+					}
 				}
-				GT8::$compilationInitialized	= false;
-				if ( $print) {
-					print($contents);
-				}
+				$contents	= str_replace($options[0], call_user_func_array( $name, $args), $contents);
+				$countFx++;
+				
+				return array( $contents, $data);
 			}
-			return $contents;
+			if ( $type === '' ) {
+				
+				return array( $contents, $data);
+			}
+			if ( $type === '' ) {
+				
+				return array( $contents, $data);
+			}
+			return array( $contents, $data);
 		}
 		public function includeView( $file, $data) {
 			global $GT8;
@@ -813,6 +956,7 @@
 				$Data	= array('path'=>RegExp($_GET['path'], '[a-z-A-Z0-9_\-\+\.\:\/\\\|\%\&\?]+'));
 				if ( $Index) {
 					$Data	= array_merge($GT8, $Data);
+					$Data	= array_merge($Data, $Index->data);
 					$Index->printView(
 						($url404!=''? $url404: SROOT .'engine/views/404/index.inc'),
 						$Data,
@@ -896,13 +1040,23 @@
 		public function prnt($field, $addSlashes=false) {
 			print($this->get($field, $addSlashes));
 		}
-		public function getParam( $name, $category='', $idUser=-1, $limit=1) {
+		public function getParam( $name, $category='', $idUser=-1) {
 			$idUser	= (integer)$idUser;
 			if ( $idUser==-1 && isset($_SESSION['login']['id']) && $_SESSION['login']['id']) {
 				$idUser	= $_SESSION['login']['id'];
 			}
+			
+			if ( isset($_SESSION['param-cache'][$name])) {
+				return $_SESSION['param-cache'][$name];
+			}
 			$name		= mysql_real_escape_string($name);
 			$category	= mysql_real_escape_string($category);
+			
+			
+			$catwhere	= '';
+			if ( !empty($category)) {
+				$catwhere	= " category = '$category' AND";
+			}
 			
 			$result		= mysql_query("
 				SELECT
@@ -910,19 +1064,21 @@
 				FROM
 					gt8_param
 				WHERE
-					id_users = $idUser AND
+					id_users IN ($idUser, 0) AND
 					name = '$name' AND
-					category = '$category'
+					$catwhere
+					read_privilege <= ". $_SESSION['login']['level'] ."
+				ORDER BY
+					id_users DESC, read_privilege DESC
 			");
-			$return	= $limit==1? '': array();
+			$return	= '';
 			if ( $result) {
-				if ( $limit==1) {
-					$row	= mysql_fetch_assoc($result);
-					$return = $row['value'];
-				} else {
-					while( ($row=mysql_fetch_assoc($result))) {
-						$return[]	= $row;
-					}
+				$row	= mysql_fetch_assoc($result);
+				$return = utf8_encode($row['value']);
+				
+				//somente ids 0, da categoria system, são cacheados
+				if ( $row['id_users'] == 0 && $row['category'] == 'system') {
+					$_SESSION['param-cache'][$name]	= $return;
 				}
 			}
 			return $return;
@@ -935,6 +1091,11 @@
 			$name		= mysql_real_escape_string($name);
 			$value		= mysql_real_escape_string($value);
 			$category	= mysql_real_escape_string($category);
+			
+			$whereWrite	= '';
+			if ( $idUser == 0) {//0 === system
+				$whereWrite	= "AND write_privilege <= ". $_SESSION['login']['level'] ."";
+			}
 			
 			if ( $allowDuplicates) {
 				mysql_query("
@@ -972,11 +1133,12 @@
 						id_users = $idUser AND
 						name = '$name' AND
 						category = '$category'
+						$whereWrite
 					LIMIT
 						1
 				");
 				if ($format=='JSON') {
-					print('//#message: parâmetro salvo com sucesso!'. PHP_EOL);
+					print('//#message: parâmetro salvo com sucesso! ('. mysql_affected_rows().')'. PHP_EOL);
 				}
 			}
 		}
@@ -1067,6 +1229,12 @@
 				$Field	= null;
 			}
 			return $Field;
+		}
+		public function createComboLevels( $allow=0, $format='HTML', $useDash=false, $showAllLevels=false) {
+			require_once( SROOT.'engine/functions/CreateComboLevels.php');
+			
+			$combo	= CreateComboLevels( $allow, $format, $useDash, $showAllLevels);
+			return utf8_encode($combo);
 		}
 	}
 ?>

@@ -30,7 +30,7 @@
 							die('//#error: Endereço inválido. Por favor, corrija quaisquer erros contidos no endereço ou entre em contato com a central de atendimento.'. PHP_EOL);
 						}
 						$this->data['message']	= '
-							Endereço inválido. Por favor, corrija quaisquer erros contidos no endereço ou entre em contato com a central de atendimento para obter auxílio: '. $GT8['phone-number'] .'.
+							Endereço inválido. Por favor, corrija quaisquer erros contidos no endereço ou entre em contato com a central de atendimento para obter auxílio: '. $this->getParam('phone-comercial') .", ". $this->getParam('opening-hours') .'.
 						';
 						$this->data['title']	= 'Endereço inválido (!ID)';
 						$this->printView(

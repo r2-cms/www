@@ -19,17 +19,24 @@
 		<div id="eMain" >
 			<?php
 				$this->printHeader(array(
-					'title'		=> 'Usuários',
+					'h1'		=> 'Usuários',
 					'directory'	=> $this->getDirLocation(),
 					'toolbar'	=> $this->toolbarItems
 				));
 			?>
 			<div class="body SplitPane-horizontal" >
-				<?php $this->printSidebar(); ?>
+				{{$this->getSidebar()}}
 				<div class="knob-pane" >&nbsp;</div>
 				<div class="content cards row right-pane" >
 					<div class="clear invisible height-15" >&nbsp;</div>
-					{{$this->getCards()}}
+					{{METHOD:getCards}}
+					<a class="card col-6" title="##name##" href="{{AROOT}}{{GT8:admin.account.root}}{{login}}/" >
+						<small>&nbsp;</small>
+						<span class="imgC2" ><span><span><img src="{{CROOT}}{{GT8:explorer.root}}users/{{login}}/?regular" alt="[imagem]" /></span></span></span>
+						<strong id="user-{{id}}" class="title" >##name##</strong>
+						<span class="level" >{{login}}</span>
+					</a>
+					{{/METHOD}}
 					<div class="clear invisible height-15" >&nbsp;</div>
 				</div>
 				<div class="clear" >&nbsp;</div>

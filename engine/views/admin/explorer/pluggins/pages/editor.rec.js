@@ -594,4 +594,4 @@
 			}
 		//]]>
 		</script>
-		<script type="text/javascript" src="{{CROOT}}{{GT8:admin.root}}js/Modal.js" ></script>
+		<script type="text/javascript" src="{{AROOT}}js/Modal.js" ></script>

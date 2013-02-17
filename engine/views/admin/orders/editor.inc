@@ -14,7 +14,7 @@
 	<body class="{{modal-class}}" >
 		<div id="eMain" >
 			<?php $Editor->printHeader(array(
-				"h1" 		=> 'Pedido ({{GT8:order-number-prefix}}){{id}}',
+				"h1" 		=> 'Pedido ({{PARAM:order-number-prefix}}){{id}}',
 				'directory'	=> $Editor->getDirLocation(),
 				'toolbar'	=> $Editor->toolbarItems
 			)); ?>
@@ -231,7 +231,7 @@
 							<a href="../{{id}}/" class="col-15 card bg-linear-light-gray text-decoration-none border-radius line-height margin-bottom-small cursor-pointer" >
 								<span class="col-15 margin-left-none margin-right-none clearfix-child" >
 									<strong class="col-5 text-align-left" >
-										{{GT8:order-number-prefix}}{{id}}
+										{{PARAM:order-number-prefix}}{{id}}
 									</strong>
 									<span class="col-9 text-align-right" >Status: ##status##</span>
 								</span>

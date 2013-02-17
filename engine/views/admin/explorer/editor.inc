@@ -102,7 +102,7 @@
 									</tr>
 									<tr>
 										<td><strong>Tamanho</strong></td>
-										<td><span id="eSize" >{{number_format({{size}}, 0, ',', '.')}} B</span></td>
+										<td><span id="eSize" >{{??number_format({{size}}, 0, ',', '.')}} B</span></td>
 									</tr>
 								</table>
 							</div>

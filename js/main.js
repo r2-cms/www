@@ -435,11 +435,11 @@ jCube(function(){
 	(function(){//window.onresize
 		var chron_ImgC;
 		window.onresize	= function() {
-			if ( jCube(':footer.main')) {
+			if ( jCube(':footer.main') && !jCube(':footer.main').className.contains('fixed') && jCube.Browser && jCube.Browser.OS != 'IOS' && window.getScrollHeight ) {
 				jCube(':footer.main').removeClass('fixed');
 			}
 			//eFooter position
-			if ( jCube(':footer.main') && jCube(':footer.main').className!='fixed' && jCube.Browser && jCube.Browser.OS != 'iPhone/iPod' && window.getScrollHeight ) {
+			if ( jCube(':footer.main') && jCube(':footer.main').className!='fixed' && jCube.Browser && jCube.Browser.OS != 'IOS' && window.getScrollHeight ) {
 				if ( window.getHeight()+10 > (jCube(':footer.main').offsetTop + jCube(':footer.main').offsetHeight) ) {
 					jCube(':footer.main').addClass('fixed');
 				} else {
@@ -608,7 +608,7 @@ var GT8	= {
 			h	= H;
 			w	= 'auto';
 		}
-		if ( !w || !h) {
+		if ( w < 30 || h < 30) {
 			window.setTimeout( function(){ GT8.adjustImgSize(eImg); }, 250);
 			return null;
 		}
@@ -626,6 +626,8 @@ var GT8	= {
 		}
 		if ( h < H) {
 			eImg.setStyle('top', (H-h)/2);
+		} else {
+			eImg.setStyle('top', 0);
 		}
 		return eImg;
 	},

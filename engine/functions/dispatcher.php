@@ -59,7 +59,11 @@
 		'login'		=> isset($_SESSION['login']['login'])? $_SESSION['login']['login']: '',
 		'login-id'	=> isset($_SESSION['login']['id'])? $_SESSION['login']['id']: ''
 	);
+	if ( isset($_GET['action']) && $_GET['action'] === 'login') {
+		require_once( SROOT ."engine/functions/CheckLogin.php");
+	}
 	if ( $found && substr($base, -1)=='/') {//DIR
+		
 		//se houver um arquivo com o mesmo nome do diretório, iniciando em maísculo, é classe com auto inicialização. Carreguemo-la!
 		$baseClassName	= strpos($controller, '/')+1<strlen($controller)? substr( $controller, strpos($controller, '/')+1): $controller;
 		//$baseClassName	= strtoupper(substr($baseClassName, 0, 1)) . substr($baseClassName, 1, (strlen($baseClassName)-2));
@@ -81,10 +85,22 @@
 			
 			if ( file_exists( SROOT .'engine/controllers/'. $fileController .'.php')) {
 				$fileController	= SROOT .'engine/controllers/'. $fileController .'.php';
+			} else if ( strpos('#'.$baseClassName, '-')>0) {
+				while ( ($pos=strpos('#'.$baseClassName, '-')) > 0) {
+					$baseClassName	= substr($baseClassName, 0, $pos-1) . substr(strtoupper($baseClassName), $pos, 1) . substr($baseClassName, $pos+1);
+				}
+				$fileController	= SROOT .'engine/controllers'. strtolower($fileController) .'/'. $baseClassName .'.php';
+				if ( !file_exists($fileController)) {
+					$fileController	= '';
+				}
+				
 			} else {
 				$fileController	= '';
 			}
 		}
+		
+		//camel case class name
+		
 		if ( $fileController ) {
 			require( $fileController);
 			$Index	= new $baseClassName;
@@ -144,8 +160,11 @@
 		}
 		
 		$fileV;
-		
 		$baseClassName	= strtoupper(substr($controller, 0, 1)) . substr($controller, 1);
+		//camel case class name
+		while ( ($pos=strpos('#'.$baseClassName, '-')) > 0) {
+			$baseClassName	= substr($baseClassName, 0, $pos-1) . substr(strtoupper($baseClassName), $pos, 1) . substr($baseClassName, $pos+1);
+		}
 		if ( file_exists(SROOT.'engine/controllers/'.$controller .'/Editor.php') ) {//o Editor.php deve ter precedência sobre o Index.php
 			require(SROOT.'engine/controllers/'.$controller .'/Editor.php');
 			if ( file_exists(SROOT.'engine/views/'.$controller .'/editor.inc') ) {
@@ -274,19 +293,21 @@
 			$Data	= array_merge($Index->data, $Data);
 		}
 	}
-	if ( $Index) {
-		$Index->printView(
-			SROOT .'engine/views/'. $fileviewer,
-			$Data,
-			null,
-			$Index
-		);
-	} else {
-		GT8::printView(
-			SROOT .'engine/views/'. $fileviewer,
-			$Data,
-			$Editor
-		);
+	if ( file_exists(SROOT .'engine/views/'. $fileviewer) && !is_dir(SROOT .'engine/views/'. $fileviewer) ) {
+		if ( $Index) {
+			$Index->printView(
+				SROOT .'engine/views/'. $fileviewer,
+				$Data,
+				null,
+				$Index
+			);
+		} else {
+			GT8::printView(
+				SROOT .'engine/views/'. $fileviewer,
+				$Data,
+				$Editor
+			);
+		}
+		die();
 	}
-	die();
 ?>

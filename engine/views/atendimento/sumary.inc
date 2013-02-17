@@ -1,7 +1,7 @@
 					<div class="cards" >
 						<div class="card grid-8 bg-light shadow-small alpha omega margin-bottom" >
 							<div class="padding display-block" >
-								<h1>Serviço de Atendimento ao Cliente <br />(11) 3539-2258</h1>
+								<h1>Serviço de Atendimento ao Cliente <br />{{PARAM:phone-comercial}}, {{PARAM:opening-hours}}</h1>
 								<p>
 									O canal de atendimento <a href="http://www.salaodocalcado.com.br" class="link" >Salãodocalcado.com.br</a> poderá lhe esclarecer dúvidas relacionadas ao processo de compras, acompanhamento de pedidos e cadastro.
 								</p>

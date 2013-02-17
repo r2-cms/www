@@ -18,16 +18,17 @@
 	$data['name']			= $Order['name'];
 	$data['creation']		= $Order['creation'];
 	$data['delivery_expected']		= $Order['delivery_expected'];
+	$orderPrefix			= GT8::getParam('order-number-prefix','system');
 	$content = "
 		<p style='padding:10px; padding-left:20px; ' >
 			##message##
 		</p>
 		<p>Prezado(a) ##name##,</p>
-		<p>Seu pedido, conforme registrado em nosso sistema sob o número <strong>{$GT8['order-number-prefix']}{{id-order}}</strong>, realizado em //creation\\\\, foi aprovado e liberado para entrega.</p>
+		<p>Seu pedido, conforme registrado em nosso sistema sob o número <strong>{$orderPrefix}{{id-order}}</strong>, realizado em //creation\\\\, foi aprovado e liberado para entrega.</p>
 		<p>A data prevista do seu pedido está prevista para o dia //delivery_expected:%d/%m/%Y\\\\.</p>
 		<p>É necessário que haja alguém no endereço no dia da entrega. As entregas são realizadas de segunda à sexta-feira, das 8:00 às 21:00h.</p>
 		&nbsp;
-		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/meu-cadastro/pedidos/{$GT8['order-number-prefix']}{$Order['id']}/'>clique aqui</a></p>
+		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{GT8:account.rott}{GT8:account.orders.root}{$orderPrefix}{$Order['id']}/'>clique aqui</a></p>
 		<br>
 		<p style='font-weight:bold;' >DADOS DA ENTREGA</p>
 			<span>Endereço: ". utf8_encode($Order['street']) .", ". $Order['number'] ."</span><span>". (!empty($Order['complement'])?'('.$Order['complement'].')':'') ."</span><br />
@@ -36,7 +37,7 @@
 			<span>CEP: {$Order['zip']}</span><br /><br />
 		</p>
 		<br>
-		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número {{phone-number}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
+		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número {{PARAM:phone-comercial}}, {{PARAM:opening-hours}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>

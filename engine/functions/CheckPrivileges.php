@@ -11,6 +11,7 @@
 			OBJECT
 				integer
 	*/
+	require_once( SROOT ."engine/functions/CheckLogin.php");
 	function CheckPrivileges( $field = '*', $format="", $url=null, $atLeastOrDie=-500) {
 		global $GT8;
 		

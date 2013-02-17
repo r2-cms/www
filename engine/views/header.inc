@@ -35,7 +35,7 @@
 						<div class="fast-links grid-4 margin-bottom" >
 							<a href="{{CROOT}}institucional/" class="grid-4 marginless t-grid-3" >Institucional</a>
 							<a href="{{CROOT}}{{GT8:atendimento.root}}" class="grid-4 marginless t-grid-3" >Atendimento</a>
-							<span class="grid-4 marginless tablet-hidden" >{{GT8:phone-number}}</span>
+							<span class="grid-4 marginless tablet-hidden" >{{PARAM:phone-comercial}}</span>
 						</div>
 						<label class="main-search input-button grid-8 margin-bottom" >
 							<input type="text" value="{{GT8:search-key-words}}" name="q" />

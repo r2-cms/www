@@ -15,7 +15,7 @@
 				array_pop($id);
 			}
 			$this->checkForBoletoEmission();
-			$this->id	= (integer)substr($id[count($id)-1], strlen($GT8['order-number-prefix']));
+			$this->id	= (integer)substr($id[count($id)-1], strlen($this->getParam('order-number-prefix','system')));
 			$this->data['id']	= $this->id;
 			
 			$this->checkActionRequest();
@@ -143,7 +143,7 @@
 				)
 			));
 			$this->data['products']	= $Pager['rows'];
-			$expireDate	= $this->getExpireDate($Pager['rows'][0]['creation2'], $GT8['order-boleto-expires']);
+			$expireDate	= $this->getExpireDate($Pager['rows'][0]['creation2'], $this->getParam('order-boleto-expires', 'system', 0));
 			
 			//PAY
 			$Pager	= Pager(array(
@@ -176,7 +176,7 @@
 			if ( $path[count($path)-1] == 'boleto') {
 				require_once( SROOT .'engine/functions/boletor/Boletor.php');
 				$orderId	= RegExp($path[count($path)-2], '[a-zA-Z0-9\ \-]+');
-				$id			= substr( $orderId, strlen($GT8['order-number-prefix']));
+				$id			= substr( $orderId, strlen($this->getParam('order-number-prefix', 'system')));
 				
 				require_once( SROOT .'engine/functions/Pager.php');
 				$Order	= Pager(array(
@@ -210,7 +210,7 @@
 					'ids'	=> array(
 						array('p.id_orders', $Order['id'])
 					),
-					'addWhere'	=> ' AND UNIX_TIMESTAMP(DATE_ADD(o.creation, INTERVAL '. $GT8['order-boleto-expires'] .' DAY)) > '. $now,
+					'addWhere'	=> ' AND UNIX_TIMESTAMP(DATE_ADD(o.creation, INTERVAL '. $this->getParam('order-boleto-expires', 'system', 0) .' DAY)) > '. $now,
 					'foundRows'	=> 1
 				));
 				

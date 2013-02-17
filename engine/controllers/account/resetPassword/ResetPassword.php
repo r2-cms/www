@@ -48,7 +48,7 @@
 				$this->data['message']	= '
 					Não foi possível redefinir sua senha agora.<br /><br />
 					'. $error .' <br /><br />
-					Se preferir, entre em contato com nosso suporte para obter auxílio: '. $GT8['phone-number'] .'.
+					Se preferir, entre em contato com nosso suporte para obter auxílio: '. $this->getParam('phone-comercial') .", ". $this->getParam('opening-hours') .'.
 				';
 				$this->data['title']	= 'Operação não concluída';
 				$this->printView(

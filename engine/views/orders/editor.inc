@@ -12,7 +12,7 @@
 			{{VIEW:header}}
 			{{VIEW:location}}
 			<div class="account row-12 resume fluid-12" >
-				<h1 class="margin-bottom grid-12" >Pedido de compra nº. {{GT8:order-number-prefix}}{{id}}</h1>
+				<h1 class="margin-bottom grid-12" >Pedido de compra nº. {{PARAM:order-number-prefix}}{{id}}</h1>
 				<div class="grid-12 card bg-graylight shadow-small clearfix-child" >
 					{{VIEW:account.menu}}
 					<div class="grid-8 marginless bg-white sborder-left unfloat-phone" >

@@ -9,7 +9,7 @@
 						<div class="fast-links grid-3 marginless" >
 							<img class="ssl-seal grid" src="{{CROOT}}imgs/ssl-seal.png" alt="" width="52" height="52" />
 							<span class="grid line-height-large margin-top-mini" >Área segura</span>
-							<span class="grid-12 marginless" >Televendas {{GT8:phone-number}}</span>
+							<span class="grid-12 marginless" >Televendas {{PARAM:phone-comercial}}, {{PARAM:opening-hours}}</span>
 						</div>
 						<div class="grid-6 margin-left-1 omega margin-top" >
 							<div class="bts-fast-access grid-12 marginless clearfix-child" >

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Salão do Calçado | HOME</title>
+		<title>Salão do Calçado | Calçados finos, de alta qualidade</title>
 		<link rel="stylesheet" type="text/css" href="{{CROOT}}css/home.css" />
 		{{VIEW:head}}
 		<script type="text/javascript" src="{{CROOT}}js/home.js" ></script>

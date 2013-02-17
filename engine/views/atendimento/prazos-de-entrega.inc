@@ -3,7 +3,7 @@
 						Prezamos muito você como cliente e, por isso, queremos garantir que seu pedido chegue o mais rápido possível.<br />
 					</p>
 					<p>
-						O <a href="http://www.salaodocalcado.com.br" class="link" >Salãodocalcado.com.br</a> utiliza os Correios ou transportadoras especializadas para a entrega dos produtos.
+						O <a href="http://www.salaodocalcado.com.br" class="link" >Salão do calcado</a> utiliza os Correios ou transportadoras especializadas para a entrega dos produtos.
 					</p>
 					<p>
 						As entregas são feitas de segunda a sexta-feira, das 8:00 às 21:00. O prazo de entrega de uma encomenda varia de acordo com o produto, a localização do cliente e o método escolhido para entrega.

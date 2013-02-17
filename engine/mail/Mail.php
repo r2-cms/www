@@ -20,8 +20,8 @@
 			
 			$this->statusCode	= (integer)$status;
 			
-			if ( !count($this->from) && isset($GT8['mail-main'])) {
-				$this->from	= array( $GT8['mail-main'][0], utf8_decode($GT8['mail-main'][1]));
+			if ( !count($this->from)) {
+				$this->from	= array( $this->getParam('call-center-mail','system'), utf8_decode($this->getParam('call-center-mail-title','system')));
 			}
 			
 			if ( !$this->statusCode) {
@@ -69,6 +69,7 @@
 			$mail;
 			$from;
 			$to;
+			$bcc;
 			$idRef	= 0;
 			if ( file_exists( SROOT .'engine/mail/status/'. $this->statusCode .'.inc')) {
 				include( SROOT .'engine/mail/status/'. $this->statusCode .'.inc');

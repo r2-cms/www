@@ -323,7 +323,7 @@ a.button, span.group-button {
 	display: block;
 	float: left;
 	margin: 8px 8px 0;
-	line-height: 48px;
+	line-height: inherit;
 	background-color: #DEDEDE;
 	background-image: -webkit-linear-gradient(#FDFDFD, #B8B8B8);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#FDFDFD), to(#B8B8B8));

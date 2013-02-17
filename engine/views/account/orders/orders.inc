@@ -25,9 +25,9 @@
 							{{IF: count($this->data['orders'])==0}}<h2 class="grid-12" >Você ainda não realizou compras</h2>{{/IF}}
 							{{IF: count($this->data['orders'])>0}}<h2 class="grid-12" >Clique em um pedido para visualizar os detalhes</h2>{{/IF}}
 							{{FOREACH:orders}}
-							<a href="{{GT8:order-number-prefix}}{{id}}/" class="grid-12 card card-hide-all-but-me text-decoration-none border-radius line-height margin-bottom" >
+							<a href="{{PARAM:order-number-prefix}}{{id}}/" class="grid-12 card card-hide-all-but-me text-decoration-none border-radius line-height margin-bottom" >
 								<span class="padding clearfix-child border border-radius" >
-									<strong class="grid-6" >{{GT8:order-number-prefix}}{{id}}</strong>
+									<strong class="grid-6" >{{PARAM:order-number-prefix}}{{id}}</strong>
 									<small class="grid-6 text-align-right" >Status: ##status##</small>
 									<span class="grid-6" >R$ $$price_total$$</span>
 									<span class="grid-6 text-align-right" >//creation\\</span>

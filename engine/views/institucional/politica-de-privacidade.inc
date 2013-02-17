@@ -9,7 +9,7 @@
 					
 					<h3 class="margin-bottom-none" >Cookies</h3>
 					<p>
-						<em>Cookies</em> são informações armazenadas em seu próprio dispositivo para lembrar suas preferências ao navegar pelo site <a href="http://www.salaodocalcado.com.br" class="link" >Salãodocalcado.com.br</a>. Se o seu navegador estiver com os <em>Cookies</em>
+						<em>Cookies</em> são informações armazenadas em seu próprio dispositivo para lembrar suas preferências ao navegar pelo site <a href="http://www.salaodocalcado.com.br" class="link" >Salão do calcado</a>. Se o seu navegador estiver com os <em>Cookies</em>
 						habilitados, nós usaremos esse recurso para lembrar seus produtos preferidos e preferências de navegação.
 					</p>
 					
@@ -20,6 +20,6 @@
 					
 					<h3 class="margin-bottom-none" >Segurança</h3>
 					<p>
-						Para proteger sua privacidade e aumentar a segurança, o <a href="http://www.salaodocalcado.com.br" class="link" >Salãodocalcado.com.br</a> utiliza encriptografia de 128 bits por meio de soquetes SSL, que encriptam as informações transmitidas e recebidas nas áreas de compras e cadastro.
+						Para proteger sua privacidade e aumentar a segurança, o <a href="http://www.salaodocalcado.com.br" class="link" >Salão do calcado</a> utiliza encriptografia de 128 bits por meio de soquetes SSL, que encriptam as informações transmitidas e recebidas nas áreas de compras e cadastro.
 						Para saber mais, acesse <a href="{{CROOT}}institucional/seguranca/" class="link" >segurança</a>.
 					</p>

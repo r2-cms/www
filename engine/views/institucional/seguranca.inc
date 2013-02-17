@@ -17,5 +17,5 @@
 					
 					<h3 class="margin-bottom-none" >Cartões de crédito</h3>
 					<p>
-						O <a href="http://www.salaodocalcado.com.br" class="link" >Salãodocalcado.com.br</a> não armazena os dados de seu cartão de crédito. Todas as informações pertinentes às transações do cartão são transferidas diretamenta às operados de crédito.
+						O <a href="http://www.salaodocalcado.com.br" class="link" >Salão do calcado</a> não armazena os dados de seu cartão de crédito. Todas as informações pertinentes às transações do cartão são transferidas diretamenta às operados de crédito.
 					</p>

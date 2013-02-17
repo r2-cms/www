@@ -1,10 +1,11 @@
 					<h1>Formas de Pagamento</h1>
 					<p>
-						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit <a href="{{CROOT}}" class="link" >vitae ligula</a> volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.
+						Para comodidade do cliente, o <a href="http://www.salaodocalcado.com.br" class="link" >Salão do calcado</a> oferece os métodos mais utilizados de pagamentos existentes no mercado, incluindo cartão de crédito e boleto bancário.
 					</p>
 					<p>
-						Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit amet rhoncus ornare, erat elit erat, id egestas pede nibh eget odio. Proin tincidunt, velit vel porta elementum, magna diam molestie sapien, non aliquet massa pede eu diam. Aliquam iaculis. Fusce et ipsum et nulla tristique facilisis. Donec eget sem sit amet ligula viverra gravida. Etiam vehicula urna vel turpis. Suspendisse sagittis ante a urna. Morbi a est quis orci consequat rutrum. Nullam egestas feugiat felis. Integer adipiscing semper ligula.
+						Para os pagamentos realizados com cartão de crédito, aceitamos as bandeiras Visa, Master Card, Diners Club e Hypercard. O pagamento poderá ser feito à vista ou em até 3 vezes sem juros. <br /><br />
+						A compra realizada com cartão é segura. Todos os dados das transações são encriptografados antes de serem enviados à operadora do cartão. Nenhuma informação relacionada ao cartão é armazenada, de modo que, não importa o que aconteça, seus dados não serão roubados.
 					</p>
 					<p>
-						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim. Suspendisse id velit <a href="{{CROOT}}" class="link" >vitae ligula</a> volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh eget ipsum. Donec porttitor ligula eu dolor. Maecenas vitae nulla consequat libero cursus venenatis. Nam magna enim, accumsan eu, blandit sed, blandit a, eros.
+						Pagamentos realizados com boleto bancário podem ser efetuados na agência bancária de sua preferência, pela internet no site do seu banco, ou em estabelecimentos que aceitem boleto bancário.
 					</p>

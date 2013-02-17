@@ -50,10 +50,10 @@
 					
 					if ( !$idOrder) {
 						if ( isset($_GET_['format']) && $_GET_['format']=='JSON') {
-							die('//#error: Não foi possível fechar o pedido neste momento. Aguarde alguns instantes e tente novamente ou contate o serviço de atendimento ao consumidor: '. $GT8['phone-number'] . PHP_EOL);
+							die('//#error: Não foi possível fechar o pedido neste momento. Aguarde alguns instantes e tente novamente ou contate o serviço de atendimento ao consumidor: '. $this->getParam('phone-comercial') .", ". $this->getParam('opening-hours') . PHP_EOL);
 						}
 						$this->data['message']	= '
-							Não foi possível fechar o pedido neste momento!<br /><br />Aguarde alguns instantes e tente novamente ou contate o serviço de atendimento ao consumidor: '. $GT8['phone-number'] .'.
+							Não foi possível fechar o pedido neste momento!<br /><br />Aguarde alguns instantes e tente novamente ou contate o serviço de atendimento ao consumidor: '. $this->getParam('phone-comercial') .", ". $this->getParam('opening-hours') .'.
 						';
 						$this->data['title']	= 'Erro desconhecido';
 						$this->printView(
@@ -80,6 +80,12 @@
 					$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
 					$m->send($this->data);
 					
+					$m	= new Mail(24, 'OBJECT');
+					$m->printAfterSending	= false;
+					$this->data['pay-method']	= 'boleto';
+					$m->copyOnDb	= false;
+					$m->send($this->data);
+					
 					die();
 				}
 				
@@ -90,7 +96,6 @@
 					$_POST['expire-month']	= RegExp($_POST['expire-month'], '[0-9]{1,2}');
 					$_POST['expire-year']	= RegExp($_POST['expire-year'], '[0-9]{2,4}');
 					$_POST['card-number']	= RegExp(str_replace('.', '', $_POST['card-number']), '[0-9]{12,19}');
-					$_POST['card-number']	= '5555666677778884';
 					$_POST['security-code']	= RegExp($_POST['security-code'], '[0-9]{2,4}');
 					$_POST['card-name']		= substr(mysql_real_escape_string($_POST['card-name']), 0, 32);
 					$_GET['card-type']		= substr(RegExp($_GET['card-type'], '[a-zA-Z\ ]+'), 0, 24);
@@ -125,6 +130,8 @@
 						$options['id-order']	= $idOrder;
 						$_SESSION['shopping']['last-order-failed']	= $options;
 					}
+					$options['id-order']	= $idOrder;
+					
 					if ( $idOrder) {
 						require_once( SROOT ."engine/classes/cURL.php");
 						/***********************************************************
@@ -134,7 +141,7 @@
 						 ***********************************************************/
 						$c	= new cURL();
 						$response	= $c->post(
-							'https://teste.aprovafacil.com/cgi-bin/APFW/adorato/APC',
+							$this->getParam('payment-apfw-path'),
 							'&NumeroDocumento='.	$idOrder .
 							'&ValorDocumento='.		$options['price_total'] .
 							'&QuantidadeParcelas='.	substr('0000'.$_GET['parts'], -2) .
@@ -148,9 +155,13 @@
 							,
 							false
 						);
-						$response	= 'sucesso';
-						$transaction	= '';
-						if ( $response == 'sucesso') {
+						preg_match_all('/\<([a-z0-9]+)\>([^\<]+)?\<\/[a-z0-9]+\>/i', $response, $matches);
+						//print("<h1>Starting...</h1>".PHP_EOL);
+						//print("$response". PHP_EOL);
+						$response	= array_combine( $matches[1], $matches[2]);
+						//print("<pre>". print_r($response, 1) ."</pre>". PHP_EOL);
+						if ( $response['TransacaoAprovada'] == 'True') {
+							//print("<h1>FIM 1</h1>".PHP_EOL);
 							/***********************************************************
 							 *                                                         *
 							 *                    GATEWAY CONFIRM                      *
@@ -158,12 +169,15 @@
 							 ***********************************************************/
 							$c	= new cURL();
 							$response	= $c->post(
-								"https://teste.aprovafacil.com/cgi-bin/APFW/adorato/CAP?NumeroDocumento=$idOrder&$transaction",
+								$this->getParam('payment-cap-path') ."?NumeroDocumento=$idOrder",
 								'',
 								false
 							);
-							$response	= 'sucesso';
-							if ( $response == 'sucesso') {
+							preg_match_all('/\<([a-z0-9]+)\>([^\<]+)?\<\/[a-z0-9]+\>/i', $response, $matches);
+							//print("$response". PHP_EOL);
+							$response	= array_combine( $matches[1], $matches[2]);
+							//print("<pre>". print_r($response, 1) ."</pre>". PHP_EOL);
+							if ( strpos('#'.strtolower($response['ResultadoSolicitacaoConfirmacao']), 'confirmado') > 0 ) {
 								//altere o status para pedido em análise de crédito
 								mysql_query("
 									UPDATE
@@ -181,19 +195,25 @@
 								$_SESSION['shopping']	= array(
 									'last-order'	=> $options
 								);
+								//die('OK 1');
 								header('location: ../'. $GT8['cart']['receipt']['root']);
 								
 								require_once( SROOT .'engine/mail/Mail.php');
 								$m	= new Mail(23, 'OBJECT');
-								$m->printAfterSending	= false;
 								$m->copyOnDb	= true;
 								$this->data['id-order']	= $idOrder;
 								$this->data['to']		= array( $_SESSION['login']['login'], $_SESSION['login']['name']);
 								$m->send($this->data);
 								
+								$m	= new Mail(24, 'OBJECT');
+								$this->data['pay-method']	= 'cartão de crédito';
+								$m->copyOnDb	= false;
+								$m->send($this->data);
+								
 								die();
 							}
 						}
+						//die("<h1>FIM 2</h1>".PHP_EOL);
 					}
 					/***********************************************************
 					 *                                                         *
@@ -201,7 +221,7 @@
 					 *                                                         *
 					************************************************************/
 					if ( isset($_GET_['format']) && $_GET_['format']=='JSON') {
-						die('//#error: No momento, não foi possível efetuar o pagamento para esta compra. Confira as informações do cartão e tente novamente ou contate o serviço de atendimento ao consumidor: '. $GT8['phone-number'] . PHP_EOL);
+						die('//#error: No momento, não foi possível efetuar o pagamento para esta compra. Confira as informações do cartão e tente novamente ou contate o serviço de atendimento ao consumidor: '. $this->getParam('phone-comercial') .", ". $this->getParam('opening-hours') . PHP_EOL);
 					}
 					header('location: ./?erro=1');
 					die();

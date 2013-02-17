@@ -20,7 +20,7 @@
 			Se você não solicitou este e-mail, não se preocupe. Sua conta continua segura e ninguém terá acesso a ela. Existe a possibilidade de alguém ter digitado incorretamente um e-mail similar enquanto tentava redefinir sua própria senha.
 		</p>
 		<p>
-			Em caso de dúvidas, entre em contato conosco {{phone-number}}
+			Em caso de dúvidas, entre em contato conosco {{PARAM:phone-comercial}}, {{PARAM:opening-hours}}
 		</p>
 	";
 	$altBody	= '';

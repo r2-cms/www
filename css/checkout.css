@@ -71,6 +71,9 @@ body.receipt #eCartLocation img {
 	.cart-items .product {
 		
 	}
+		.cart-items .product > a {
+			height: 90px;
+		}
 	.cart-items .line-height {
 		line-height: 85px !important;
 	}
@@ -210,4 +213,8 @@ body.pay {
 }
 .receipt .sumary-items div.border-bottom:last-child {
 	border-bottom: none !important;
+}
+.text-extra-large {
+	font-size: 24px;
+	font-weight: bolder;
 }

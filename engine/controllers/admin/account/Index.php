@@ -3,12 +3,7 @@
 		require_once( "../../connect.php");
 		//die('Undefined GT8: a1i32->p4o1u1o0->ca1a5o6o->Home');
 	}
-	require_once( SROOT ."engine/functions/CheckLogin.php");
-	require_once( SROOT ."engine/functions/CheckPrivileges.php");
-	
-	CheckPrivileges( null, null, 'users/', 1);
 	require_once( SROOT .'engine/classes/CardLister.php');
-	
 	class Index extends CardLister {
 		public $name	= 'users';
 		public $orderFilter	= array(
@@ -27,6 +22,7 @@
 				<label title="Procurar por palavras chaves" ><span><input type="text" value="'. utf8_encode(addslashes(isset($_GET['q'])? $_GET['q']:'')) .'" name="q" class="gt8-update input-rounded-shadowed" /><small>keywords</small></span></label>
 			');
 			
+			$this->checkReadPrivileges();
 			$spath			= $this->getSPath($GT8['admin']['root'] . $GT8['admin']['account']['root']);
 			
 			//spath
@@ -60,7 +56,7 @@
 				die();
 			}
 		}
-		public function printCards($template) {
+		public function getCards($template) {
 			$this->options['sql']	= 'users.list';
 			$this->options['where']	= "AND u.level <= {$_SESSION['login']['level']}";
 			if ( $this->keywords) {
@@ -70,7 +66,7 @@
 				);
 			}
 			//$this->options['debug']	= 1;
-			parent::printCards($template);
+			return parent::getCards($template);
 		}
 	}
 ?>

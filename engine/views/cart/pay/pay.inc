@@ -36,7 +36,7 @@
 								<div class="border border-radius padding" >
 									<strong class="margin-bottom" >Boleto bancário</strong>
 									<img src="{{CROOT}}imgs/shopping/boleto-small.png" width="128" height="65" alt="" />
-									<span>R$ $$total_boleto$$ (-{{round({{desconto_boleto_percentual}}, 0)}}%)</span>
+									<span>R$ $$total_boleto$$<span class="hidden">(-{{round({{desconto_boleto_percentual}}, 0)}}%)</span></span>
 								</div>
 							</div>
 							<div class="item grid-2m bg-light border-radius box-shadow master-card" >

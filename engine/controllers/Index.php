@@ -549,10 +549,8 @@
 			
 			return $this->data['categories'];
 		}
-		public function getCards($template) {
+		public function setCards() {
 			$this->options['sql']	= 'explorer.list';
-			$this->options['format']	= 'TEMPLATE';
-			$this->options['template']	= $template;
 			$this->options['addSelect']	.= ', SUBSTRING_INDEX(SUBSTRING_INDEX(e.path, "/", 4), "/", -1) AS brand';
 			$this->options['addSelect']	.= ', SUBSTRING_INDEX(e.path, "/", -5) AS varname, e.filename AS imgname';
 			$this->options['addSelect']	.= ', SUBSTRING(e.path, 10) AS l_path';
@@ -584,14 +582,14 @@
 			$this->Pager	= Pager($this->options);
 			$this->data['foundRows']	= $this->Pager['foundRows'];
 			
-			$this->Pager['rows']	= str_replace(
-				array('0x0', 'privilege-r', '/type=directory',	'/type=file'),
-				array('@', 'semi-invisible', '/',				'?edit'),
-				$this->Pager['rows']
-			);
+			//$this->Pager['rows']	= str_replace(
+			//	array('0x0', 'privilege-r', '/type=directory',	'/type=file'),
+			//	array('@', 'semi-invisible', '/',				'?edit'),
+			//	$this->Pager['rows']
+			//);
 			$this->data['page']	= $this->Pager['page'];
 			$this->data['found-0-rows']	= $this->data['foundRows'] > 0? '0': '1';
-			return ($this->Pager['rows']);
+			$this->data['rows']	= $this->Pager['rows'];
 		}
 		public function getSpecialOffersField( $page, $field) {
 			if ( !isset($this->data['special-offers-'. $page])) {

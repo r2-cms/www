@@ -194,7 +194,6 @@
 				require_once( SROOT .'engine/functions/Pager.php');
 				$this->Pager	= Pager($this->options);
 			}
-			
 			return $this->Pager['rows'];
 		}
 		public function printCards( $template='') {
@@ -259,6 +258,9 @@
 			$this->toolbarItems	.= '</span>';
 		}
 		public function printSidebar() {
+			print($this->getSidebar());
+		}
+		public function getSidebar() {
 			$html	= '
 				<div class="sidebar left-pane" style="width:'. (isset($_COOKIE['explorer-sp-w'])? $_COOKIE['explorer-sp-w']: 270) .'px;" >
 			';
@@ -279,7 +281,7 @@
 			$html	.= '
 				</div>
 			';
-			print($html);
+			return $html;
 		}
 		public function printHead( $title, $jsContent='', $jsInclude=array(), $cssInclude=array(), $cssContent= '') {
 			

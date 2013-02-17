@@ -84,6 +84,9 @@
 		} else {
 			$error	= "//#error: Nome de usuário ou senha inválidos! ";
 		}
+		
+		$_SESSION['param-cache']		= array();
+		
 		if ( empty($error)) {
 			$_SESSION["login"]["logged"]		= true;
 			$_SESSION["login"]["login"]			= $row["login"];
@@ -150,6 +153,7 @@
 	}
 	//DEFAULT FLOW
 	if ( isset($_GET["logout"])) {
+		$_SESSION['param-cache']		= array();
 		if ( !headers_sent()) {
 			setcookie("cuser", $_COOKIE['cuser'], time()-(60*60*24*$_SESSION["login"]["daysToKeepLogged"]), "/");
 			setcookie("cpass", $_COOKIE['cpass'], time()-(60*60*24*$_SESSION["login"]["daysToKeepLogged"]), "/");

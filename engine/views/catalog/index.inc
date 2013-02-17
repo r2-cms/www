@@ -73,13 +73,14 @@
 						</div>
 					</div>{{/FOREACH}}
 				</div>
+				{{$this->setCards()}}
 				<div class="grid-9 m-grid-3 marginless clearfix-child" >
 					<div class="grid-12 margin-bottom bg-white box-shadow clearfix-child" >
 						<h3 class="clearfix-child margin-bottom-none hidden-{{found-0-rows}}" >
 							<span class="mobile-hidden float-left text-indent font-size-small" >{{foundRows}} calçados encontrados.</span>
 							<span class="e-select grid-3 m-grid-3 float-right font-size-small margin-top-mini margin-bottom-mini" >
 								<select name="order" class="link-click-unique reset-index" >
-									{{METHOD:getOrderOptions}}{{/METHOD}}
+									{{$this->getOrderOptions()}}
 								</select>
 								<span class="button group-button" ><strong>&nbsp;</strong><img src="{{CROOT}}imgs/gt8/arrow-down-mini.png" alt="" /></span>
 							</span>
@@ -90,7 +91,7 @@
 						</h3>
 					</div>
 					<div class="grid-12 marginless clearfix-child" >
-						{{METHOD:getCards}}
+						{{FOREACH:rows}}
 						<a title="##title##" href="{{CROOT}}{{l_path}}" class="grid-4 t-grid-3 m-grid-3 margin-bottom padding-bottom-small card bg-white box-shadow text-decoration-none text-align-center" >
 							<strong class="brand text-uppercase off off-{{off}}" >##brand##</strong>
 							<span class="bt-admin bt-admin-{{bt_admin}}" >&nbsp;</span>
@@ -101,7 +102,7 @@
 							<strong class="price_selling currency" >R$ $$price_selling$$</strong>
 							<small class="price_parts currency" >{{price_parts}} x R$ $$price_finantial$$</small>
 						</a>
-						{{/METHOD}}
+						{{/FOREACH}}
 					</div>
 					<div class="grid-12 margin-bottom bg-white box-shadow clearfix-child hidden-{{found-0-rows}}" >
 						<h3 class="clearfix-child margin-bottom-none" >

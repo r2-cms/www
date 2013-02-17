@@ -70,7 +70,6 @@
 				)
 			));
 			$row	= $row['rows'][0];
-			
 			if ( !$row) {
 				//array_shift($paths);
 				$path	= join('/', $paths);
@@ -139,7 +138,8 @@
 			if ( isset($_SESSION['login']['level']) && $_SESSION['login']['level'] > 5) {
 				global $GT8;
 				
-				$this->data['bt-admin']	= '<a class="bt-admin" title="'. $this->data['id'] .'" href="'. CROOT . $GT8['admin']['root'] . $this->data['fullpath'] .'?edit" ><img src="'. CROOT .'imgs/gt8/admin-icon.png" width="28" height="24" alt="[acesso administrativo]" /></a>';
+				$fullpath	= str_replace('downloads/catalogo/', 'explorer/catalogo/', $this->data['fullpath']);
+				$this->data['bt-admin']	= '<a class="bt-admin" title="'. $this->data['id'] .'" href="'. CROOT . $GT8['admin']['root'] . $fullpath .'?edit" ><img src="'. CROOT .'imgs/gt8/admin-icon.png" width="28" height="24" alt="[acesso administrativo]" /></a>';
 			} else {
 				$this->data['bt-admin']	= '';
 			}

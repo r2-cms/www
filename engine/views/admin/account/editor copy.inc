@@ -40,7 +40,7 @@
 								<strong class="col-5" >Nível</strong>
 								<span class="col-6 e-select" >
 									<select name="level" class="gt8-update" >
-										{{?$this->createComboLevels({{level}})}}
+										{{$this->getComboLevel({{level}})}}
 									</select>
 									<span class="button group-button" >
 										<strong>Escolha uma opção</strong>

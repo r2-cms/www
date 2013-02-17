@@ -15,10 +15,10 @@
 			<div id="eBtGoPreviousPage" class="go-page-button" ></div>
 			<div class="body" >
 				<div class="overflow-view" >
-				<?php $this->printCards('
+				{{METHOD:getCards}}
 					<div id="eModule-{{card_index}}-{{page_index}}" class="card" >
 						<div class="spacing bg-linear-gray" >
-							<a href="{{module}}/" >
+							<a href="{{url}}" >
 								<img src="{{img}}" alt="##sumary##" />
 							</a>
 							<span>##sumary##</span>
@@ -26,7 +26,7 @@
 							<div>&nbsp;</div>
 						</div>
 					</div>
-			'); ?>
+				{{/METHOD}}
 				</div>
 			</div>
 			<div id="eBtGoNextPage" class="go-page-button" ></div>

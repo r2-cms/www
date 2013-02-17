@@ -827,6 +827,16 @@ var GT8	= {
 						}
 					}
 					this.ret	= ret;
+					
+					if ( this.position == 'center') {//como a mensagem pode alterar o tamanho da caixa, ajustemos a posição do growl
+						growl.obj.setStyle({
+							left: '50%',
+							top: '50%',
+							marginLeft: -growl.obj.offsetWidth/2,
+							marginTop: -growl.obj.offsetHeight
+						});
+					}
+					
 					window.setTimeout(function(){
 						if ( growl) {
 							growl.hide();
