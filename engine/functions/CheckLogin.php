@@ -203,7 +203,7 @@
 		}
 		require_once( SROOT .'engine/controllers/account/Login.php');
 		$Login	= new Login();
-		GT8::printView(
+		$Login->printView(
 			(Login::$includeCustomView? Login::$includeCustomView: SROOT .'engine/views/'. ( strpos('#'.$_SERVER['REQUEST_URI'], '/'.$GT8['admin']['root'])>-1?'admin/':'' ) .'account/login.inc'),
 			array(),
 			null,

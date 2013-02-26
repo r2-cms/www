@@ -135,20 +135,32 @@ header.main {
 				z-index: 1;
 			}
 				header.main > nav a.logo img {
+					width: 157px;
+					height: 99px;
 				}
 		header.main .empty-space {
 			height: 40px;
 		}
 		header.main .fast-links {
 			position: relative;
-			height: 40px;
 			overflow: hidden;
-			line-height: 44px;
+			line-height: 36px;
 			color: #999999;
 			font-size: small;
 			font-weight: normal;
 			text-align: center;
 		}
+			header.main .fast-links a, header.main .fast-links span {
+				display: block;
+			}
+		header.main .fast-links-tablet {
+			margin-top: -10px;
+			text-align: right;
+			line-height: 30px;
+		}
+			header.main .fast-links-tablet a, header.main .fast-links-tablet span {
+				display: inline
+			}
 		header.main .bts-fast-access {
 			background: #EEE;
 			background-image: linear-gradient(#FFFFFF, #D7D7D7);

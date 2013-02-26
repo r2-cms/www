@@ -111,7 +111,7 @@
 			print($html);
 			
 		}
-		public function printManagerModal() {
+		public function printManagerModal($options=array()) {
 			parent::printManagerModal(array(
 				'html'		=> ''
 			));

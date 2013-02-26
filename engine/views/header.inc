@@ -1,47 +1,53 @@
 <header class="main clearafix-child" >
 				<nav class="top top-1 clearfix-child" >
 					<div class="row-12 fluid-12 clearfix-child" >
-						<a href="{{CROOT}}./" class="logo float-left grid-2" >
+						<a href="{{CROOT}}./" class="omega logo float-left grid-2 t-grid-2" >
 							<span>
-								<img src="{{CROOT}}imgs/logo-large.png" alt="[logotipo]" class="display-block margin-top-small" width="109" height="69" />
+								<img src="{{CROOT}}imgs/logo-large.png" alt="[logotipo]" class="display-block margin-top-small" />
 							</span>
 						</a>
-						<div class="empty-space grid-2 margin-top" ></div>
-						<div class="bts-fast-access grid-8 margin-top clearfix-child" >
-							<a id="eBtShoppingCart" href="{{CROOT}}{{GT8:cart.root}}" class="grid-4 marginless" >
-								<span class="clearfix-child" >
-									<img src="{{CROOT}}imgs/cart-small.png" alt="[ícone meu carrinho]" width="30" height="27" />
-									<span>{{GT8:cart.title}}</span>
-									<strong class="float-right margin-right-m" >{{SESSION:shopping.total-items|}}</strong>
-								</span>
-							</a>
-							<a id="eBtAccountOrders" href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}" class="grid-3h marginless" >
-								<span class="clearfix-child" >
-									<img src="{{CROOT}}imgs/account-orders-small.png" alt="[ícone meus pedidos]" width="30" height="27" />
-									<span>{{GT8:account.orders.title}}</span>
-								</span>
-							</a>
-							<a id="eBtAccountHome" href="{{CROOT}}{{GT8:account.root}}" class="grid-4h marginless" >
-								<span class="clearfix-child" >
-									<img src="{{CROOT}}imgs/account-home-small.png" alt="[ícone meu cadastro]" width="30" height="27" />
-									<span>{{SESSION:login.name|Acesse sua conta}}</span>
-								</span>
-							</a>
-							<a id="eBtAccountLeave" href="{{CROOT}}?logout" class="grid {{IF:!$_SESSION['login']['id']}}hidden{{/IF}}" >
-								SAIR
-							</a>
+						<div class="fast-links desktop-visible grid-2 marginless" >
+							<a href="{{CROOT}}institucional/" class="" >Institucional</a>
+							<a href="{{CROOT}}{{GT8:atendimento.root}}" class="" >Atendimento</a>
+							<span class="marginless" >{{PARAM:phone-comercial}}</span>
+						</div>
+						<div class="grid-8 t-grid-4 alpha clearfix-child" >
+							<div class="bts-fast-access grid-12 margin-top-small clearfix-child" >
+								<a id="eBtShoppingCart" href="{{CROOT}}{{GT8:cart.root}}" class="grid-4 marginless" >
+									<span class="clearfix-child" >
+										<img src="{{CROOT}}imgs/cart-small.png" alt="[ícone meu carrinho]" width="30" height="27" />
+										<span>{{GT8:cart.title}}</span>
+										<strong class="float-right margin-right-m" >{{SESSION:shopping.total-items|}}</strong>
+									</span>
+								</a>
+								<a id="eBtAccountOrders" href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}" class="grid-3h marginless" >
+									<span class="clearfix-child" >
+										<img src="{{CROOT}}imgs/account-orders-small.png" alt="[ícone meus pedidos]" width="30" height="27" />
+										<span>{{GT8:account.orders.title}}</span>
+									</span>
+								</a>
+								<a id="eBtAccountHome" href="{{CROOT}}{{GT8:account.root}}" class="grid-4h marginless" >
+									<span class="clearfix-child" >
+										<img src="{{CROOT}}imgs/account-home-small.png" alt="[ícone meu cadastro]" width="30" height="27" />
+										<span>{{SESSION:login.name|Acesse sua conta}}</span>
+									</span>
+								</a>
+								<a id="eBtAccountLeave" href="{{CROOT}}?logout" class="grid {{IF:!$_SESSION['login']['id']}}hidden{{/IF}}" >
+									SAIR
+								</a>
+							</div>
+							<label class="main-search input-button grid-12 margin-top-small margin-bottom-small" >
+								<input type="text" value="{{GT8:search-key-words}}" name="q" />
+								<small>Nome, código, descrição, etc</small>
+								<a href="?q=" class="href-button" ><span class="padding-left-medium padding-right-medium" >BUSCA</span></a>
+							</label>
 						</div>
 						<div class="clearfix" ></div>
-						<div class="fast-links grid-4 margin-bottom" >
-							<a href="{{CROOT}}institucional/" class="grid-4 marginless t-grid-3" >Institucional</a>
-							<a href="{{CROOT}}{{GT8:atendimento.root}}" class="grid-4 marginless t-grid-3" >Atendimento</a>
-							<span class="grid-4 marginless tablet-hidden" >{{PARAM:phone-comercial}}</span>
+						<div class="fast-links fast-links-tablet desktop-hidden grid-12 marginless text-align-right" >
+							<a href="{{CROOT}}institucional/" class="padding-h" >Institucional</a>
+							<a href="{{CROOT}}{{GT8:atendimento.root}}" class="padding-h" >Atendimento</a>
+							<span class="padding-h" >{{PARAM:phone-comercial}}</span>
 						</div>
-						<label class="main-search input-button grid-8 margin-bottom" >
-							<input type="text" value="{{GT8:search-key-words}}" name="q" />
-							<small>Nome, código, descrição, etc</small>
-							<a href="?q=" class="href-button" ><span class="padding-left-medium padding-right-medium" >BUSCA</span></a>
-						</label>
 					</div>
 				</nav>
 				<nav class="menu bg-light MenuDropDown" >

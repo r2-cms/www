@@ -15,11 +15,9 @@
 		if ( isset($Index->data)) {
 			$Data	= array_merge($Index->data, $Data);
 		}
-		GT8::printView(
+		$Index->printView(
 			SROOT.'engine/views/admin/explorer/index.inc',
-			$Data,
-			null,
-			$Index
+			$Data
 		);
 		die();
 	}
@@ -382,13 +380,13 @@
 				}
 			}
 		}
-		public function update() {
+		public function update( &$field='', &$value='') {
 			//sleep(5);
 			require_once( SROOT .'engine/queries/explorer/updateFile.php');
 			updateFile($this->id, $_GET['field'], isset($_GET['value'])? $_GET['value']: $_POST['value'], 'JSON');
 			exit;
 		}
-		public function newFile() {
+		public function newFile( &$field='', &$value='') {
 			require_once( SROOT .'engine/queries/explorer/createNewFile.php');
 			$qsa	= '';
 			foreach( $_GET as $name=>$value) {

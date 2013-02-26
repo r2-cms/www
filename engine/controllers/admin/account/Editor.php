@@ -80,7 +80,7 @@
 				}
 			}
 		}
-		public function update( $field, $value) {
+		public function update( &$field='', &$value='') {
 			require_once(SROOT.'engine/queries/users/UpdateUsers.php');
 			new UpdateUsers(array(
 				"id"		=> $this->id,
@@ -90,7 +90,7 @@
 			));
 			die();
 		}
-		public function newFile() {
+		public function newFile( &$field='', &$value='') {
 			parent::newFile( $field, $value);
 			die();
 		}
@@ -204,7 +204,7 @@
 			
 			print($html);
 		}
-		public function printManagerModal() {
+		public function printManagerModal($options=array()) {
 			global $GT8;
 			
 			parent::printManagerModal(array(

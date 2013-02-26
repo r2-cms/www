@@ -13,20 +13,20 @@
 	<body class="{{modal-class}}" >
 		<div id="eMain" >
 			<?php
-				$Index->printHeader(array(
+				$this->printHeader(array(
 					'title'		=> 'Explorer',
-					'directory'	=> $Index->getDirLocation(),
-					'toolbar'	=> $Index->toolbarItems
+					'directory'	=> $this->getDirLocation(),
+					'toolbar'	=> $this->toolbarItems
 				));
 			?>
 			<div class="body SplitPane-horizontal" >
-				<?php $Index->printSidebar(); ?>
+				<?php $this->printSidebar(); ?>
 				<div class="knob-pane" >&nbsp;</div>
 				<div class="content cards row right-pane" >
 					<div class="clear invisible height-15" >&nbsp;</div>
 					<?php
-					$modalClass	= $Index->isModal? ' hidden': '';
-					$Index->printCards('<a class="card col-'. ($Index->isModal?4:6) .' locked-{{locked}} allow- privilege-" href="{{filename}}/type={{type}}" title="##title##" id="img-{{id}}" >
+					$modalClass	= $this->isModal? ' hidden': '';
+					$this->printCards('<a class="card col-'. ($this->isModal?4:6) .' locked-{{locked}} allow- privilege-" href="{{filename}}/type={{type}}" title="##title##" id="img-{{id}}" >
 						<span class="hidden" >{{all-fields}}</span>
 						<em class="user'. $modalClass .'" title="{{id_user}}" >##user##</em>
 						<strong class="title" >##title##</strong>
@@ -40,7 +40,7 @@
 				<div class="clear" >&nbsp;</div>
 			</div>
 			<footer class="footer-clear-height" >&nbsp;</footer>
-			<?php $Index->printFooter(); ?>
+			{{$this->getFooter()}}
 		</div>
 		<!-- CUSTOMS -->
 		<div id="eFolderEdit" class="teste modal input-validation" >

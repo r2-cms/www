@@ -10,7 +10,7 @@
 	$GT8	= $_SESSION['GT8'];
 	define( 'SROOT', substr(__FILE__, 0, strlen(__FILE__)-strlen('engine/connect.php')) );
 	define( 'DS', DIRECTORY_SEPARATOR );
-	define( 'CROOT', str_repeat('../', (count(explode('/', substr(substr($_SERVER['REQUEST_URI'], 0, (strpos($_SERVER['REQUEST_URI'], '?')?strpos($_SERVER['REQUEST_URI'], '?'):strlen($_SERVER['REQUEST_URI']))), 1)))-1)  -  (count(explode('/', substr(SROOT, strlen($_SERVER['DOCUMENT_ROOT'])+1)))-(DS=='/'? 1: -1))   )); require_once( SROOT.'engine/preferences/user.php');
+	define( 'CROOT', str_repeat('../', (count(explode('/', substr(substr($_SERVER['REQUEST_URI'], 0, (strpos($_SERVER['REQUEST_URI'], '?')?strpos($_SERVER['REQUEST_URI'], '?'):strlen($_SERVER['REQUEST_URI']))), 1)))-1)  -  (count(explode('/', substr(SROOT, strlen($_SERVER['DOCUMENT_ROOT'])+1)))-(DS=='/'? 1: 1))   )); require_once(SROOT .'../9a27o1e1a1o0.php');
 	define( 'AROOT', CROOT . $GT8['admin']['root']);
 	
 	if ( isset($_GET['analytics']) && $_GET['analytics']=='GT8' && (isset($GT8['analytics']) && $GT8['analytics']===false)) {

@@ -158,7 +158,15 @@
 					$crr['CROOT']	= CROOT;
 					$crr	= array_merge($crr, $_SESSION['login']);
 					//$crr['sumary']	= utf8_decode($crr['sumary']);
-					$crr['shortcut']	= $crr['module']['shortcut'];
+					if ( empty($crr['shortcut'])) {
+						for ( $j=0; $j<count($Base); $j++) {
+							
+							if ( $Base[$j]['module'] === $crr['module']) {
+								$crr['shortcut']	= $Base[$j]['shortcut'];
+								break;
+							}
+						}
+					}
 					$html	.= $this->getMatchPairs($template, $crr);
 				}
 				$pindex	= $crr['page_index'];

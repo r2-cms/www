@@ -69,6 +69,7 @@
 	$data['price_total']	= $Order['price_total'];
 	$data['pay-method']		= $Pay[0]['type'];
 	$orderPrefix			= GT8::getParam('order-number-prefix','system');
+	$phoneNumber			= GT8::getParam('phone-comercial') .", ". GT8::getParam('opening-hours');
 	$content = "
 		<p style='padding:10px; padding-left:20px; ' >
 			##message##
@@ -106,7 +107,7 @@
 			<span>CEP: {$Order['zip']}</span><br /><br />
 		</p>
 		<br>
-		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número {{PARAM:phone-comercial}}, {{PARAM:opening-hours}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
+		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número $phoneNumber, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>

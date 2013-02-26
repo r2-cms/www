@@ -56,7 +56,7 @@
 				die();
 			}
 		}
-		public function getCards($template) {
+		public function getCards($template='') {
 			$this->options['sql']	= 'users.list';
 			$this->options['where']	= "AND u.level <= {$_SESSION['login']['level']}";
 			if ( $this->keywords) {

@@ -35,12 +35,12 @@
 			**/
 			print( GT8::getMatchPairs( $template, $data));
 		}
-		public function getHTML( $template, $data) {
+		public static function getHTML( $template, $data) {
 			$template	= GT8::getMatchPairs($template, $data);
 			
 			return $template;
 		}
-		protected function getMatchPairs( $text, $data) {
+		protected static function getMatchPairs( $text, $data) {
 			//bidimensional arrays
 			foreach( $data as $name=>$value) {
 				
@@ -969,7 +969,7 @@
 			}
 			return false;
 		}
-		public function isAdmin() {
+		public static function isAdmin() {
 			global $GT8;
 			$b	= false;
 			
@@ -1040,7 +1040,7 @@
 		public function prnt($field, $addSlashes=false) {
 			print($this->get($field, $addSlashes));
 		}
-		public function getParam( $name, $category='', $idUser=-1) {
+		public static function getParam( $name, $category='', $idUser=-1) {
 			$idUser	= (integer)$idUser;
 			if ( $idUser==-1 && isset($_SESSION['login']['id']) && $_SESSION['login']['id']) {
 				$idUser	= $_SESSION['login']['id'];
@@ -1171,7 +1171,12 @@
 			}
 		}
 		static function enterSSL() {
-			if ($_SERVER['DOCUMENT_ROOT'] != '/home/robson/sites/r2-cms.com/www/trunk' && $_SERVER['DOCUMENT_ROOT'] != '/Users/Roger/Sites' && (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "") ) {
+			if (
+				$_SERVER['DOCUMENT_ROOT'] != '/home/robson/sites/r2-cms.com/www/trunk' &&
+				$_SERVER['DOCUMENT_ROOT'] != '/Users/Roger/Sites' &&
+				!strpos('#'. $_SERVER['DOCUMENT_ROOT'], 'C:/xampp/htdocs') &&
+				(!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "")
+			) {
 				$redirect = "https://". $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 				header("Location: $redirect");
 				die();

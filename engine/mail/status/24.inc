@@ -69,7 +69,7 @@
 	$data['pay-method']		= $Pay[0]['type'];
 	$orderPrefix			= GT8::getParam('order-number-prefix','system');
 	$content = "
-		<p>Um pedido de compra foi registrado no sistema sob o número <strong>$orderPrefix{{id-order}}</strong>, realizado em //now\\\\ e est&aacute;  aguardando an&&aacute;lise de cr&eacute;dito.</p>
+		<p>Um pedido de compra foi registrado no sistema sob o número <strong>$orderPrefix{{id-order}}</strong>, realizado em //now\\\\ e est&aacute;  aguardando an&aacute;lise de cr&eacute;dito.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>

@@ -126,7 +126,7 @@
 			}
 			$this->options	= $options;
 		}
-		public function isAdmin() {
+		public static function isAdmin() {
 			global $GT8;
 			if ( strpos('#'.$_SERVER['REQUEST_URI'], '/'.$GT8['admin']['root']) ) {
 				$this->isAdmin	= true;

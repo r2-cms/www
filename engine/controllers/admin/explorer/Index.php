@@ -306,7 +306,7 @@
 				) AS $asName
 			";
 		}
-		public function printCards($template) {
+		public function printCards($template='') {
 			$this->options['sql']	= 'explorer.list';
 			$this->options['bts']		= '';
 			$this->options['format']	= 'TEMPLATE';

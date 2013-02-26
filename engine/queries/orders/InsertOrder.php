@@ -40,7 +40,7 @@
 		$priceTotal	= (float)$options['price_total'];
 		$freight	= (float)$options['freight'];
 		$format		= isset($options['format'])? $options['format']: 'OBJECT';
-		$analytics	= (isset($options['analytics']) && $options['analytics']) || !isset($options['analytics'])? $_SESSION['analytics']['id']: 0;
+		$analytics	= (isset($options['analytics']) && $options['analytics']) || !isset($options['analytics'])? (integer)$_SESSION['analytics']['id']: 0;
 		
 		if ( !$idUser) {
 			if ( $options['format'] == 'JSON') {

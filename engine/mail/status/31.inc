@@ -16,6 +16,7 @@
 	}
 	$to		= array($Order['login'], $Order['name']);
 	$data['name']			= $Order['name'];
+	$phoneNumber			= GT8::getParam('phone-comercial') .", ". GT8::getParam('opening-hours');
 	$content = "
 		<p style='padding:10px; padding-left:20px; ' >&nbsp;</p>
 		<p>Prezado(a) ##name##,</p>
@@ -29,7 +30,7 @@
 			Embora este tipo de incidente esteja fora do alcance da empresa Salão do Calçado, sentimo-nos responsáveis pelo ocorrido e providenciaremos um novo pedido, com os mesmos produtos, e o encaminharemos ao seu endereço.
 		</p>
 		<p>Estamos com nossa atenção concentrada em sua entrega e providenciaremos que seu novo pedido seja entregue o quanto antes.</p>
-		<p>Pedimos desculpas pelo ocorrido e colocamo-nos à disposição para dirimir quaisquer dúvidas, que você talvez tenha, pelo número {{PARAM:phone-comercial}}, {{PARAM:opening-hours}}, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
+		<p>Pedimos desculpas pelo ocorrido e colocamo-nos à disposição para dirimir quaisquer dúvidas, que você talvez tenha, pelo número $phoneNumber, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
 		<p>
 			<br>&nbsp;<br>
 		</p>

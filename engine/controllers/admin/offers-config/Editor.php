@@ -84,7 +84,7 @@
 			}
 			$this->data['cards']	= $rows;
 		}
-		public function update( $field, $value) {
+		public function update( &$field='', &$value='') {
 			
 		}
 		private function checkActionRequest() {

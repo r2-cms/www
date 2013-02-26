@@ -278,7 +278,8 @@
 		if ( $mime) {
 			header("Content-Type: $mime");
 			if ( $useView) {
-				GT8::printView(SROOT.'engine/views/'.$fileviewer);
+				$gt8	= new GT8();
+				$gt8->printView(SROOT.'engine/views/'.$fileviewer);
 			} else {
 				print(file_get_contents(SROOT.'engine/views/'.$fileviewer));
 			}
