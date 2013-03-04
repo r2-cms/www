@@ -1,0 +1,136 @@
+.imgC {
+	position: relative;
+	height: 380px;
+	text-align: center;
+	border: 1px solid #CCC;
+}
+body.modal-window .imgC {
+	height: 246px;
+}
+.imgC img.ttl{
+	width: auto;
+	height: 100%;
+}
+.imgC img.ltt {
+	width: 100%;
+	height: auto;
+}
+.imgC a.preview {
+	position: absolute;
+	bottom: 0px;
+	right: 35px;
+	width: 32px;
+	height: 32px;
+	z-index: 10;
+	background: transparent url(../../../imgs/gt8/search-small.png) no-repeat center;
+}
+.imgC div.glass-lock {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: #FFF;
+	opacity: 0.3;
+	z-index: 9;
+}
+.attributes > .card {
+	overflow: visible;
+}
+.attributes .line.cursor-pointer {
+	position: relative;
+	transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+}
+	.attributes .line.cursor-pointer:hover {
+		background: #F2F2F2;
+		color: #000;
+	}
+	.attributes .delete-confirm.line.cursor-pointer:hover {
+		background: #FFF2F2;
+		color: #600;
+	}
+/*attribute exclusion*/
+.attributes .att {
+	position: relative;
+}
+	.attributes .att img {
+		position: absolute;
+		top: 5px;
+		left: -15px;
+		visibility: hidden;
+		opacity:  0;
+		transition: all 0.5s;
+		-moz-transition: all 0.5s;
+		-webkit-transition: all 0.5s;
+	}
+	.attributes .att span {
+		display: block;
+		position: relative;
+		left: 0px;
+		transition: all 0.5s;
+		-moz-transition: all 0.5s;
+		-webkit-transition: all 0.5s;
+	}
+	.attributes .pfx {
+		text-align: right;
+	}
+	.attributes .typ {
+		position: static;
+	}
+		.attributes .typ a.href-button {
+			position: absolute;
+			top: 0;
+			opacity: 0;
+			visibility: hidden;
+			right: -30px;
+			line-height: inherit;
+			transition: all 0.5s;
+			-moz-transition: all 0.5s;
+			-webkit-transition: all 0.5s;
+		}
+			.attributes .typ a.href-button span {
+				line-height: inherit;
+				font-size: small;
+			}
+		.attributes .typ img {
+			position: absolute;
+			right: 10px;
+			top: 5px;
+		}
+			.attributes .typ > span.e-select {
+				width: inherit;
+			}
+	/*first step (show)*/
+	.attributes .delete-visible .att img {
+		left: -10px;
+		opacity: 1;
+		visibility: visible;
+	}
+	.attributes .delete-visible .att span {
+		left: 17px;
+	}
+	/*second step (confirmation)*/
+	.attributes .delete-confirm .att img {
+		transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+	}
+	.attributes .delete-confirm .typ a.href-button {
+		right: 0px;
+		opacity: 1;
+		visibility: visible;
+	}
+
+
+
+
+
+
+
+
+
+
+
+

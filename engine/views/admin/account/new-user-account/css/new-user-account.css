@@ -1,0 +1,12 @@
+.Editor-new-item {
+	padding: 30px;
+}
+header.admin {
+	z-index: 1001;
+}
+footer.main {
+	z-index: 1001;
+}
+body .hidden {
+	display: none;
+}
