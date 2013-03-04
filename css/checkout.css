@@ -169,8 +169,16 @@ footer.main > .bottom > .row-1 {
 		box-shadow: 0 1px 5px #CCC;
 	}
 		.address-holder a.card .padding {
-			height: 136px;
+			/*height: 136px;*/
 		}
+			.address-holder a.card .padding span.bt-buy {
+				border: 1px solid #77C;
+				color: #FFF;
+				text-shadow: 0 -1px 1px #333;
+				text-align: center;
+				line-height: 30px;
+				border-radius: 4px;
+			}
 /*********************************** PAY **************************************/
 body.pay {
 	
@@ -196,6 +204,9 @@ body.pay {
 				margin: 0 auto 10px;
 				height: 65px;
 				width: auto;
+			}
+			body.pay .chooser .item span {
+				display: block;
 			}
 			body.pay .chooser .item span {
 				display: block;

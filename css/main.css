@@ -453,7 +453,7 @@ a.href-button-green span:hover {
 	background-color: #CAFF5B;
 	background-color: rgba( 202, 255, 91, 0.45);
 }
-a.href-button-blue {
+a.href-button-blue, .href-button-blue {
 	background: #4C97DF;
 	background-image: linear-gradient( top, #4C97DF, #539EDF 48%, #4692DE 52%, #3176D5);
 	background-image: -ms-linear-gradient( top, #4C97DF, #539EDF 48%, #4692DE 52%, #3176D5);

@@ -9,10 +9,7 @@ h1 {
 	border-bottom: 1px solid #CCC;
 }
 	.banner .price {
-		font-family: 'Georgia', serif, "Trebuchet MS";
 		font-size: 3em;
-		color: #8EDB1B;
-		text-shadow: 1px 1px 0 #333, 2px 2px 3px #666;
 	}
 	.banner #eMagnifierC {
 		position: absolute;
@@ -42,8 +39,11 @@ h1 {
 		position: relative;
 		z-index: auto;
 	}
+		.banner .image-preview, .banner .info .pay-methods strong {
+			font-size: 20px;
+		}
 
-.href-button.href-button-green.bt-buy > span {
+#eBtBuy > span {
 	line-height: 50px;
 	height: 50px;
 }
