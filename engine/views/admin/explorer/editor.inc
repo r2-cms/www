@@ -119,46 +119,44 @@
 							</div>
 						</div>
 						<div class="card attributes input-validation line-height" >
-							<div class="card resumo line-height over <?php print($this->type=='file'? 'hidden': ''); ?> clearfix-child" >
-								<div class="line bg-head" >
-									<div class="col-4" title="Nome do atributo" ><strong>Atributo</strong></div>
-									<div class="col-3" title="Quem poderá visualizar este atributo" ><strong>Privilégio</strong></div>
-									<div class="col-3" title="Tipo de valor permitido" ><strong>Definição</strong></div>
-									<div class="col-2" title="Prefixo" ><strong>Prefixo</strong></div>
-									<div class="col-2" title="Sufixo" ><strong>Sufixo</strong></div>
+							<div class="card resumo line-height over <?php print($this->type=='file'? 'hidden': ''); ?> clearfix-child row-12 fluid-12 fullwidth clearfix-child" >
+								<div class="grid-12 bg-head" >
+									<div class="grid-4" title="Nome do atributo" ><strong>Atributo</strong></div>
+									<div class="grid-2" title="Quem poderá visualizar este atributo" ><strong>Privilégio</strong></div>
+									<div class="grid-4" title="Tipo de valor permitido" ><strong>Definição</strong></div>
+									<div class="grid-1" title="Prefixo" ><strong>Prefixo</strong></div>
+									<div class="grid-1" title="Sufixo" ><strong>Sufixo</strong></div>
 								</div>
 								<?php $this->printAttributes('
-									<div class="line cursor-pointer" id="e-attr-{{id}}" >
-										<div class="att col-4" >
+									<div class="grid-12 line cursor-pointer" id="e-attr-{{id}}" >
+										<div class="att grid-4 overflow" >
 											<img src="{{CROOT}}imgs/gt8/delete-aqua-small.png" width="24" height="24" alt="[excluir]" />
 											<span>[[attribute]]</span>
 										</div>
-										<div title="{{level}}" class="lvl col-3" >{{level}}</div>
-										<div title="{{type}}" class="typ col-3" >##type##</div>
-										<div class="pfx col-2" >##prefix##</div>
-										<div class="sfx col-2" >##suffix##</div>
-										<div class="clear"></div>
+										<div title="{{level}}" class="lvl grid-2 overflow" >{{level}}</div>
+										<div title="{{type}}" class="typ grid-4 overflow" >##type##</div>
+										<div class="pfx grid-1 overflow" >##prefix##</div>
+										<div class="sfx grid-1 overflow" >##suffix##</div>
 									</div>
 									');
 								?>
-								<div class="clear" ></div>
 							</div>
 							<div class="card resumo line-height over <?php print($this->type=='file'? '': 'hidden'); ?> clearfix-child" >
 								<div class="line bg-head margin-bottom-medium" >
-									<div class="col-4" title="Nome do atributo" ><strong>Atributo</strong></div>
+									<div class="col-5" title="Nome do atributo" ><strong>Atributo</strong></div>
 									<div class="col-2" title="Prefixo" ><strong>Prefixo</strong></div>
 									<div class="col-5" title="Valor permitido" ><strong>Valor</strong></div>
-									<div class="col-2" title="Sufixo" ><strong>Sufixo</strong></div>
+									<div class="col-1" title="Sufixo" ><strong>Suf.</strong></div>
 								</div>
 								<?php $this->printAttributesValue('
 									<label class="line attr-value clearfix-child" id="e-attr-{{id_attributes}}-{{id_explorer}}" >
-										<strong class="att col-4" >##attribute##</strong>
+										<strong class="att col-5" >##attribute##</strong>
 										<strong class="pfx col-2" >##prefix##&nbsp;</strong>
 										<span class="typ col-5 editable-{{editable}}" >
 											{{input}}
 											<small>&nbsp;</small>
 										</span>
-										<strong class="sfx col-2" >##suffix##&nbsp;</strong>
+										<strong class="sfx col-1" >##suffix##&nbsp;</strong>
 										<span class="clear" >&nbsp;</span>
 									</label>
 									');
@@ -215,10 +213,7 @@
 				<span id="eAttrLevelChooser" class="line e-select col-10 overflow-visible" >
 					<select >
 						<option value="0" >Visualização permitida a usuário:</option>
-						<?php
-							require_once( SROOT.'engine/functions/CreateComboLevels.php');
-							print(CreateComboLevels());
-						?>
+						{{$this->createComboLevels()}}
 					</select>
 					<span class="button group-button"><strong>Visualização permitida a usuário:</strong><img src="{{CROOT}}imgs/gt8/arrow-down-mini.png" alt="" /></span>
 				</span>

@@ -61,13 +61,19 @@
 							$codFamily	= $codFamily[2];
 							$codFamily	= mysql_fetch_array(mysql_query("SELECT e.code FROM gt8_explorer e WHERE e.path = 'catalogo/calcados/' AND e.filename = '$codFamily' "));
 							$codFamily	= substr('00'. strtoupper($codFamily[0]), -2);
-							$tamanho	= '00';
-							for ( $i=0; $i<count($this->data['attributes-value']); $i++) {
-								if ( $this->data['attributes-value'][$i]['tamanho'] === 'Tamanho') {
-									$tamanho	= $this->data['attributes-value'][$i]['value'];
-									break;
-								}
-							}
+							$tamanho	= Pager(array(
+								'sql'	=> 'explorer.list-attributes-value',
+								'where'	=> '
+									AND a.id_dir IN ('. str_replace('/', ',', substr($this->Pager['rows'][0]['dirpath'], 0, -1)) .')
+									AND a.attribute = "tamanho"
+								',
+								'replace'	=> array(
+									array('vIn.id_explorer = vIn.id_explorer', 'vIn.id_explorer = '. $this->Pager['rows'][0]['id'])
+								),
+								'foundRows'	=> 1,
+								'limit'	=> 1
+							));
+							$tamanho	= $tamanho['rows'][0]['value'];
 							$price	= mysql_fetch_array(mysql_query("SELECT e.price_cost FROM gt8_explorer e WHERE e.id = ". $this->data['id_dir']));
 							$price	= $price[0].'';
 							$price	= substr('000'. substr($price, 0, strpos($price, '.')), -3);

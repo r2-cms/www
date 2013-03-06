@@ -19,7 +19,7 @@
 				});
 				
 				jCube('::.TabbedPane > .body > .attributes > .card > label strong.att').each(function(){
-					if ( ['material da sola', 'material interno', 'material externo', 'tema', 'tipo de salto', 'gênero', 'desconto', 'cor'].contains(this.innerHTML.toLowerCase())) {
+					if ( ['material da sola', 'material interno', 'material externo', 'tema', 'tipo de salto', 'gênero', 'desconto', 'cor','altura da plataforma', 'altura do cano', 'altura do salto'].contains(this.innerHTML.toLowerCase())) {
 						this.getParent('label').addClass('hidden');
 					}
 				});
