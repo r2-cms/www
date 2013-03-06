@@ -9,6 +9,11 @@
 						this.getParent('label').addClass('hidden');
 					}
 				});
+				
+				var eA	= jCube(document.createElement('A'));
+				eA.href	= ASP.CROOT + ASP.path.replace('catalogo/', '') + jCube(':input[name=filename]').value +'/';
+				eA.appendChild(jCube(':#ePublishC .img-preview span'));
+				jCube(':#ePublishC .img-preview').appendChild( eA);
 			});
 			
 		//]]>
