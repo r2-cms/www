@@ -376,7 +376,7 @@ var GT8	= {
 	},
 	adjustImgSize: function( eImg){
 		eImg	= jCube(eImg);
-		if ( !eImg.getParent) {
+		if ( !eImg.getParent || !eImg.getParent()) {
 			return null;
 		}
 		var W	= eImg.getParent().offsetWidth;

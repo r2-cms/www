@@ -1573,6 +1573,53 @@ input.search {
 .text-link, .link {
 	color: #3176D5;
 }
+/************************************* BARCODE ********************************/
+.barcode.code39 {
+	display: inline-block;
+	clear: both;
+}
+	.barcode:after {
+	  clear: both;
+	  display: block;
+	  overflow: hidden;
+	  visibility: hidden;
+	  width: 0;
+	  height: 0;
+	  content: '';
+	}
+	.barcode .b1, .barcode .b3, .barcode .p1, .barcode .p3 {
+		float: left;
+		height: 50px;
+		line-height: 0px;
+	}
+	.barcode.code39 .p1 {
+		width: 1px;
+		background: #000;
+	}
+	.barcode.code39 .b1 {
+		width: 1px;
+		background: #FFF;
+	}
+	.barcode.code39 .p3 {
+		width: 3px;
+		background: #000;
+	}
+	.barcode.code39 .b3 {
+		width: 3px;
+		background: #FFF;
+	}
+		.barcode.code39.large .p1 {
+			width: 2px;
+		}
+		.barcode.code39.large .b1 {
+			width: 2px;
+		}
+		.barcode.code39.large .p3 {
+			width: 6px;
+		}
+		.barcode.code39.large .b3 {
+			width: 6px;
+		}
 /********************** DEBUGGER **********************************************/
 .pos-overlay {
 	position: fixed;

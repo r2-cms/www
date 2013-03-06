@@ -95,7 +95,7 @@
 			}
 			
 			$myLevel	= isset($_SESSION['login']['level'])?$_SESSION['login']['level']: 0;
-			$this->options['where']	.= " AND e.approved = 1 AND e.read_privilege <= $myLevel";
+			$this->options['where']	.= " AND e.approved = 1 AND ez.approved = 1 AND e.read_privilege <= $myLevel";
 			
 			if ( isset($spath[4]) || (!isset($spath[4]) && isset($_GET['translate-img'])&&$_GET['translate-img']=1)) {//variações
 				//este arquivo, consulta o caminho de GT8.explorer.root para assegurar que a intenção é realmente carregar uma imagem. Portanto, simularemos esse caminho
@@ -581,7 +581,7 @@
 			require_once( SROOT .'engine/functions/Pager.php');
 			$this->Pager	= Pager($this->options);
 			$this->data['foundRows']	= $this->Pager['foundRows'];
-			
+			//die("<pre>". print_r( $this->Pager, 1) ."</pre>");
 			//$this->Pager['rows']	= str_replace(
 			//	array('0x0', 'privilege-r', '/type=directory',	'/type=file'),
 			//	array('@', 'semi-invisible', '/',				'?edit'),

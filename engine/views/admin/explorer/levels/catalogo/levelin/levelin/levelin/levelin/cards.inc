@@ -50,3 +50,57 @@
 								<div class="clear" ></div>
 							</div>
 						</div>
+						<?php
+							/****************************************
+							 *
+							 * Cria código de barras, padrão code39, nas variações dos produtos
+							 *
+							 ***************************************/
+							$codProd	= substr( '000000'. $this->data['filename'], -6);
+							$codFamily	= explode('/', $this->data['path']);
+							$codFamily	= $codFamily[2];
+							$codFamily	= mysql_fetch_array(mysql_query("SELECT e.code FROM gt8_explorer e WHERE e.path = 'catalogo/calcados/' AND e.filename = '$codFamily' "));
+							$codFamily	= substr('00'. strtoupper($codFamily[0]), -2);
+							$tamanho	= '00';
+							for ( $i=0; $i<count($this->data['attributes-value']); $i++) {
+								if ( $this->data['attributes-value'][$i]['tamanho'] === 'Tamanho') {
+									$tamanho	= $this->data['attributes-value'][$i]['value'];
+									break;
+								}
+							}
+							$price	= mysql_fetch_array(mysql_query("SELECT e.price_cost FROM gt8_explorer e WHERE e.id = ". $this->data['id_dir']));
+							$price	= $price[0].'';
+							$price	= substr('000'. substr($price, 0, strpos($price, '.')), -3);
+							
+							require_once( SROOT.'engine/functions/Barcode39.php');
+							$this->htmlManagerModal	= '
+								<hr />
+								<div class="margin-top-small" title="Código do fornecedor" >
+									<div class="font-size-small" >
+										Código do fornecedor
+									</div>
+									<div class="clearfix" ></div>
+									<div class="barcode code39" >
+										'. Barcode39($this->data['filename']) .'
+									</div>
+									<div class="clearfix" ></div>
+									<div class="barcode code39 font-size-small" >
+										'. $this->data['filename'] .'
+									</div>
+								</div>
+								<hr />
+								<div id="eCodSDC" class="margin-top-small" title="Código Salão do Calçado" >
+									<div class="font-size-small" >
+										Código Salão do Calçado
+									</div>
+									<div class="clearfix" ></div>
+									<div class="barcode code39" >
+										'. Barcode39( $codProd.$codFamily.$tamanho.$price) .'
+									</div>
+									<div class="clearfix" ></div>
+									<div class="barcode code39 font-size-small" >
+										'. $codProd.$codFamily.$tamanho.$price .'
+									</div>
+								</div>
+							';
+						?>

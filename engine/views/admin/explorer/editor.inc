@@ -77,6 +77,7 @@
 						<div class="card dados input-validation" >
 							<?php $this->writeInputLabeled('title', 'Título', 'required', 1, 48, array('onkeyup'=>'if ( jCube(":input.filename").value.length=="" ) { jCube(":input.filename").value = this.value; } ' )); ?>
 							<?php $this->writeInputLabeled('filename', 'Nome de arquivo', '', 1, 64, array('readonly'=>true)); ?>
+							<?php $this->writeInputLabeled('code', 'Código', '', 1, 64, array()); ?>
 							<?php $this->writeTextareaLabeled('sumary', 'Resumo', '', 1, 128, array('styleTA'=>'height:78px')); ?>
 							<?php $this->writeTextareaLabeled('description', 'Descrição', '', 0, 4096); ?>
 						</div>
@@ -174,7 +175,7 @@
 						<?php $this->printManagerCard(); ?>
 					</div>
 				</div>
-				<?php $this->printManagerModal(array('html'=>$this->getAllowModeration())); ?>
+				<?php $this->printManagerModal(array('html' => $this->getAllowModeration())); ?>
 			</div>
 			<?php $this->printModalButtons(); ?>
 			<footer class="footer-clear-height" >&nbsp;</footer>

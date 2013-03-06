@@ -40,7 +40,9 @@
 				<div class="clear" >&nbsp;</div>
 			</div>
 			<footer class="footer-clear-height" >&nbsp;</footer>
-			{{$this->getFooter()}}
+			<footer class="main line-height-medium" >
+				&nbsp;
+			</footer>
 		</div>
 		<!-- CUSTOMS -->
 		<div id="eFolderEdit" class="teste modal input-validation" >

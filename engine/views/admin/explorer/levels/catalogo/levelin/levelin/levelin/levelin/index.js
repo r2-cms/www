@@ -54,8 +54,9 @@
 			jCube.Include('String.toASCII');
 			jCube(function(){
 				jCube(':h1').setHTML('Variações');
-				Explorer.strings.label	= 'Digite o código (EAN) do produto';
+				Explorer.strings.label	= 'Digite o código produto (fornecedor)';
 				Explorer.strings.filename	= 'Código do produto';
+				Explorer.strings.title	= 'Código numérico';
 				jCube('::nav.toolbar a.new-folder').addClass('hidden');
 				jCube('::nav.toolbar a.new-file img').setProperty('title', 'Criar nova variação de produto');
 				
@@ -63,7 +64,7 @@
 				jCube('::.right-pane.cards .card .title').addClass('height-20');
 				jCube('::.right-pane.cards .card .modification').addClass('hidden');
 				
-				////jCube('::.right-pane.cards').addClass('fluid');
+				//jCube('::.right-pane.cards').addClass('fluid');
 				//jCube('::.right-pane.cards .card .hidden .cor').each(function(){
 				//	this.getParent('a').addClass('color-'+ this.innerHTML +' card-linear col-8').removeClass('col-6');
 				//	jCube(document.createElement('SPAN')).setHTML( '&nbsp;').addClass('icon color color-'+ this.innerHTML.toASCII().toLowerCase().replace(/ /g, '-')).appendTo( this.getParent('a'));
@@ -74,6 +75,10 @@
 					this.getParent('a').query(':.imgC').setHTML( this.innerHTML)
 					//jCube(document.createElement('SPAN')).setHTML( this.innerHTML).addClass('icon tamanho').appendTo( this.getParent('a'));
 				});
+				
+				//modal
+				jCube(':#eNewFolderName').getParent('label').addClass('hidden');
+				
 			});
 			
 		//]]>

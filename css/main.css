@@ -1979,6 +1979,41 @@ input.search {
 .text-link, .link {
 	color: #3176D5;
 }
+/************************************* BARCODE ********************************/
+.barcode {
+	display: block;
+	clear: both;
+}
+	.barcode:after {
+	  clear: both;
+	  display: block;
+	  overflow: hidden;
+	  visibility: hidden;
+	  width: 0;
+	  height: 0;
+	  content: '';
+	}
+	.barcode .b1, .barcode .b3, .barcode .p1, .barcode .p3 {
+		float: left;
+		height: 50px;
+		line-height: 0px;
+	}
+	.barcode .p1 {
+		width: 1px;
+		background: #000;
+	}
+	.barcode .b1 {
+		width: 1px;
+		background: #FFF;
+	}
+	.barcode .p3 {
+		width: 3px;
+		background: #000;
+	}
+	.barcode .b3 {
+		width: 3px;
+		background: #FFF;
+	}
 /************************************* OTHERS *********************************/
 .pos-overlay {
 	position: fixed;

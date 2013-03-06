@@ -10,7 +10,7 @@
 				DATE_FORMAT(e.publish_up, '%Y/%m/%d %H:%i:%s') AS publish_up,
 				DATE_FORMAT(e.publish_down, '%Y/%m/%d %H:%i:%s') AS publish_down,
 				
-				e.dirpath,  e.path, e.filename,
+				e.dirpath,  e.path, e.filename, e.code,
 				IF(e.type='file', CONCAT('{$GT8['explorer']['root']}', e.path, e.filename), CONCAT('{$GT8['explorer']['root']}', e.path, e.filename, '/')) AS fullpath,
 				e.size,
 				e.folders, e.files,

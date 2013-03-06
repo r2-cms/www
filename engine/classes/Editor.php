@@ -17,6 +17,7 @@
 		public $root	= '';
 		public $isModal	= null;
 		public $approved	= false;
+		public $htmlManagerModal	= '';
 		
 		public function Editor() {
 			global $GT8;
@@ -393,6 +394,7 @@
 					'. $lock .'
 					'. $enabled .'
 					'. (isset($options['html'])? $options['html']: '') .'
+					'. $this->htmlManagerModal .'
 				</section>
 			';
 			print($html);

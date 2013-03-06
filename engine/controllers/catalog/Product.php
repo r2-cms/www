@@ -60,7 +60,8 @@
 					UNIX_TIMESTAMP(e.publish_up) AS tpublish_up,
 					UNIX_TIMESTAMP(e.publish_down) AS tpublish_down,
 					SUBSTRING_INDEX(SUBSTRING_INDEX(e.path, "/", 4), "/", -1) AS brand,
-					e.price_selling / e.price_parts AS financiamento
+					e.price_selling / e.price_parts AS financiamento,
+					SUBSTRING_INDEX(SUBSTRING_INDEX(e.path, "/", -3), "/", 1) AS family
 				',
 				'addFrom'	=> 'LEFT JOIN gt8_explorer_data d ON e.id = d.id',
 				'required'		=> array(
@@ -165,7 +166,7 @@
 			$Pager	= Pager(array(
 				'sql'		=> 'explorer.list',
 				'addSelect'	=> ', SUBSTRING_INDEX(e.path, "/", -2) AS varname, e.filename AS imgname',
-				'addWhere'	=> ' AND e.dirpath RegExp "^'. $this->data['dirpath'].$this->data['id'].'/[0-9]+/$"',
+				'addWhere'	=> ' AND e.dirpath RegExp "^'. $this->data['dirpath'].$this->data['id'].'/[0-9]+/$" AND e.size > 0',
 				'format'	=> 'TEMPLATE',
 				'template'	=> $template
 			));

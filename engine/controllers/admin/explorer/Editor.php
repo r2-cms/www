@@ -614,6 +614,7 @@
 				'foundRows'	=> 1,
 				'limit'	=> 100
 			));
+			$this->data['attributes-value']	= $Pager['rows'];
 			
 			$html	= '';
 			for( $i=0, $rows=$Pager['rows'], $len=count($rows); $i<$len; $i++) {
