@@ -163,7 +163,6 @@ jCube(function(){
 				}
 			}
 			if ( !found ) {
-				console.log([ crr, greatest[1]])
 				eA	= jCube(document.createElement('A')).
 					addClass('unavaiable text-stroke').
 					setProperty('title', 'Estoque esgotado!').

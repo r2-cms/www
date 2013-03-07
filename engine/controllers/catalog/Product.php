@@ -136,7 +136,7 @@
 			}
 		}
 		public function setAdminBt() {
-			if ( isset($_SESSION['login']['level']) && $_SESSION['login']['level'] > 5) {
+			if ( isset($_SESSION['login']['level']) && $_SESSION['login']['level'] > 4) {
 				global $GT8;
 				
 				$fullpath	= str_replace('downloads/catalogo/', 'explorer/catalogo/', $this->data['fullpath']);
