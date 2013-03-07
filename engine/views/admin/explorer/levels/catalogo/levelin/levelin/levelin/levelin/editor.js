@@ -49,8 +49,12 @@
 				jCube(':.TabbedPane .header .tab.imagem').remove();
 				jCube(':.Editor-TabbedPaneC .body .card.imagem').remove();
 				
-				//jCube(':.TabbedPane .header .tab.dados').remove();
-				//jCube(':.Editor-TabbedPaneC .body .card.dados').remove();
+				//Criando link para a imagem do painel
+				var eA	= jCube(document.createElement('A'));
+				eA.href	= ASP.CROOT + ASP.path.replace('catalogo/', '');
+				eA.appendChild(jCube(':#ePublishC .img-preview span'));
+				jCube(':#ePublishC .img-preview').appendChild( eA);
+				jCube(':#ePublishC .img-preview img').src	= jCube(':#ePublishC .img-preview img').src.replace(jCube(':input[name=filename]').value, '');
 			});
 			
 		//]]>

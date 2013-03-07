@@ -65,16 +65,16 @@
 						<hr class="grid-12" />
 					</div>
 					<div class="row-12 fluid-12 block clearfix-child mobile-hidden" >
-						<div class="grid-12" >
-							<p class="text-light" >
-								<small>O <a href="{{CROOT}}" class="link" >Salãodocalcado.com.br</a> é especializado no comércio eletrônico de calçados nobre, de de alta qualidade, todos fabricados com couro legítimo. O site busca constantemente a satisfação do consumidor, oferecendo o melhor atendimento possível, rapidez nas entregas, segurança e simplicidade nas compras. Estamos sempre pesquisando tendências na moda feminina para poder lhe oferecer o que há de mais novo e melhor.</small>
-							</p>
+						<div class="grid-12 text-light" >
+							{{$this->H1only4Home()}}
+							<small>O <a href="{{CROOT}}" class="link" >Salãodocalcado.com.br</a> é especializado no comércio eletrônico de calçados nobres, de alta qualidade, todos fabricados em couro legítimo. O site busca constantemente a satisfação do consumidor, oferecendo o melhor atendimento possível, rapidez nas entregas, segurança e simplicidade nas compras. Estamos sempre pesquisando tendências na moda feminina para poder lhe oferecer o que há de mais novo e melhor.</small>
+							{{$this->H1only4Home(1)}}
 						</div>
 					</div>
 				</div>
 				<div class="row-12 fluid-12 clearfix-child bottom" >
 					<p class="grid-12 margin-bottom-none row-1" >
-						<small class="text-light" >Fotos meramente ilustrativas l Ofertas válidas enquanto durarem nossos estoques l Vendas sujeitas a análise de dados </small>
+						<small class="text-light" >Fotos meramente ilustrativas | Ofertas válidas enquanto durarem nossos estoques | Vendas sujeitas a análise de dados</small>
 					</p>
 					<p class="grid-12 row-2" >
 						<small>

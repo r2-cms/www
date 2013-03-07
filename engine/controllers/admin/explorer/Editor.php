@@ -379,6 +379,11 @@
 					ob_end_clean();
 				}
 			}
+			$this->data['PLUGGIN:tabs']			= $this->printView( '', array(), $this, null, $print=false, $content=$this->data['PLUGGIN:tabs']);
+			$this->data['PLUGGIN:cards']		= $this->printView( '', array(), $this, null, $print=false, $content=$this->data['PLUGGIN:cards']);
+			$this->data['PLUGGIN:css']			= $this->printView( '', array(), $this, null, $print=false, $content=$this->data['PLUGGIN:css']);
+			$this->data['PLUGGIN:editor']		= $this->printView( '', array(), $this, null, $print=false, $content=$this->data['PLUGGIN:editor']);
+			$this->data['PLUGGIN:editor.js']	= $this->printView( '', array(), $this, null, $print=false, $content=$this->data['PLUGGIN:editor.js']);
 		}
 		public function update( &$field='', &$value='') {
 			//sleep(5);

@@ -1241,5 +1241,14 @@
 			$combo	= CreateComboLevels( $allow, $format, $useDash, $showAllLevels);
 			return utf8_encode($combo);
 		}
+		//CUSTOMS
+		public function H1only4Home( $endTag) {
+			global $spath;
+			if ( count($spath) === 0 ) {
+				return '<'. ($endTag? '/': '') .'h1>';
+			} else {
+				return '';
+			}
+		}
 	}
 ?>

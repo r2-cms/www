@@ -532,9 +532,11 @@
 				));
 				
 				//correct category's name
-				switch($this->data['category-title']) {
-					case 'Calcados': $this->data['category-title']	= 'Calçados'; break;
-				}
+				$this->data['category-title']	= strtolower($this->data['category-title']);
+				$this->data['category-title']	= str_replace('calcados', 'calçados', $this->data['category-title']);
+				$this->data['category-title']	= str_replace('conexao', 'conexão', $this->data['category-title']);
+				$this->data['category-title']	= str_replace('sandalia', 'sandália', $this->data['category-title']);
+				$this->data['category-title']	= utf8_encode(mb_convert_case(utf8_decode($this->data['category-title']), MB_CASE_TITLE));
 				
 				//replace fullpath
 				foreach( $Pager['rows'] AS $i=>$row) {

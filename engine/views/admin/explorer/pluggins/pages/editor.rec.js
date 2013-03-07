@@ -425,7 +425,10 @@
 							}
 						}
 						eImgEditor.removeClass('hidden');
-						eImgEditor.query(':input[name=editor-img-src]').value	= eImg.getAttribute('src');
+						eImgEditor.query(':input[name=editor-img-src]').value	= eImg.getAttribute('src')
+							.replace('{{CROOT}}', '{'+'{CROOT}'+'}')
+							.replace('{{GT8:explorer.root}}', '{'+'{GT8:explorer.root}'+'}')
+						;
 						eImgEditor.query(':select[name=editor-img-align]').setProperty('value', eImg.style.cssFloat || 'none').trigger('updateValue');
 						var size		= eImg.src.contains('?')? eImg.src.substringIndex('?',-1).substringIndex('&'): 'default';
 						if ( ['default', 'small', 'regular', 'preview'].contains(size)) {
@@ -448,7 +451,7 @@
 									return;
 								}
 								if ( eImg) {
-									eImg.src	= '{{CROOT}}downloads/'+ eA.query(':.hidden .path').innerHTML + eA.query(':.hidden .filename').innerHTML +'/?regular';
+									eImg.src	= '{{CROOT}}{{GT8:explorer.root}}/'+ eA.query(':.hidden .path').innerHTML + eA.query(':.hidden .filename').innerHTML +'/?regular';
 								}
 								Modal.hide();
 							}
@@ -464,10 +467,20 @@
 						}).injectAfter(eEditor).addClass('DivEditor');
 						eEditor.addClass('hidden');
 						iFrame.contentWindow.document.open();
-						iFrame.contentWindow.document.write(storage.content);
+						iFrame.contentWindow.document.write(
+							storage.content
+							.replace('{{CROOT}}', '{'+'{CROOT}'+'}')
+							.replace('{{GT8:explorer.root}}', '{'+'{GT8:explorer.root}'+'}')
+						);
 						iFrame.contentWindow.document.close();
 						iFrame.contentWindow.document.body.contentEditable	= true;
 						iFrame.contentWindow.document.designMode	= 'On';
+						var eImgs	= jCube(':iframe.DivEditor').contentDocument.getElementsByTagName('img');
+						for( var i=0; i<eImgs.length; i++) {
+							eImgs[i].src	= unescape(eImgs[i].getAttribute('src'))
+								.replace('{'+'{GT8:explorer.root}'+'}', '{{GT8:explorer.root}}')
+							;
+						};
 					})();
 					(function(){//LISTENERS
 						jCube(iFrame.contentDocument).addEvent('onkeyup', function(E){
