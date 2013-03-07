@@ -63,7 +63,9 @@
 						<p class="item margin-bottom-large line-height-large clearfix-child item-separator sizes-chooser-holder hidden-{{no-stock}}" >
 							<span class="grid" >Escolha seu tamanho:</span>
 							<span class="grid sizes-chooser clearfix-child" >
-								{{FOREACH:sizes}}<a href="{{CROOT}}{{GT8:cart.root}}?action=adicionar-produto&amp;produto={{id}}&amp;clean-qsa=1" title="{{stock}}" class="nofollow" >{{crr_size}}</a>{{/FOREACH}}
+								{{FOREACH:sizes}}
+								<a href="{{CROOT}}{{GT8:cart.root}}?action=adicionar-produto&amp;produto={{id}}&amp;clean-qsa=1" title="{{stock}} em estoque" rel="nofollow" >{{crr_size}}</a>
+								{{/FOREACH}}
 							</span>
 						</p>
 						<a id="eBtBuy" href="?clean-qsa=1" rel="nofollow" class="bt-buy href-button href-button-blue line-height-large grid-12 marginless margin-bottom hidden-{{no-stock}}" >

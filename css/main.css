@@ -1635,6 +1635,9 @@ label.increaser.side-by-side {
 .text-lower-case {
 	text-transform: lowercase;
 }
+.text-stroke {
+	text-decoration: line-through !important;
+}
 .font-weight-normal {
 	font-weight: normal !important;
 }

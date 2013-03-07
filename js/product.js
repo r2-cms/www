@@ -143,4 +143,40 @@ jCube(function(){
 			}
 		});
 	})();
+	(function(){
+		var crrSize	= 33;
+		var eSizes	= null;
+		var greatest	= [];
+		for ( var i=0, j=0, crr, eA, found, sizes=[33,34,35,36,37,38,39]; i<sizes.length; i++) {
+			crr		= sizes[i];
+			found	= false;
+			greatest	= [null, 0];
+			eSizes	= jCube('::.sizes-chooser a');
+			for( j=0; j<eSizes.length; j++) {
+				
+				if ( eSizes[j].innerHTML == crr) {
+					found	= true;
+					break;
+				}
+				if ( eSizes[j].innerHTML.toInteger() > greatest[1] && eSizes[j].innerHTML.toInteger() < crr) {
+					greatest	= [ eSizes[j], eSizes[j].innerHTML.toInteger()];
+				}
+			}
+			if ( !found ) {
+				console.log([ crr, greatest[1]])
+				eA	= jCube(document.createElement('A')).
+					addClass('unavaiable text-stroke').
+					setProperty('title', 'Estoque esgotado!').
+					addEvent('onclick', function(){ return null; }).
+					setHTML(crr+'').
+					setProperty('href', '#')
+				;
+				if ( greatest[1] ) {
+					eA.injectAfter( greatest[0]);
+				} else {
+					eA.prependTo( eSizes[0].parentNode);
+				}
+			}
+		}
+	})();
 });
