@@ -1,4 +1,5 @@
 <?php
+	print("<h1>Starting explorer</h1>".PHP_EOL);
 	$_Fields	= array(
 		//Field	Type	Null	Key	Default	Extra
 		array('Field'=>'id',	'Type'=>'int(10) unsigned',	'Null'=>'NO',	'Key'=>'PRI',	'Default'=>'\N',	'Extra'=>'auto_increment'),
@@ -21,7 +22,7 @@
 		array('Field'=>'files_all',	'Type'=>'int(11) unsigned',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0',	'Extra'=>''),
 		array('Field'=>'folders',	'Type'=>'int(11) unsigned',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0',	'Extra'=>''),
 		array('Field'=>'files',	'Type'=>'int(11) unsigned',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0',	'Extra'=>''),
-		array('Field'=>'stock',	'Type'=>'tinyint(3) unsigned',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0',	'Extra'=>''),
+		array('Field'=>'stock',	'Type'=>'tinyint(3)',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0',	'Extra'=>''),
 		array('Field'=>'price_cost',	'Type'=>'double(9,2)',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0.00',	'Extra'=>''),
 		array('Field'=>'price_suggested',	'Type'=>'double(9,2)',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0.00',	'Extra'=>''),
 		array('Field'=>'price_selling',	'Type'=>'double(9,2)',	'Null'=>'NO',	'Key'=>'',	'Default'=>'0.00',	'Extra'=>''),
@@ -102,4 +103,5 @@
 			print("`$table`.`{$crr['Field']}` created".PHP_EOL);
 		}
 	}
+	print("<h1>########################################################################</h1>".PHP_EOL);
 ?>

@@ -19,10 +19,12 @@
 			if ( $options['field'] === 'id_stts') {
 				$idStatus	= (integer)$options['value'];
 				
+				$Order	= $this->getOrder();
+				$this->Update($options);
+				
 				if ( file_exists( SROOT .'engine/mail/status/'. $idStatus .'.inc')) {
 					
 					if ( $idStatus == 40) {//liberado para entrega, calcule a data
-						$Order	= $this->getOrder();
 						$Products	= $this->getProducts();
 						$weight		= 0;
 						$width		= 0;
@@ -47,7 +49,6 @@
 						$this->Update($options);
 					}
 					if ( $idStatus == 29) {//Cancelar pedido
-						$Order	= $this->getOrder();
 						$Products	= $this->getProducts();
 						
 						if ( $Order['id_stts'] != 29) {
@@ -61,6 +62,7 @@
 									WHERE
 										id	= {$crr['id_explorer']}
 								");
+								//print("//#message: Estoque atualizado!".PHP_EOL);
 							}
 						}
 					}
@@ -75,7 +77,6 @@
 					$m->send($this->data);
 				}
 			}
-			$this->Update($options);
 		}
 		protected function getOrder() {
 			$Order	= Pager(array(

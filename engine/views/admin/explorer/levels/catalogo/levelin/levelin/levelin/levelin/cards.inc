@@ -144,7 +144,7 @@
 								for ( $i=0; $i<count($Pager); $i++) {
 									$crr	= $Pager[$i];
 									$html	.= "
-										<a class='col-3 href-button href-button-cancel' href='{$crr['filename']}/' ><span>{$crr['tamanho']}</span></a>
+										<a class='col-3 href-button href-button-cancel' href='{$crr['filename']}?edit' ><span>{$crr['tamanho']}</span></a>
 									";
 								}
 								print($html);
