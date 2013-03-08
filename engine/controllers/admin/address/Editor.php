@@ -61,7 +61,7 @@
 				parent::on404();
 			}
 		}
-		public function update() {
+		public function update( &$field='', &$value='') {
 			parent::update( $field, $value);
 			
 			if ( $field) {
@@ -88,7 +88,7 @@
 					break;
 			}
 		}
-		public function getDirLocation() {
+		public function getDirLocation($base='') {
 			global $GT8;
 			$base	= str_replace('//', '/', CROOT . $this->root);
 			$base	= CROOT . $this->root;
@@ -103,8 +103,8 @@
 			}
 			$path	= CROOT . $GT8['admin']['root'].$GT8['address']['root'];
 			$html	= '<a href="'. $path .'" class="button" style="z-index:7; padding-left:10px;" >Endereços</a>';
-			$html	.= '<a class="button" id="nav-1" href="../?uf='. $estado[0] .'" style="z-index:3; " >'. $estado[1] .'</a>';
-			$html	.= '<a class="button" id="nav-2" href="../?cidade='. $row['city'] .'" style="z-index:2; " >'. utf8_encode(htmlentities($row['city'])) .'</a>';
+			$html	.= '<a class="button" id="nav-1" href="../?uf='. $estado[0] .'" style="z-index:3; " >'. $estado[0] .'</a>';
+			$html	.= '<a class="button" id="nav-2" href="../?cidade='. $row['city'] .'" style="z-index:2; " >'. utf8_encode(($row['city'])) .'</a>';
 			$html	.= '<a class="button" id="nav-3" href="'. $row['zip'] .'/" style="z-index:1; " >'. utf8_encode(htmlentities($row['street'])) .', '. $row['number'] .'</a>';
 			
 			return $html;
@@ -142,7 +142,7 @@
 			);
 			return $arr;
 		}
-		public function getType() {
+		public function getType($field='') {
 			$arr	= array(
 				array("1", 'Residencial'),
 				array("2", 'Comercial'),

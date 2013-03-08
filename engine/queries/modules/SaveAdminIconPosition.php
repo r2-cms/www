@@ -59,9 +59,6 @@
 			$options['value']	= $options['card_index'];
 			$this->Update( $options);
 		}
-		public function checkPrivileges($field, $value) {
-			
-		}
 		public function getValue( $field, $value) {
 			if ( $field == 'stt') {
 				//$value	= strtoupper(RegExp($value, '[A-Za-z]{2}'));

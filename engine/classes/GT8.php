@@ -1188,7 +1188,7 @@
 		protected function checkWritePrivileges($url='', $field='*', $format='OBJECT') {
 			$this->checkPrivileges( $url, $field, $format, 2);
 		}
-		private function checkPrivileges( $url=null, $field='*', $format='OBJECT', $min=2) {
+		protected function checkPrivileges( $url=null, $field='*', $format='OBJECT', $min=2) {
 			require_once( SROOT ."engine/functions/CheckPrivileges.php");
 			$format	= $format? $format: 'OBJECT';
 			if ( !$url) {
@@ -1201,12 +1201,14 @@
 				$url	= join('/',$url) .'/';
 			}
 			
+			$_format	= $format;
+			$format		= $field!=='*'? 'OBJECT': $format;
 			$prv	= CheckPrivileges($field, $format, $url, $min);
+			$format	= $_format;
 			//se o privilégio para o campo específico não foi encontrado, procure-o genericamente
-			if ( $prv == 404 && $field!='*') {
+			if ( $prv == -404 && $field!='*') {
 				$prv	= CheckPrivileges('*', $format, $url, $min);
 			}
-			
 			if ( $format == 'OBJECT' && $prv < $min) {
 				$this->redirect('forbidden');
 			}

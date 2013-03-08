@@ -1,8 +1,13 @@
-<?php require_once(SROOT.'engine/functions/includeif.php'); ?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-	<?php GT8::printHead('Sem permissão | GT8', '', array(), array()); ?>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Permissão negada</title>
+		{{VIEW:head}}
+	</head>
+	<body>
 		<div id="eMain" >
-			<?php GT8::printHeader(); ?>
+			{{VIEW:header}}
 			<div class="wrapper" >
 				<div class="row padding-top" >
 					<h2 class="block" >Você não tem permissão para acessar este diretório!</h2>
@@ -15,7 +20,7 @@
 					<div class="clear" ></div>
 				</div>
 			</div>
-			<?php GT8::printFooter(); ?>
+			{{VIEW:footer}}
 		</div>
 	</body>
 </html>

@@ -69,7 +69,9 @@
 			}
 			return $value;
 		}
-		public function checkPrivileges( $field, $value) {
+		public function checkWritePrivileges( $url=null, $field='*', $format='OBJECT', $min=2) {
+			$value	= $min;
+			$url	= $this->privilegeName;
 			if ( ($field=='enabled' || $field=='level') && $this->id == $_SESSION['login']['id']) {
 				die('//#error: Você não pode alterar seus próprios privilégios!'. PHP_EOL);
 			} else if ( $field == 'login' ) {
@@ -83,9 +85,9 @@
 				}
 			} else if ( $field == 'level' || $field=='enabled') {
 				//1) Tem o privilégio necessário?
-				$prv	= CheckPrivileges('level', 'OBJECT', 'users/');
+				$prv	= CheckPrivileges('level', 'OBJECT', $url);
 				if ( $prv == -404 || $prv < 2) {
-					$prv	= CheckPrivileges('*', 'OBJECT', 'users/', 2);
+					$prv	= CheckPrivileges('*', 'OBJECT', $url, 2);
 					
 					if ( $prv < 2) {
 						die('//#error: Privilégio elevado requerido para este campo!'. PHP_EOL);
@@ -94,7 +96,7 @@
 			} else {
 				$id		= $this->isContact? (integer)$_GET['id']: $this->id;
 				if ( $id != $_SESSION['login']['id'])  {
-					parent::checkPrivileges($field, $value);
+					parent::checkPrivileges( $url, $field, $format);
 				}
 			}
 			

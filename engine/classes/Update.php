@@ -44,7 +44,7 @@
 				die('//#error: propriedade requerida em Update::privilegeName não definida!'. PHP_EOL);
 			}
 			
-			$this->checkPrivileges($field, $value, $options);
+			$this->checkWritePrivileges( $this->privilegeName, $field, $format, 2);
 			
 			$Field	= $this->getType($field);
 			
@@ -110,15 +110,6 @@
 				));
 			}
 			return true;
-		}
-		public function checkPrivileges($field, $value, $options=array()) {
-			$prv	= CheckPrivileges($field, '', $this->privilegeName);
-			if ( $prv == -404 || $prv < 2) {
-				$prv	= CheckPrivileges('', 'JSON', $this->privilegeName, 2);
-				if ( $prv < 2) {
-					die('//#error: Privilégio elevado requerido para este campo!'. PHP_EOL);
-				}
-			}
 		}
 		public function getValue( $field, $value) {
 			return $value;

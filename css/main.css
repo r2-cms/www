@@ -1531,6 +1531,17 @@ label.increaser {
 			background: -webkit-linear-gradient( #FFF, #EBEBEB);
 		}
 
+	label.increaser.readonly {
+		background: #F2F2F2;
+		box-shadow: none;
+		color: #000;
+		border: 1px solid #CCC;
+		border-radius: 4px;
+		height: 40px;
+	}
+		label.increaser.readonly a {
+			display: none;
+		}
 /*INCREASER horizontal orientation*/
 label.increaser.side-by-side {
 	height: 30px;

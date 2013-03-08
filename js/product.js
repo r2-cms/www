@@ -143,7 +143,10 @@ jCube(function(){
 			}
 		});
 	})();
-	(function(){
+	(function(){//SHOES GRID
+		if ( !jCube('::.sizes-chooser a').length) {
+			return;
+		}
 		var crrSize	= 33;
 		var eSizes	= null;
 		var greatest	= [];
@@ -176,6 +179,13 @@ jCube(function(){
 					eA.prependTo( eSizes[0].parentNode);
 				}
 			}
+		}
+	})();
+	(function(){
+		if ( jCube('::.sizes-chooser a:not(.unavaiable)').length > 2) {
+			jCube(':#eStockInfo').addClass('hidden');
+		} else {
+			jCube(':#eStockInfo').setHTML('(Últimas unidades)');
 		}
 	})();
 });

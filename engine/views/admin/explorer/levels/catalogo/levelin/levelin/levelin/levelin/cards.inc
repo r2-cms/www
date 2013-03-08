@@ -110,3 +110,57 @@
 								</div>
 							';
 						?>
+						<?php
+							/************************************************************************************************************************
+							 *
+							 * IMPRIME ATALHOS PARA O MESMO PRODUTO COM NUMERAÇÃO DIFERENTE
+							 *
+							************************************************************************************************************************/
+						?>
+						<div id="eLinkedSizeShs" class="card resumo line-height over clearfix-child hidden" >
+							<div class="line bg-head margin-bottom-medium clearfix-child" >
+								<div class="col-13" ><strong>Outros números</strong></div>
+							</div>
+							<div class="clear" ></div>
+							<div class="col-13 clearfix-child" >
+							<?php
+								$Pager	= Pager(array(
+									'sql'	=> 'explorer.list',
+									'addWhere'	=> "AND e.path = '{$this->data['path']}' AND e.id != ". $this->data['id'],
+									'addSelect'	=> ',
+										(
+											SELECT
+												v.value
+											FROM
+												gt8_explorer_attributes_value v
+												JOIN gt8_explorer_attributes a ON a.id = v.id_attributes
+											WHERE
+												a.attribute = "tamanho" AND v.id_explorer = e.id AND v.id_attributes = a.id 
+										) AS tamanho
+									'
+								));
+								$Pager	= $Pager['rows'];
+								$html	= '';
+								for ( $i=0; $i<count($Pager); $i++) {
+									$crr	= $Pager[$i];
+									$html	.= "
+										<a class='col-3 href-button href-button-cancel' href='{$crr['filename']}/' ><span>{$crr['tamanho']}</span></a>
+									";
+								}
+								print($html);
+							?>
+							</div>
+							<div class="clear" ></div>
+						</div>
+						<script type="text/javascript" >
+						//<![CDATA[
+							jCube(function(){
+								jCube(':#eLinkedSizeShs').appendTo(jCube(':.body .card.attributes')).removeClass('hidden');
+							});
+						//]]>
+						</script>
+						<?php
+							/************************************************************************************************************************
+							 * FIM
+							************************************************************************************************************************/
+						?>

@@ -2,8 +2,6 @@
 	if ( !defined('CROOT')) {
 		die('Undefined GT8: a1i32->a114e00->e1i1o4->Home');
 	}
-	require_once( SROOT ."engine/functions/CheckLogin.php");
-	require_once( SROOT ."engine/functions/CheckPrivileges.php");
 	require_once( SROOT ."engine/classes/Editor.php");
 	
 	class AdminEditor extends Editor {
@@ -43,6 +41,7 @@
 				switch($_GET['action']) {
 					case 'change-status': {
 						require_once( SROOT .'engine/queries/orders/UpdateOrders.php');
+						
 						$_GET	= array_merge($_GET, array(
 							'field'		=> 'id_stts',
 							'value'		=> $_GET['status'],

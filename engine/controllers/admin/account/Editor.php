@@ -2,8 +2,6 @@
 	if ( !defined('CROOT')) {
 		die('Undefined GT8: a1i32->a114e00->e1i1o4->Home');
 	}
-	require_once( SROOT ."engine/functions/CheckLogin.php");
-	require_once( SROOT ."engine/functions/CheckPrivileges.php");
 	require_once( SROOT ."engine/classes/Editor.php");
 	
 	class AdminEditor extends Editor {
@@ -15,7 +13,6 @@
 			$spath	= $this->getSPath('users/');
 			$userLogin	= RegExp($spath[0], '[a-zA-Z0-9_\-\.\,\&\@]+');
 			parent::Editor();
-			
 			$Pager	= Pager( array(
 				'sql'		=> 'users.list',
 				'addSelect'	=> 'u.cpfcnpj, u.document, u.natureza, u.genre, u.level+0 AS ilevel',
@@ -30,7 +27,7 @@
 			$this->id	= $this->data['id'];
 			
 			if ( $this->id != $_SESSION['login']['id']) {
-				CheckPrivileges(0,'OBJECT','users/', 1);
+				$this->checkReadPrivileges('users/', '*', (isset($_GET['format'])? $_GET['format']:'OBJECT'));
 			}
 			if ( $this->data['ilevel'] > $_SESSION['login']['level']) {
 				$this->redirect('forbidden');
@@ -82,6 +79,7 @@
 		}
 		public function update( &$field='', &$value='') {
 			require_once(SROOT.'engine/queries/users/UpdateUsers.php');
+			$this->checkWritePrivileges( 'users/', $field, (isset($_GET['format'])? $_GET['format']:'OBJECT'));
 			new UpdateUsers(array(
 				"id"		=> $this->id,
 				"field"		=> $field,

@@ -52,12 +52,27 @@
 				} else {
 					$codeError	= $prv;
 					$exists	= false;
+					$Index	= null;
 					if ( file_exists( SROOT .'engine/controllers/account/Forbidden.php')) {
 						require_once( SROOT .'engine/controllers/account/Forbidden.php');
+						$Index	= new Forbidden();
 						$exists	= true;
 					}
-					if ( file_exists( SROOT .'engine/views/account/forbidden.inc')) {
-						include( SROOT .'engine/views/account/forbidden.inc');
+					if ( GT8::isAdmin() && file_exists( SROOT .'engine/views/admin/account/forbidden.inc')) {
+						if ( !$Index) {
+							$Index	= new GT8();
+						}
+						global $spath;
+						$Index->data['path']	= $spath;
+						$Index->printView( SROOT .'engine/views/admin/account/forbidden.inc');
+						$exists	= true;
+					} else if ( file_exists( SROOT .'engine/views/account/forbidden.inc')) {
+						if ( !$Index) {
+							$Index	= new GT8();
+						}
+						global $spath;
+						$Index->data['path']	= $spath;
+						$Index->printView( SROOT .'engine/views/account/forbidden.inc');
 						$exists	= true;
 					}
 					if ( !$exists ) {

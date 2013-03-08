@@ -34,6 +34,13 @@ var Cart	= {
 			total	+= parseFloat(this.innerHTML.replace('.', '').replace(',', '.').replace('R$ ', ''));
 		});
 		jCube(':#eTotal').setHTML( 'R$ '+ total.format(2));
+		
+		//sum qty
+		var qty	= 0;
+		jCube('::.cart-items .qty input').each(function(){
+			qty	+= this.value.toInteger();
+		});
+		jCube(':.bar-total .qty').setHTML(qty);
 	}
 }
 jCube(function(){//QTY update
@@ -88,5 +95,17 @@ jCube(function(){//DELIVERY: CARDS OVER
 	}).addEvent('onmouseout', function(e){
 		this.removeClass('not-me');
 		jCube('::.address-holder a.card:not(.not-me)').fadeIn();
+	});
+});
+jCube(function(){
+	jCube('::.cart-items .qty label.increaser input[title=1|1|1]').each(function(){
+		this.getParent('label').addClass('readonly');
+	});
+	jCube('::.cart-items .qty label.increaser input').each(function(){
+		if ( this.title === '1|1|1') {
+			this.title	= 'Última unidade em estoque';
+		} else {
+			this.title	= 'Quantidade em estoque: '+ this.title.split('|')[0];
+		}
 	});
 });

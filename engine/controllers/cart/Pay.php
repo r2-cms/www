@@ -62,8 +62,16 @@
 						);
 						die();
 					}
-					
-					
+					for ( $i=0; $i<count($items); $i++) {
+						mysql_query("
+							UPDATE
+								gt8_explorer
+							SET
+								stock = stock - {$items[$i][1]}
+							WHERE
+								id = {$items[$i][0]}
+						");
+					}
 					unset($_SESSION['shopping']);
 					$this->cookieCart();
 					setcookie('cart-items', '', time()+10, '/');
@@ -209,6 +217,17 @@
 								$this->data['pay-method']	= 'cartão de crédito';
 								$m->copyOnDb	= false;
 								$m->send($this->data);
+								
+								for ( $i=0; $i<count($items); $i++) {
+									mysql_query("
+										UPDATE
+											gt8_explorer
+										SET
+											stock = stock - {$items[$i][1]}
+										WHERE
+											id = {$items[$i][0]}
+									");
+								}
 								
 								die();
 							}

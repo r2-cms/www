@@ -12,7 +12,9 @@
 		
 		public function __construct($options) {
 			$this->options	= $options;
-			$this->Update( $options);
+			$this->id		= $options['id'];
+			
+			$this->checkWritePrivileges('orders/', '', (isset($_GET['format'])? $_GET['format']: NULL));
 			
 			if ( $options['field'] === 'id_stts') {
 				$idStatus	= (integer)$options['value'];
@@ -44,6 +46,25 @@
 						$options['value']	= $deliveryDate;
 						$this->Update($options);
 					}
+					if ( $idStatus == 29) {//Cancelar pedido
+						$Order	= $this->getOrder();
+						$Products	= $this->getProducts();
+						
+						if ( $Order['id_stts'] != 29) {
+							for ( $i=0; $i<count($Products); $i++) {
+								$crr	= $Products[$i];
+								$b	= mysql_query("
+									UPDATE
+										gt8_explorer
+									SET
+										stock = stock - {$crr['qty']}
+									WHERE
+										id	= {$crr['id_explorer']}
+								");
+							}
+						}
+					}
+					
 					
 					require_once( SROOT .'engine/mail/Mail.php');
 					$m	= new Mail($idStatus, 'OBJECT');
@@ -54,6 +75,7 @@
 					$m->send($this->data);
 				}
 			}
+			$this->Update($options);
 		}
 		protected function getOrder() {
 			$Order	= Pager(array(
@@ -95,19 +117,13 @@
 					array('o.id', $this->id)
 				)
 			));
-			$Products	= $Products['rows'];
-			
-			return $Products;
+			return $Products['rows'];
 		}
 		public function getValue( $field, $value) {
 			if ( $field == 'stt') {
 				$value	= strtoupper(RegExp($value, '[A-Za-z]{2}'));
 			}
 			return $value;
-		}
-		public function checkPrivileges( $field, $value) {
-			$this->checkWritePrivileges( 'orders/', '*', $this->options['format']);
-			
 		}
 		protected function isHoliday( $date='yyyy/mm/dd') {
 			$holidays;

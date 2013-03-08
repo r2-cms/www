@@ -67,6 +67,7 @@
 								<a href="{{CROOT}}{{GT8:cart.root}}?action=adicionar-produto&amp;produto={{id}}&amp;clean-qsa=1" title="{{stock}} em estoque" rel="nofollow" >{{crr_size}}</a>
 								{{/FOREACH}}
 							</span>
+							<em id="eStockInfo" class="grid-12 text-align-center" >&nbsp;</em>
 						</p>
 						<a id="eBtBuy" href="?clean-qsa=1" rel="nofollow" class="bt-buy href-button href-button-blue line-height-large grid-12 marginless margin-bottom hidden-{{no-stock}}" >
 							<span>Comprar</span>

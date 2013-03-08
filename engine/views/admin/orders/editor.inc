@@ -121,7 +121,7 @@
 						</div>
 						<div class="card input-validation" id="card-products" >
 							{{FOREACH:products}}
-							<a class="col-15 border-bottom margin-bottom" href="{{CROOT}}{{l_path}}" >
+							<a class="col-15 border-bottom margin-bottom" href="{{AROOT}}explorer/{{path}}{{filename}}?edit" >
 								<span class="col-3 position-relative product overflow-hidden" >
 									<img src="{{CROOT}}{{l_path}}?translate-img=1&amp;small" alt="" style="max-height:112px; max-width:100px;" />
 								</span>

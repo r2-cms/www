@@ -28,10 +28,11 @@
 		WHERE
 			id = $id
 		"));
-		$idUser		= $idUser['id_users'];
+		
 		$channel	= $idUser['channel'];
 		$type		= $idUser['type'];
 		$value		= $idUser['value'];
+		$idUser		= $idUser['id_users'];
 		
 		if ( !$idUser) {
 			die('//#error: Este contato já não existe mais.'. PHP_EOL);
@@ -39,12 +40,15 @@
 		
 		//o operador precisa ter privilégios superiores ao do contato
 		if ( $idUser != $_SESSION['login']['id']) {
-			$row	= mysql_fetch_assoc(mysql_query("SELECT id, level+0 AS level FROM gt8_users WHERE id = $idUser"));
+			$row	= mysql_fetch_assoc(mysql_query("SELECT id, level+0 AS level, login FROM gt8_users WHERE id = $idUser"));
+			die("<pre>". print_r( $row, 1) ."</pre>".PHP_EOL);
 			if ( !($row['level'] < $_SESSION['login']['level'])) {
 				die('//#error: Privilégio elevado é requerido para remover contato a este usuário!'. PHP_EOL);
 			}
+			print("<h1>". $row['level'] ."</h1>");
+			print("<h1>". $_SESSION['login']['level'] ."</h1>".PHP_EOL);
 		}
-		
+		die("<pre>". print_r( 2222222, 1) ."</pre>".PHP_EOL);
 		mysql_query("
 			DELETE FROM
 				gt8_users_contact
