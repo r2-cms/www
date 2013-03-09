@@ -80,7 +80,7 @@
 		
 		<p><strong>Forma de Pagamento</strong>: <b>Boleto bancário</b></p>
 		
-		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{{GT8:account.root}}{{GT8:account.orders.root}}{$orderPrefix}{$Order['id']}/'>clique aqui</a></p>
+		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{$GT8['account']['root']}{$GT8['account']['orders']['root']}{$orderPrefix}{$Order['id']}/'>clique aqui</a></p>
 		
 		<p>Em caso de dúvida, estamos à disposição para lhe ajudar pelo número $phoneNumber, pelo e-mail <a href='mailto:atendimento@salaodocalcado.com.br' >atendimento@salaodocalcado.com.br</a> ou pelo atendimento online no site <a href='http://www.salaodocalcado.com.br/{$GT8['atendimento']['root']}' >www.salaodocalcado.com.br</a>.</p>
 		<p>

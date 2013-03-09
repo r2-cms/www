@@ -95,7 +95,7 @@
 		
 		<p><strong>Forma de Pagamento</strong>: {{pay-method}}</p>
 		
-		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{$GT8['account.root']}{$GT8['account.order.root']}$orderPrefix{$Order['id']}/'>clique aqui</a></p>
+		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{$GT8['account']['root']}{$GT8['account']['orders']['root']}{$orderPrefix}{$Order['id']}/'>clique aqui</a></p>
 		
 		<p>
 			<br>&nbsp;<br>
