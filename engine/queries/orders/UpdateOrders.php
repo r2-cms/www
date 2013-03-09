@@ -58,7 +58,7 @@
 									UPDATE
 										gt8_explorer
 									SET
-										stock = stock - {$crr['qty']}
+										stock = stock + {$crr['qty']}
 									WHERE
 										id	= {$crr['id_explorer']}
 								");
