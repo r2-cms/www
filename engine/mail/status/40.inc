@@ -29,7 +29,7 @@
 		<p>A data prevista do seu pedido está prevista para o dia //delivery_expected:%d/%m/%Y\\\\.</p>
 		<p>É necessário que haja alguém no endereço no dia da entrega. As entregas são realizadas de segunda à sexta-feira, das 8:00 às 21:00h.</p>
 		&nbsp;
-		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{GT8:account.rott}{GT8:account.orders.root}{$orderPrefix}{$Order['id']}/'>clique aqui</a></p>
+		<p>Para visualizar seu pedido, <a href='http://www.salaodocalcado.com.br/{{GT8:account.root}}{{GT8:account.orders.root}}{$orderPrefix}{$Order['id']}/'>clique aqui</a></p>
 		<br>
 		<p style='font-weight:bold;' >DADOS DA ENTREGA</p>
 			<span>Endereço: ". utf8_encode($Order['street']) .", ". $Order['number'] ."</span><span>". (!empty($Order['complement'])?'('.$Order['complement'].')':'') ."</span><br />
