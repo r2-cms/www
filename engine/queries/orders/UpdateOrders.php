@@ -68,6 +68,26 @@
 					}
 					
 					
+					if ( $idStatus == 21 ) {//aguardando pagamento do boleto
+						$Products	= $this->getProducts();
+						
+						if ( $Order['id_stts'] != 21) {
+							for ( $i=0; $i<count($Products); $i++) {
+								$crr	= $Products[$i];
+								$b	= mysql_query("
+									UPDATE
+										gt8_explorer
+									SET
+										stock = stock - {$crr['qty']}
+									WHERE
+										id	= {$crr['id_explorer']}
+								");
+								//print("//#message: Estoque atualizado!".PHP_EOL);
+							}
+						}
+					}
+					
+					
 					require_once( SROOT .'engine/mail/Mail.php');
 					$m	= new Mail($idStatus, 'OBJECT');
 					$m->printAfterSending	= false;

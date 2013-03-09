@@ -1164,6 +1164,12 @@ label.increaser.side-by-side {
 .font-size-smaller {
 	font-size: smaller;
 }
+.font-weight-normal {
+	font-weight: normal !important;
+}
+.font-italic {
+	font-style: italic !important;
+}
 .text-align-center {
 	text-align: center !important;
 }
@@ -1202,9 +1208,6 @@ label.increaser.side-by-side {
 }
 .text-lower-case {
 	text-transform: lowercase;
-}
-.font-weight-normal {
-	font-weight: normal !important;
 }
 .abs-left {
 	position: absolute !important;

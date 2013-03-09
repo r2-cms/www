@@ -246,6 +246,8 @@
 					<h3 title="8">Gerenciar</h3>
 					<h4 title="8">Alterar status para:</h4>
 					<div id="eMailActionC" class="line margin-top-small" >
+						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=21" id="stt-21" ><span >(21) Aguardando pagamento do boleto</span></a>
+						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=23" id="stt-23" ><span >(23) Em análise de crédito</span></a>
 						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=40" id="stt-40" ><span >(40) Liberado para entrega</span></a>
 						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=49" id="stt-49" ><span >(49) Pedido entregue</span></a>
 						<a class="full-width href-button href-button-cancel  margin-bottom-small text-align-left text-indent-medium" href="?action=change-status&amp;status=30" id="stt-30" ><span >(30) Prazo de entrega prorrogado</span></a>
@@ -265,7 +267,10 @@
 						Confirme a alteração de status
 				</h3>
 				<label title="minlength:1" class="line required col-10" >
-					<span>Atenção, esta ação envia um e-mail de notificação ao cliente e é irreversível!</span>
+					<span>
+						Atenção, esta ação envia um e-mail de notificação ao cliente e é irreversível!<br /><br />
+						Obs: <span class="font-size-small font-italic" >O status 21 diminui o estoque, o 29 eleva.</span>
+					</span>
 				</label>
 				<label class="line">
 					<a class="col-3 href-button href-button-cancel" href="#cancel" ><span>Cancelar</span></a>
