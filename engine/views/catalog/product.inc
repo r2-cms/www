@@ -106,8 +106,8 @@
 								<div class="clearfix-child container" >
 									{{FOREACH:attributes|value}}
 									<div class="grid-12 clearfix-child" >
-										<div class="grid-4" >##attribute##</div>
-										<div class="grid-8" >##prefix## ##value## ##suffix##</div>
+										<div class="attr-name grid-4" >##attribute##</div>
+										<div class="attr-value grid-8" >##prefix## ##value## ##suffix##</div>
 									</div>
 									{{/FOREACH}}
 								</div>

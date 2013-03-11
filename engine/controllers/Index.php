@@ -214,7 +214,7 @@
 			{//SIZES
 				$tamanhos	= explode(',', isset($_GET['tamanhos'])?$_GET['tamanhos']:'');
 				$this->data['filter-sizes']	= array();
-				for ( $i=28; $i<=43; $i++) {
+				for ( $i=32; $i<=39; $i++) {
 					$this->data['filter-sizes'][]	= array(
 						'size'		=> $i,
 						'selected'	=> in_array( $i, $tamanhos)? 'href-button-orange': ''
@@ -331,7 +331,7 @@
 									1 = 1
 									AND ez.dirpath REGEXP '{$this->pathRegExp}'
 									AND e.stock > 0
-									AND a.attribute NOT IN('cor', 'desconto')
+									AND a.attribute NOT IN('cor', 'desconto', 'altura do salto')
 									$attrWhere
 								GROUP BY
 									attribute, VALUE, ez.id

@@ -1201,7 +1201,7 @@ label.increaser.side-by-side {
 	text-decoration: none !important;
 }
 .text-uppercase {
-	text-transform: uppercase;
+	text-transform: uppercase !important;
 }
 .text-capitalize {
 	text-transform: capitalize;

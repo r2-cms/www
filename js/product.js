@@ -181,11 +181,19 @@ jCube(function(){
 			}
 		}
 	})();
-	(function(){
+	(function(){//Stock avaibility
 		if ( jCube('::.sizes-chooser a:not(.unavaiable)').length > 2) {
 			jCube(':#eStockInfo').addClass('hidden');
 		} else {
 			jCube(':#eStockInfo').setHTML('(Últimas unidades)');
 		}
+	})();
+	(function(){//ATTRIBUTES
+		jCube('::.card .attributes .attr-name').each(function(){
+			if ( this.innerHTML.toLowerCase() == 'altura do salto' ) {
+				var eL	= this.getParent().query(':.attr-value');
+				eL.innerHTML	= (eL.innerHTML.trim().toInteger()/10).round(2).toString().replace('.', ',') + ' cm'
+			}
+		});
 	})();
 });
