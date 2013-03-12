@@ -22,13 +22,13 @@ jCube(function(){
 			container: this,
 			wait: 15000,
 			onComplete: function() {
-				eIndicator.setStyle('width', '100%');
+				//eIndicator.setStyle('width', '100%');
 			},
 			onTimeEllapsing: function(t) {
-				eIndicator.setStyle('width', 100 - (t/this.wait) * 100 +'%');
+				eIndicator.setStyle('width', (100 - (t/this.wait) * 100).round(2) +'%');
 			}
 		}).start();
-		be.getChron().fps	= 20;
+		be.getChron().fps	= 15;
 	});
 	(function(){//MAGNIFIER
 		var magActive	= false;
