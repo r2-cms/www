@@ -17,17 +17,18 @@ jCube(function(){
 		})
 	});
 	jCube('::.background-effect').each(function(){//BACKGROUND-EFFECT
+		var eIndicator	= jCube(':.slider-steps .bar-indicator');
 		be	= new jCube.Pluggins.BackgroundEffect({
 			container: this,
 			wait: 15000,
 			onComplete: function() {
-				jCube('::.slider-steps a').setStyle('opacity', 1);
+				eIndicator.setStyle('width', '100%');
 			},
 			onTimeEllapsing: function(t) {
-				jCube(':.slider-steps a.active').setStyle('opacity', t/this.wait)
+				eIndicator.setStyle('width', 100 - (t/this.wait) * 100 +'%');
 			}
 		}).start();
-		
+		be.getChron().fps	= 20;
 	});
 	(function(){//MAGNIFIER
 		var magActive	= false;

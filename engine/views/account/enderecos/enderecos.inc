@@ -36,7 +36,7 @@
 							<div class="height-medium grid" ></div>
 							<hr class="grid-12" />
 							<p class="grid-12 clearfix-child margin-bottom-none" >
-								<a href="novo/" class="href-button grid-6 float-right line-height-large" >
+								<a href="novo/" class="href-button href-button-blue grid-6 float-right line-height-large" >
 									<span>Criar novo endereço</span>
 								</a>
 							</p>

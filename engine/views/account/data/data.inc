@@ -119,7 +119,7 @@
 								<a href="../" class="href-button grid-2hm line-height-large margin-left-4m" >
 									<span>Cancelar</span>
 								</a>
-								<a href="#salvar" class="href-button grid-5 omega line-height-large gt8-form-post-save gt8formname-save-account-data" >
+								<a href="#salvar" class="href-button href-button-blue grid-5 omega line-height-large gt8-form-post-save gt8formname-save-account-data" >
 									<span>Salvar</span>
 								</a>
 							</p>

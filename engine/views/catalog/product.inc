@@ -42,8 +42,15 @@
 									</div>
 								</div>
 								<div class="slider-steps" >
-									<a href='link-1/' class="active" ><img src="{{CROOT}}imgs/gt8/blank.gif" alt="" width="16" height="16" /></a>
-									{{FOREACH:thumbs}}<a href='{{varname}}{{imgname}}/?preview' class="active" ><img src="{{CROOT}}imgs/gt8/blank.gif" alt="" width="16" height="16" /></a>{{/FOREACH}}
+									<a href='link-1/' class="active" >
+										<img src="?translate-img=1&amp;small" alt="" width="48" height="32" />
+									</a>
+									{{FOREACH:thumbs}}
+									<a href='{{varname}}{{imgname}}/?preview' class="active" >
+										<img src="{{varname}}{{imgname}}/?small" alt="" width="48" height="32" />
+									</a>
+									{{/FOREACH}}
+									<div class="bar-indicator" ></div>
 								</div>
 							</div>
 						</div>
