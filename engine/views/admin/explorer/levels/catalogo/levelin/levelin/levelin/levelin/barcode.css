@@ -1,0 +1,87 @@
+#eBarPrint {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: #FFF;
+	z-index: 1000;
+	text-align: left;
+	cursor: pointer;
+}
+	#eBarPrint .content {
+		position: relative;
+		left: 20px;
+		top: 20px;
+		width: 350px;
+	}
+		#eBarPrint .img {
+			position: relative;
+			float: left;
+			width: 120px;
+			height: 90px;
+			text-align: center;
+			border: 1px solid #000;
+		}
+			#eBarPrint .img img {
+				width: 110px;
+			}
+		#eBarPrint .size {
+			position: relative;
+			float: left;
+			width: 90px;
+			height: 90px;
+			line-height: 90px;
+			text-align: center;
+			border: 1px solid #000;
+			font-size: 64px;
+			font-weight: bolder;
+			color: #000;
+			margin-left: 15px;
+		}
+		#eBarPrint .info {
+			position: absolute;
+			right: 0px;
+			width: 110px;
+			text-transform: capitalize;
+			margin-left: 15px;
+		}
+			#eBarPrint .info > .title {
+				height: 23px;
+				overflow: hidden;
+			}
+			#eBarPrint .info > span, #eBarPrint .info > strong {
+				display: block;
+			}
+		#eBarPrint .barfoot {
+			display: block;
+			text-align: center;
+		}
+		#eBarPrint .middle-info {
+			position: relative;
+			height: 50px;
+			margin-top: 10px;
+		}
+		#eBarPrint .code39C {
+			display: block;
+			position: relative;
+			margin-top: 10px;
+			padding: 10px 0px;
+			border: 1px solid #000;
+			overflow: hidden;
+		}
+			#eBarPrint .code39C .barcode.code39 {
+				position: relative;
+				left: 10px;
+				display: block;
+			}
+		#eBarPrint .img-qr {
+			position: absolute;
+			right: 3px;
+			top: 0px;
+			width: 70px;
+			height: 70px;
+		}
+		#eBarPrint . {
+			
+		}

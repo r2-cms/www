@@ -4,10 +4,79 @@
 								<span class="col-6" ><input type="text" value="{{stock}}" name="stock" class="gt8-update input-rounded-shadowed" /><small class="hidden" >Estoque</small></span>
 								<em class="col-6">&nbsp;</em>
 							</label>
+							<label class="line" >
+								<?php
+									$Pager	= Pager(array(
+										'sql'	=> 'storage.list',
+										'where'	=> ' AND e.id = '. $this->id
+									));
+									$Pager	= $Pager['rows'][0];
+									if ( !$Pager) {
+										$Pager	= array(
+											'id' => 0,
+											'path' => '',
+											'filename' => '',
+											'fullpath' => '',
+											'idStorage' => 0
+										);
+									}
+									$Pager['cel']	= explode('/', $Pager['path']);
+									$Pager['cel']	= array_reverse($Pager['cel']);
+									array_shift($Pager['cel']);
+									if ( count($Pager['cel']) === 0 ) {
+										$Pager['cel']	= '<strong class="display-block" >---</strong><small class="padding-small" >Não armazenado</small>';
+									} else {
+										$Pager['cel']	= '<strong class="display-block" >'. strtoupper($Pager['filename']) .'</strong><small class="padding-small" >'. join('<br /> ', $Pager['cel']).'</small>';
+									}
+								?>
+								<script type="text/javascript" src="{{AROOT}}js/Modal.js" ></script>
+								<script type="text/javascript" >
+									jCube(function(){
+										jCube(':#eStorageBt').addEvent('onclick', function(E){
+											E.stop();
+											
+											Modal.getFrame().scrolling	= 'no';
+											Modal.show({
+												url: '{{AROOT}}storage/matriz/',
+												objRef: this,
+												height: 550
+											});
+										});
+									});
+									Modal.onStorageChoose	= function( id, card) {
+										
+										if ( id != ASP.idStorage) {
+											var req	= new jCube.Server.HttpRequest({
+												url: '{{AROOT}}storage/?action=save-product&format=JSON&idProduct='+ ASP.id +'&idStorage='+ id
+											});
+											GT8.Spinner.request(req);
+											var path	= card.query(':.path.hidden').innerHTML.split('/').reverse();
+											var filename	= path[0].toUpperCase();
+											path.shift();
+											path.pop();
+											jCube(':#eStorageBt span').innerHTML	= '<strong>'+ filename +'</strong><small class="padding-small" >'+ path.join('<br />') +'</small>';
+											
+										}
+										Modal.hide();
+									}
+									ASP.idStorage	= <?php print($Pager['idStorage']);?>;
+								</script>
+								<strong class="col-5" >Armazenamento</strong>
+								<a id="eStorageBt" href="{{AROOT}}<?php print($Pager['path'] . $Pager['filename']); ?>/" class="button col-6" >
+									<span class="headed" >
+										<?php print($Pager['cel']); ?>
+									</span>
+								</a>
+							</label>
 						</div>
 						<div class="card photos line-height" >
 							<div class="padding cards" >
 							<?php
+								/****************************************
+								 *
+								 * IMAGENS COMUNS AO PRODUTO
+								 *
+								 ***************************************/
 								require_once( SROOT .'engine/functions/Pager.php');
 								require_once( SROOT .'engine/functions/formatInBytes.php');
 								$Pager	= Pager(array(
@@ -81,20 +150,6 @@
 							require_once( SROOT.'engine/functions/Barcode39.php');
 							$this->htmlManagerModal	= '
 								<hr />
-								<div class="margin-top-small" title="Código do fornecedor" >
-									<div class="font-size-small" >
-										Código do fornecedor
-									</div>
-									<div class="clearfix" ></div>
-									<div class="barcode code39" >
-										'. Barcode39($this->data['filename']) .'
-									</div>
-									<div class="clearfix" ></div>
-									<div class="barcode code39 font-size-small" >
-										'. $this->data['filename'] .'
-									</div>
-								</div>
-								<hr />
 								<div id="eCodSDC" class="margin-top-small" title="Código Salão do Calçado" >
 									<div class="font-size-small" >
 										Código Salão do Calçado
@@ -108,6 +163,55 @@
 										'. $codProd.$codFamily.$tamanho.$price .'
 									</div>
 								</div>
+								<section id="eBarPrint" class="barcode-printer clearfix-child hidden" >
+									<div class="content" >
+										<div class="img" >
+											<img alt="" src="{{CROOT}}imgs/gt8/blank.gif" />
+										</div>
+										<div class="size" >
+											
+										</div>
+										<div class="info" >
+											<strong class="title" >Título</strong>
+											<span class="family" >Família</span>
+											<span class="brand" >Marca</span>
+											<span class="id" >REF: {{id}}</span>
+										</div>
+										<div class="clearfix" ></div>
+										<div class="middle-info" >
+											
+										</div>
+										<div class="barcode code39C" >
+											
+										</div>
+										<img class="img-qr" src="?action=print-qr-bar&url=teste" alt="" />
+										<div class="clearfix" ></div>
+										<div class="barfoot" >
+											<small>www.salaodocalcado.com.br</small>
+										</div>
+									</div>
+								</section>
+								<script type="text/javascript" >
+									jCube.Include("{{AROOT}}explorer/levels/catalogo/levelin/levelin/levelin/levelin/barcode.css");
+									jCube(function(){
+										jCube(":#eBarPrint").addEvent("onclick", function(E){
+											E.stop();
+											this.addClass("hidden");
+										});
+										jCube(":#eCodSDC .barcode.code39").addEvent("onclick", function(E){
+											E.stop();
+											jCube(":#eBarPrint").removeClass("hidden");
+										});
+										jCube(":#eBarPrint .img img").src	= jCube(":#ePublishC .img-preview img").src.replace(jCube(":input[name=filename]").value, "");
+										jCube(":#eBarPrint .title").innerHTML	= jCube("::nav.directory a")[7].innerHTML;
+										jCube(":#eBarPrint .family").innerHTML	= jCube("::nav.directory a")[5].innerHTML;
+										jCube(":#eBarPrint .brand").innerHTML	= jCube("::nav.directory a")[6].innerHTML;
+										jCube(":#eBarPrint .size").innerHTML	= jCube(":input[name=tamanho]").value;
+										jCube(":#eBarPrint .code39C").appendChild(jCube(":#eCodSDC .barcode.code39").cloneNode(true));
+										jCube(":#eBarPrint .img-qr").appendTo(jCube(":#eBarPrint .barcode.code39C"));
+										jCube(":#eCodSDC .barcode.code39").addClass("cursor-pointer");
+									});
+								</script>
 							';
 						?>
 						<?php
@@ -159,8 +263,3 @@
 							});
 						//]]>
 						</script>
-						<?php
-							/************************************************************************************************************************
-							 * FIM
-							************************************************************************************************************************/
-						?>

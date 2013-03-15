@@ -291,7 +291,7 @@
 			
 			$this->printHead( $title, $jsContent, $jsInclude, $cssInclude, $cssContent);
 		}
-		public function printFooter($data=array()) {
+		public function getFooter($data=array()) {
 			if ( isset($this->Pager['page'])) {
 				if ( GT8::isAdmin() ) {
 					$data['html']	= '
@@ -326,7 +326,10 @@
 				}
 			}
 			
-			parent::printFooter($data);
+			return parent::getFooter($data);
+		}
+		public function printFooter($data=array()) {
+			print( $this->getFooter($data));
 		}
 	}
 ?>

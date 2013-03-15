@@ -151,6 +151,13 @@
 					updateAttributeValue($_GET);
 					die();
 				}
+				if ( $_GET['action'] == 'print-qr-bar') {
+					require_once( SROOT .'engine/classes/BarcodeQR.php');
+					$qr	= new BarcodeQR();
+					$qr->url(mysql_real_escape_string($_GET['url']));
+					$qr->draw();
+					die();
+				}
 			}
 		}
 		public function on404() {

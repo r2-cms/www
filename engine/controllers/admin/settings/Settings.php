@@ -1,5 +1,4 @@
 <?php
-	require_once( SROOT ."engine/functions/Pager.php");
 	class Settings extends GT8 {
 		function __construct() {
 			global $GT8, $spath;
@@ -9,6 +8,7 @@
 			$this->checkActionRequest();
 		}
 		public function setParams( $id=0) {
+			require_once( SROOT ."engine/functions/Pager.php");
 			$id		= (integer)$id;
 			
 			$where	= '';

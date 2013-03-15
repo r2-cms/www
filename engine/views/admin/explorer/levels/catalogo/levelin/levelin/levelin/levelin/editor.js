@@ -14,15 +14,6 @@
 				//changing filename to código
 				jCube(':input[name=filename]').getParent('label').query(':strong').innerHTML	= 'Código da variação';
 				
-				//local de armazenamento
-				jCube('::.attributes input[name=armazenamento]').each(function(){
-					this.addClass('text-uppercase');
-					var eLabel	= this.getParent('label');
-					eLabel.appendTo(jCube(':.body .card.logistic'));
-					eLabel.query(':strong.pfx').addClass('hidden');
-					eLabel.query(':span.typ').removeClass('col-5').addClass('col-6');
-				});
-				
 				jCube('::[name=price_selling], [name=price_suggested], [name=price_cost], [name=stock]').each(function(){
 					this.getParent('label').removeClass('hidden');
 				});
@@ -55,8 +46,8 @@
 					}
 				});
 				//eliminando abas desnecessárias
-				jCube(':.TabbedPane .header .tab.imagem').remove();
-				jCube(':.Editor-TabbedPaneC .body .card.imagem').remove();
+				jCube(':.TabbedPane .header .tab.imagem').addClass('hidden');
+				//jCube(':.Editor-TabbedPaneC .body .card.imagem').remove();
 				
 				//Criando link para a imagem do painel
 				var eA	= jCube(document.createElement('A'));

@@ -216,6 +216,10 @@ jCube(function(){
 				transition: jCube.Transition.DEFAULT,
 				transitionIn: [0.3, 1.06, 0.5, 1.19],
 				doNotRemoveOnHiding: true,
+				onHideOverlayComplete: function(){
+					var crr	= this;
+					window.setTimeout(function(){crr.setStyle({top: -10000,left: -1000});}, 1000);
+				},
 				overlay: {
 					border : 'none',
 					background:'white',

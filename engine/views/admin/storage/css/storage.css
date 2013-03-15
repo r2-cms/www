@@ -1,0 +1,63 @@
+#eResults {
+	overflow: auto;
+}
+	#eC {
+		
+	}
+		#eResults a {
+			display: block;
+			position: relative;
+			margin-bottom: 20px;
+			background: #FFF;
+			box-shadow: 0 0 1px 1px #CCC;
+			border-radius: 4px;
+			transition: all 0.4s;
+		}
+			#eResults a.disabled {
+				opacity: 0.3;
+				box-shadow: none !important;
+				cursor: default !important;
+				text-decoration: none !important;
+			}
+			#eResults a:hover, #eResults a:active {
+				box-shadow: 0 0 4px 3px #AAA;
+			}
+			#eResults a strong {
+				display: block;
+				text-decoration: none;
+			}
+			#eResults a span {
+				display: block;
+				text-decoration: none;
+			}
+				#eResults a span.imgC {
+					height: 160px;
+				}
+					#eResults a.grid-fixed span.imgC {
+						height: 110px;
+					}
+				#eResults a span.tamanho {
+					line-height: 160px;
+					font-size: 128px;
+					font-weight: bold;
+					color: #444;
+				}
+			#eResults a span.overlay {
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 0;
+				background: rgba( 200,255,200, 0.5);
+			}
+		#eResults a.grid-fixed {
+			width: 150px;
+			height: 130px;
+		}
+		#eBackward {
+			display: block;
+		}
+			#eBackward small {
+				font-weight: normal;
+				text-transform: lowercase;
+			}

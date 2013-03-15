@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="{{CROOT}}js/gt8/Editor.js" ></script>
 		<script type="text/javascript" src="{{AROOT}}explorer/js/fileEditor.js" ></script>
 		{{PLUGGIN:css}}
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
 	</head>
 	<body class="{{modal-class}}" >
 		<div id="eMain" >

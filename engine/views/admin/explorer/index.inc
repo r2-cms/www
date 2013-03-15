@@ -41,7 +41,7 @@
 			</div>
 			<footer class="footer-clear-height" >&nbsp;</footer>
 			<footer class="main line-height-medium" >
-				&nbsp;
+				{{$this->getFooter()}}
 			</footer>
 		</div>
 		<!-- CUSTOMS -->

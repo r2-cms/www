@@ -196,6 +196,16 @@ a.button img, span.group-button a img {
 	display: block;
 	border-radius: 8px;
 }
+	a.button span.headed strong {
+		display: block;
+		font-size: 52px;
+	}
+	a.button span.headed small {
+		display: block;
+		font-size: 16px;
+		font-weight: normal;
+		line-height: 20px;
+	}
 /******************************* GROUP-BUTTON *********************************/
 span.group-button {
 	width: auto !important;
@@ -892,6 +902,9 @@ body .overflow-visible {
 }
 .margin-left-none {
 	margin-left: 0px !important;
+}
+.margin-left {
+	margin-left: 30px !important;
 }
 .margin-right-none {
 	margin-right: 0px !important;
@@ -1777,8 +1790,8 @@ table.list-filter td span, table.list-filter td strong {
 }
 .paging .disabled {
 	cursor: default;
-	background: #B2B2B2;
-	box-shadow: 1px 1px 3px inset;
+	background: #DDD;
+	box-shadow: 0 0 0;
 }
 .paging span.flex-space {
 	width: 300px;

@@ -53,11 +53,21 @@
 			$options['field']	= 'page_index';
 			$options['value']	= $options['page_index'];
 			
-			$this->Update( $options);
+			mysql_query("
+				UPDATE
+					gt8_modules
+				SET
+					page_index	= {$options['page_index']},
+					card_index	= {$options['card_index']}
+				WHERE
+					id = {$options['id']} AND
+					id_users = {$options['id_users']}
+					
+			") or die("SQL Update Error on Qr::SAIP");
 			
-			$options['field']	= 'card_index';
-			$options['value']	= $options['card_index'];
-			$this->Update( $options);
+			if ( (isset($options['format']) && $options['format'] === 'JSON') || ( isset($_GET['format']) && $_GET['format'] === 'JSON')) {
+				print("//#affected rows: 1". PHP_EOL);
+			}
 		}
 		public function getValue( $field, $value) {
 			if ( $field == 'stt') {
