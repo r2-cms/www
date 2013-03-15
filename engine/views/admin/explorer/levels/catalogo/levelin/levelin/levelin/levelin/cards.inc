@@ -180,7 +180,7 @@
 										'. Barcode39( $codProd.$codFamily.$tamanho.$price) .'
 									</div>
 									<div class="clearfix" ></div>
-									<div class="barcode code39 font-size-small" >
+									<div class="barcode code39 font-size-small textual-code" >
 										'. $codProd.$codFamily.$tamanho.$price .'
 									</div>
 								</div>
@@ -205,6 +205,9 @@
 										<div class="barcode code39C" >
 											
 										</div>
+										<div class="barcode code39 font-size-small textual-code" >
+											*'. $codProd.$codFamily.$tamanho.$price .'*
+										</div>
 										<img class="img-qr" src="{{CROOT}}imgs/gt8/blank.gif" alt="" />
 										<div class="clearfix" ></div>
 										<div class="barfoot" >
@@ -219,10 +222,12 @@
 											jCube(":#eBarPrint").addEvent("onclick", function(E){
 												E.stop();
 												this.addClass("hidden");
+												jCube(":#eMain").removeClass("hidden");
 											});
 											jCube(":#eCodSDC .barcode.code39").addEvent("onclick", function(E){
 												E.stop();
 												jCube(":#eBarPrint").removeClass("hidden");
+												jCube(":#eMain").addClass("hidden");
 											});
 											jCube(":#eBarPrint .img img").src	= jCube(":#ePublishC .img-preview img").src.replace(jCube(":input[name=filename]").value, "");
 											jCube(":#eBarPrint .title").innerHTML	= jCube("::nav.directory a")[7].innerHTML;
@@ -232,6 +237,7 @@
 											jCube(":#eBarPrint .code39C").appendChild(jCube(":#eCodSDC .barcode.code39").cloneNode(true));
 											jCube(":#eBarPrint .img-qr").appendTo(jCube(":#eBarPrint .barcode.code39C"));
 											jCube(":#eCodSDC .barcode.code39").addClass("cursor-pointer");
+											jCube(":#eBarPrint .barcode.code39.textual-code").appendTo(jCube(":#eBarPrint .code39C"));
 											jCube(":#eBarPrint").appendTo(document.body);
 											jCube(":#eBarPrint img.img-qr").src	= "?action=print-qr-bar&url="+ jCube(":#ePublishC .img-preview a").href;
 										}).delay(1000);//use o delay para dar tempo a outro DOMReady executar algumas funções que precisaremos aqui
