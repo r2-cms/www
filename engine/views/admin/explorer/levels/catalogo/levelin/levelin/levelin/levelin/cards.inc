@@ -146,7 +146,7 @@
 							 * Cria código de barras, padrão code39, nas variações dos produtos
 							 *
 							 ***************************************/
-							$codProd	= substr( $this->data['filename'] .'000000', -6);
+							$codProd	= substr( '000000'. $this->data['filename'], -6);
 							$codFamily	= explode('/', $this->data['path']);
 							$codFamily	= $codFamily[2];
 							$codFamily	= mysql_fetch_array(mysql_query("SELECT e.code FROM gt8_explorer e WHERE e.path = 'catalogo/calcados/' AND e.filename = '$codFamily' "));
