@@ -25,13 +25,27 @@
 									array_shift($Pager['cel']);
 									if ( count($Pager['cel']) === 0 ) {
 										$Pager['cel']	= '<strong class="display-block" >---</strong><small class="padding-small" >Não armazenado</small>';
+										$Pager['storaged']	= false;
 									} else {
 										$Pager['cel']	= '<strong class="display-block" >'. strtoupper($Pager['filename']) .'</strong><small class="padding-small" >'. join('<br /> ', $Pager['cel']).'</small>';
+										$Pager['storaged']	= true;
 									}
 								?>
 								<script type="text/javascript" src="{{AROOT}}js/Modal.js" ></script>
 								<script type="text/javascript" >
 									jCube(function(){
+										jCube(':#eStorageDelBt').addEvent('onclick', function(E){
+											E.stop();
+											if ( confirm("Deseja realmente remover este produto do estoque?")) {
+												var req	= new jCube.Server.HttpRequest({
+													url: '{{AROOT}}storage/?action=remove-product&format=JSON&idProduct='+ ASP.id,
+													noCache: true
+												});
+												GT8.Spinner.request(req);
+												jCube(':#eStorageBt span').innerHTML	= '<strong class="display-block" >---</strong><small class="padding-small" >Removido do estoque</small>';
+												this.addClass('hidden');
+											}
+										});
 										jCube(':#eStorageBt').addEvent('onclick', function(E){
 											E.stop();
 											
@@ -44,10 +58,10 @@
 										});
 									});
 									Modal.onStorageChoose	= function( id, card) {
-										
 										if ( id != ASP.idStorage) {
 											var req	= new jCube.Server.HttpRequest({
-												url: '{{AROOT}}storage/?action=save-product&format=JSON&idProduct='+ ASP.id +'&idStorage='+ id
+												url: '{{AROOT}}storage/?action=save-product&format=JSON&idProduct='+ ASP.id +'&idStorage='+ id,
+												noCache: true
 											});
 											GT8.Spinner.request(req);
 											var path	= card.query(':.path.hidden').innerHTML.split('/').reverse();
@@ -55,7 +69,7 @@
 											path.shift();
 											path.pop();
 											jCube(':#eStorageBt span').innerHTML	= '<strong>'+ filename +'</strong><small class="padding-small" >'+ path.join('<br />') +'</small>';
-											
+											jCube(':#eStorageDelBt').removeClass("hidden");
 										}
 										Modal.hide();
 									}
@@ -65,6 +79,13 @@
 								<a id="eStorageBt" href="{{AROOT}}<?php print($Pager['path'] . $Pager['filename']); ?>/" class="button col-6" >
 									<span class="headed" >
 										<?php print($Pager['cel']); ?>
+									</span>
+								</a>
+								<span class="clearfix" >&nbsp;</span>
+								<span class="col-5" >&nbsp;</span>
+								<a id="eStorageDelBt" href="#remover-armzenamento" class="button col-6 href-button-warning <?php print($Pager['storaged']?'':'hidden'); ?>" >
+									<span class="headed" >
+										Remover armazenamento
 									</span>
 								</a>
 							</label>
@@ -184,7 +205,7 @@
 										<div class="barcode code39C" >
 											
 										</div>
-										<img class="img-qr" src="?action=print-qr-bar&url=teste" alt="" />
+										<img class="img-qr" src="{{CROOT}}imgs/gt8/blank.gif" alt="" />
 										<div class="clearfix" ></div>
 										<div class="barfoot" >
 											<small>www.salaodocalcado.com.br</small>
@@ -194,22 +215,26 @@
 								<script type="text/javascript" >
 									jCube.Include("{{AROOT}}explorer/levels/catalogo/levelin/levelin/levelin/levelin/barcode.css");
 									jCube(function(){
-										jCube(":#eBarPrint").addEvent("onclick", function(E){
-											E.stop();
-											this.addClass("hidden");
-										});
-										jCube(":#eCodSDC .barcode.code39").addEvent("onclick", function(E){
-											E.stop();
-											jCube(":#eBarPrint").removeClass("hidden");
-										});
-										jCube(":#eBarPrint .img img").src	= jCube(":#ePublishC .img-preview img").src.replace(jCube(":input[name=filename]").value, "");
-										jCube(":#eBarPrint .title").innerHTML	= jCube("::nav.directory a")[7].innerHTML;
-										jCube(":#eBarPrint .family").innerHTML	= jCube("::nav.directory a")[5].innerHTML;
-										jCube(":#eBarPrint .brand").innerHTML	= jCube("::nav.directory a")[6].innerHTML;
-										jCube(":#eBarPrint .size").innerHTML	= jCube(":input[name=tamanho]").value;
-										jCube(":#eBarPrint .code39C").appendChild(jCube(":#eCodSDC .barcode.code39").cloneNode(true));
-										jCube(":#eBarPrint .img-qr").appendTo(jCube(":#eBarPrint .barcode.code39C"));
-										jCube(":#eCodSDC .barcode.code39").addClass("cursor-pointer");
+										(function(){
+											jCube(":#eBarPrint").addEvent("onclick", function(E){
+												E.stop();
+												this.addClass("hidden");
+											});
+											jCube(":#eCodSDC .barcode.code39").addEvent("onclick", function(E){
+												E.stop();
+												jCube(":#eBarPrint").removeClass("hidden");
+											});
+											jCube(":#eBarPrint .img img").src	= jCube(":#ePublishC .img-preview img").src.replace(jCube(":input[name=filename]").value, "");
+											jCube(":#eBarPrint .title").innerHTML	= jCube("::nav.directory a")[7].innerHTML;
+											jCube(":#eBarPrint .family").innerHTML	= jCube("::nav.directory a")[5].innerHTML;
+											jCube(":#eBarPrint .brand").innerHTML	= jCube("::nav.directory a")[6].innerHTML;
+											jCube(":#eBarPrint .size").innerHTML	= jCube(":input[name=tamanho]").value;
+											jCube(":#eBarPrint .code39C").appendChild(jCube(":#eCodSDC .barcode.code39").cloneNode(true));
+											jCube(":#eBarPrint .img-qr").appendTo(jCube(":#eBarPrint .barcode.code39C"));
+											jCube(":#eCodSDC .barcode.code39").addClass("cursor-pointer");
+											jCube(":#eBarPrint").appendTo(document.body);
+											jCube(":#eBarPrint img.img-qr").src	= "?action=print-qr-bar&url="+ jCube(":#ePublishC .img-preview a").href;
+										}).delay(1000);//use o delay para dar tempo a outro DOMReady executar algumas funções que precisaremos aqui
 									});
 								</script>
 							';

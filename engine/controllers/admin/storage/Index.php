@@ -16,6 +16,8 @@
 			
 			$this->options['addWhere']	= '';
 			
+			$this->checkReadPrivileges('storage/');
+			
 			$this->checkActionRequest();
 			/***************************************************************************
 			*                                 CARD LISTER                              *
@@ -27,7 +29,6 @@
 			}
 			
 			$this->checkReadPrivileges('storage/');
-			
 			parent::CardLister();
 		}
 		public function on404() {
@@ -47,7 +48,7 @@
 						break;
 					}
 					case 'save-product': {
-						$this->checkWritePrivileges( $this->privilegeName, $field, $format, 2);
+						$this->checkWritePrivileges( 'storage/', 2);
 						
 						$idProduct	= (integer)$_GET['idProduct'];
 						$idStorage	= (integer)$_GET['idStorage'];
@@ -113,6 +114,35 @@
 								print('//#affected rows: ('. $affected .')'. PHP_EOL);
 								print('//#message: Produto registrado em depósito com sucesso!'. PHP_EOL);
 							}
+							die();
+						}
+						break;
+					}
+					case 'remove-product': {
+						$this->checkWritePrivileges( 'storage/');
+						
+						$idProduct	= (integer)$_GET['idProduct'];
+						mysql_query("
+							DELETE FROM
+								gt8_storage
+							WHERE
+								id_explorer_product	= $idProduct
+						") or die('SQL Delete Error on Adm.Storage!');
+						
+						$affected	= mysql_affected_rows();
+						
+						require_once( SROOT .'engine/functions/LogAdmActivity.php');
+						LogAdmActivity( array(
+							"action"	=> "delete",
+							"page"		=> "storage/",
+							"name"		=> 'product',
+							"value"		=> $idProduct,
+							"idRef"		=> $idStorage
+						));
+						
+						if ( isset($_GET['format']) && $_GET['format'] === 'JSON') {
+							print('//#affected rows: ('. mysql_affected_rows() .')'. PHP_EOL);
+							print('//#message: Produto removido do depósito com sucesso!'. PHP_EOL);
 							die();
 						}
 						break;

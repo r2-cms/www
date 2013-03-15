@@ -85,3 +85,6 @@
 		#eBarPrint . {
 			
 		}
+.barcode .p1, .barcode .p3 {
+	-webkit-print-color-adjust: exact;
+}

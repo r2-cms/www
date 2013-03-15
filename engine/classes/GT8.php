@@ -1182,15 +1182,17 @@
 				die();
 			}
 		}
-		protected function checkReadPrivileges( $url='', $field='*', $format='OBJECT') {
+		protected function checkReadPrivileges( $url='', $field='*', $format='') {
 			$this->checkPrivileges( $url, $field, $format, 1);
 		}
-		protected function checkWritePrivileges($url='', $field='*', $format='OBJECT') {
+		protected function checkWritePrivileges($url='', $field='*', $format='') {
 			$this->checkPrivileges( $url, $field, $format, 2);
 		}
-		protected function checkPrivileges( $url=null, $field='*', $format='OBJECT', $min=2) {
+		protected function checkPrivileges( $url=null, $field='*', $format='', $min=2) {
 			require_once( SROOT ."engine/functions/CheckPrivileges.php");
-			$format	= $format? $format: 'OBJECT';
+			if ( empty($format)) {
+				$format	= isset($_GET['format']) && $_GET['format']? $_GET['format']: 'OBJECT';
+			}
 			if ( !$url) {
 				global $paths;
 				$url	= $paths;
