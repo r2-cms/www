@@ -73,7 +73,7 @@
 				switch($_GET['action']) {
 					case 'set-pass': {
 						$name	= 'pass';
-						$this->update( $name, $pass);
+						$this->update( $name, $_POST['pass']);
 					}
 				}
 			}
