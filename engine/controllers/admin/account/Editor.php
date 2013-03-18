@@ -72,7 +72,8 @@
 			if ( isset($_GET['action']) && $_GET['action']) {
 				switch($_GET['action']) {
 					case 'set-pass': {
-						$this->update( 'pass', $_POST['pass']);
+						$name	= 'pass';
+						$this->update( $name, $pass);
 					}
 				}
 			}
