@@ -45,8 +45,17 @@
 			width: 110px;
 			text-transform: capitalize;
 			margin-left: 15px;
+			font-size: 12px;
 		}
 			#eBarPrint .info > .title {
+				height: 23px;
+				overflow: hidden;
+			}
+			#eBarPrint .info > .family {
+				height: 23px;
+				overflow: hidden;
+			}
+			#eBarPrint .info > .brand {
 				height: 23px;
 				overflow: hidden;
 			}

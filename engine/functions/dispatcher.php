@@ -303,7 +303,8 @@
 				$Index
 			);
 		} else {
-			GT8::printView(
+			$Index	= new GT8;
+			$Index->printView(
 				SROOT .'engine/views/'. $fileviewer,
 				$Data,
 				$Editor

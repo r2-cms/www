@@ -141,6 +141,22 @@
 							</div>
 						</div>
 						<?php
+							if ( isset($_GET['action']) && $_GET['action'] ==='queue-print-barcode') {
+								mysql_query("
+									INSERT INTO
+										print_queue( id_explorer, creation)
+										SELECT {$this->data['id']}, NOW()
+										FROM
+											print_queue
+										WHERE
+											id_explorer = {$this->data['id']}
+										HAVING
+											COUNT(*) = 0
+								") or die(mysql_error());
+								mysql_query("UPDATE print_queue SET printed = 0 WHERE id_explorer = {$this->data['id']}") or die(mysql_error());
+								print("//#message: Produto adiconado à fila de impressão.<br />Aguarde alguns segundos e pegue a etiquena na impressora.". PHP_EOL);
+								die();
+							}
 							/****************************************
 							 *
 							 * Cria código de barras, padrão code39, nas variações dos produtos
@@ -184,6 +200,7 @@
 										'. $codProd.$codFamily.$tamanho.$price .'
 									</div>
 								</div>
+								<span class="button group-button group-toggle hidden" ><a id="eTBbtPrint" title="Adicionar código de barra à fila de impressão" onclick="return Explorer.addBarcodeToQueue" href="#" class="button" ><img alt="" src="{{CROOT}}imgs/print-small.png" /></a></span>
 								<section id="eBarPrint" class="barcode-printer clearfix-child hidden" >
 									<div class="content" >
 										<div class="img" >
@@ -240,6 +257,14 @@
 											jCube(":#eBarPrint .barcode.code39.textual-code").appendTo(jCube(":#eBarPrint .code39C"));
 											jCube(":#eBarPrint").appendTo(document.body);
 											jCube(":#eBarPrint img.img-qr").src	= "?action=print-qr-bar&url="+ jCube(":#ePublishC .img-preview a").href;
+											
+											//toolbar
+											jCube(":#eTBbtPrint").addEvent("onclick", function(E){
+												GT8.Spinner.request(new jCube.Server.HttpRequest({
+													url: "?action=queue-print-barcode",
+													noCache: true
+												}));
+											}).getParent().appendTo(jCube(":header.admin nav.toolbar")).removeClass("hidden");
 										}).delay(1000);//use o delay para dar tempo a outro DOMReady executar algumas funções que precisaremos aqui
 									});
 								</script>
