@@ -95,6 +95,15 @@
 		$Pager['url']		= join('/', $Pager['url']);
 		$Pager['url']		= 'http://www.salaodocalcado.com.br/'. $Pager['url'] .'/';
 		
+		$Pager['cel']		= Pager(array(
+			'sql'	=> 'storage.list',
+			'ids'	=> array(
+				array('e.id', $Pager['id'])
+			),
+			'limit'	=> 1
+		));
+		$Pager['cel']	= $Pager['cel']['rows'][0]['filename'];
+		
 		require_once( SROOT.'engine/functions/Barcode39.php');
 	} else {
 		print('<!DOCTYPE html>
@@ -151,14 +160,17 @@
 			#eBarPrint {
 				cursor: default;
 			}
+				#eBarPrint .info .id {
+					text-transform: uppercase;
+				}
 		</style>
 		<script type="text/javascript" >
 			window.onload	= function(){
 				window.setTimeout(function(){
-					jsPrintSetup.setOption('printSilent', 1);
-					jsPrintSetup.setSilentPrint(true);
-					jsPrintSetup.printWindow(window);
-					window.setTimeout(function(){ window.location.reload();}, 7000);
+					//jsPrintSetup.setOption('printSilent', 1);
+					//jsPrintSetup.setSilentPrint(true);
+					//jsPrintSetup.printWindow(window);
+					//window.setTimeout(function(){ window.location.reload();}, 7000);
 				}, 5000);
 			}
 		</script>
@@ -177,7 +189,7 @@
 						<strong class="title" ><?php print($Pager['title']); ?></strong>
 						<span class="family" ><?php print($Pager['family']); ?></span>
 						<span class="brand" ><?php print($Pager['brand']); ?></span>
-						<span class="id" >REF: <?php print($Pager['id']); ?></span>
+						<span class="id" >REF: <?php print($Pager['id'] .' '. $Pager['cel']); ?></span>
 					</div>
 					<div class="clearfix" ></div>
 					<div class="middle-info" >

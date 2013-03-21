@@ -1,5 +1,4 @@
 <?php
-	global $GT8;
 	$sql	= array(
 		"select"	=> "
 				e.id, e.dirpath, e.path, e.filename,

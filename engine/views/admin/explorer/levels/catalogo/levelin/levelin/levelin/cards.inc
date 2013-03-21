@@ -25,3 +25,22 @@
 								jCube('::input[name=desconto]').getParent('label').appendTo(jCube(':#eCardBodyPrices'));
 							});
 						//]]></script>
+						<!-- ********************* BOTÃO LIQUIDAÇÃO ********************************* -->
+						<script type="text/javascript" >//<![CDATA[
+							jCube(function(){
+								jCube(document.createElement('HR')).appendTo(jCube(':#ePublishC'));
+								jCube(':#eBtLiquidation').appendTo(jCube(':#ePublishC'));
+							});
+						//]]></script>
+						<div id="eBtLiquidation" class="line" >
+							<div class="name">Liquidação</div>
+							<div class="value">
+								<div class="Switch">
+									<div class="overflow">
+										<div class="on" >ON</div>
+										<div class="knob" ><input type="checkbox" class="gt8-update" name="special" <?php print($this->data['special']==1?'checked="checked"':''); ?>></div>
+										<div class="off">OFF</div>
+									</div>
+								</div>
+							</div>
+						</div>

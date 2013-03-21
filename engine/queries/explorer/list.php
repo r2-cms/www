@@ -5,7 +5,7 @@
 	$sql	= array(
 		"select"	=> "
 				e.type,
-				e.id, e.id_dir, e.title, e.locked, e.mime, 
+				e.id, e.id_dir, e.title, e.locked, e.special, e.mime, 
 				
 				DATE_FORMAT(e.publish_up, '%Y/%m/%d %H:%i:%s') AS publish_up,
 				DATE_FORMAT(e.publish_down, '%Y/%m/%d %H:%i:%s') AS publish_down,

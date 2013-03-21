@@ -11,7 +11,7 @@
 	);
 	require_once( '../../../engine/connect.php');
 	require_once( SROOT.'engine/functions/Pager.php');
-	$table	= 'gt8_explorer';
+	$table	= 'gt8_storage';
 	$result	= mysql_query('
 		DESCRIBE '. $table .'
 	') or die('Can not get table data type in SQL Update');
