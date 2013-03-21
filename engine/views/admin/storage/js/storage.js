@@ -122,6 +122,7 @@ jCube(function() {//navigation
 		for ( var i=0, crr; i<jStorage.paths.length; i++) {
 			crr	= jStorage.paths[i];
 			
+			//console.log([ (path +'/'+ crr[3]).toLowerCase(), crr[0].toLowerCase(), (crr[0].split('/').length === level + 1)]);
 			if ( (path +'/'+ crr[3]).toLowerCase() === crr[0].toLowerCase() && crr[0].split('/').length === level + 1 ) {
 				html.push(
 					template.
@@ -132,6 +133,7 @@ jCube(function() {//navigation
 				);
 			}
 		}
+		//console.log([html.length]);
 		var is3x	= false;
 		if ( html.length == 1) {
 			html	= html.join('').replace(/grid-fixed/g, 'grid-12');
@@ -193,7 +195,6 @@ jCube(function() {//navigation
 		} else {
 			jCube(':#eBackwardLabel').removeClass("text-uppercase");
 		}
-		
 		
 		//CARREGAR aJax
 		if ( is3x) {
@@ -273,7 +274,7 @@ jCube(function() {//navigation
 						for ( j=0; j<results.length; j++) {
 							if ( crr === results[j].filename.toLowerCase()) {
 								eL	= cards[i].getParent().getLastChild();
-								eL.setStyle('height', (cards[i].getParent().offsetHeight/20) + eL.offsetHeight);
+								eL.setStyle('height', (cards[i].getParent().offsetHeight/14) + eL.offsetHeight);
 								found	= true;
 							}
 						}

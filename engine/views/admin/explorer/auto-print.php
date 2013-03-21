@@ -167,10 +167,10 @@
 		<script type="text/javascript" >
 			window.onload	= function(){
 				window.setTimeout(function(){
-					//jsPrintSetup.setOption('printSilent', 1);
-					//jsPrintSetup.setSilentPrint(true);
-					//jsPrintSetup.printWindow(window);
-					//window.setTimeout(function(){ window.location.reload();}, 7000);
+					jsPrintSetup.setOption('printSilent', 1);
+					jsPrintSetup.setSilentPrint(true);
+					jsPrintSetup.printWindow(window);
+					window.setTimeout(function(){ window.location.reload();}, 7000);
 				}, 5000);
 			}
 		</script>

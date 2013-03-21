@@ -177,6 +177,7 @@
 						v.id_attributes = a.id 
 				) AS tamanho
 			';
+			$this->options['limit']		= '600';
 			
 			//$this->options['debug']	= 1;
 			$Pager	= Pager($this->options);
@@ -192,7 +193,7 @@
 			$this->options['addWhere']	= '
 				AND e.path REGEXP "^storage/"
 			';
-			$this->options['limit']		= '200';
+			$this->options['limit']		= '600';
 			
 			//$this->options['debug']	= 1;
 			$Pager	= Pager($this->options);
