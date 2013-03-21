@@ -19,7 +19,7 @@
 			//{{$this->setCards()}}
 			var jStorage	= {
 				paths: [
-				{{FOREACH:storage-rows}}['{{path}}{{filename}}', '##title##', '{{fullpath}}', '{{filename}}', '{{id}}'],
+				{{FOREACH:storage-rows}}['{{path}}{{filename}}', '##title##', '{{fullpath}}', '{{filename}}', {{id}}],
 				{{/FOREACH}}
 				['the end']
 				]

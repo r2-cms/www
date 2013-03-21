@@ -175,7 +175,8 @@
 						a.attribute = "tamanho" AND 
 						v.id_explorer = e.id AND
 						v.id_attributes = a.id 
-				) AS tamanho
+				) AS tamanho,
+				e.stock
 			';
 			$this->options['limit']		= '600';
 			

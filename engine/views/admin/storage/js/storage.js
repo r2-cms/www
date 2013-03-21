@@ -274,7 +274,7 @@ jCube(function() {//navigation
 						for ( j=0; j<results.length; j++) {
 							if ( crr === results[j].filename.toLowerCase()) {
 								eL	= cards[i].getParent().getLastChild();
-								eL.setStyle('height', (cards[i].getParent().offsetHeight/14) + eL.offsetHeight);
+								eL.setStyle('height', ((cards[i].getParent().offsetHeight/14)*results[j].stock.toInteger()) + eL.offsetHeight);
 								found	= true;
 							}
 						}
