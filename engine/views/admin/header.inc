@@ -22,7 +22,9 @@
 						<a class="button home<?php print(strpos('#'.strtolower($_SERVER["PHP_SELF"]), "/". strtolower($GT8['admin']['root']) ."index.php")>0? ' disabled': ''); ?>" href="{{AROOT}}" title="Ir para a página administrativa inicial" ><span><img src="{{CROOT}}imgs/gt8/toolbar/home-regular.png" alt="[bt home]" /></span></a>
 						<a class="button user" href="{{AROOT}}users/{{SESSION:login.login}}/" ><span><img src="{{CROOT}}{{GT8:explorer.root}}users/{{SESSION:login.login}}/?small" alt="Carregando..." /></span></a>
 						<h1>{{h1}}</h1>
-						<a href="" onclick="jsAdmin.logout(event)" class="button logout float-right" title="Finalizar esta sessão" ><span><img src="{{CROOT}}imgs/gt8/toolbar/logout-regular.png" alt="[bt logout]" /></span></a>
+						<div id="eNotificationsC" class="float-right clearfix-child" >
+							<a href="#" onclick="jsAdmin.logout(event)" class="button logout " title="Finalizar esta sessão" ><span><img src="{{CROOT}}imgs/gt8/toolbar/logout-regular.png" alt="[bt logout]" /></span></a>
+						</div>
 					</nav>
 					<?php
 						if ( $_h_showTool ) {

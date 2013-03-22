@@ -1245,6 +1245,24 @@
 			$combo	= CreateComboLevels( $allow, $format, $useDash, $showAllLevels);
 			return utf8_encode($combo);
 		}
+		public function printAction( $response, $type='value') {
+			
+			if ( isset($_GET['format']) && $_GET['format'] === 'JSON') {
+				
+				if ( $type === 'affected') {
+					print('//#affected rows: '. $response .''. PHP_EOL);
+				} else if ( $type === 'message') {
+					print('//#message: '. $response . PHP_EOL);
+				} else if ( $type === 'error') {
+					print('//#error: '. $response . PHP_EOL);
+				} else if ( $type === 'insert') {
+					print('//#insert id: '. $response .''. PHP_EOL);
+				} else if ( $type === 'value') {
+					print('//#value: '. $response .''. PHP_EOL);
+				}
+			}
+			return $response;
+		}
 		//CUSTOMS
 		public function H1only4Home( $endTag) {
 			global $spath;

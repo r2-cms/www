@@ -102,18 +102,19 @@
 			return parent::getServerJSVars();
 		}
 		private function checkActionRequest() {
-			if ( $_GET['opt'] == 'update') {
-				die();
-				require_once( SROOT .'queries/address/UpdateAddress.php');
-				new UpdateAddress(array(
-					"id"		=> $_GET["id"],
-					"field"		=> $_GET["field"],
-					"value"		=> $_GET["value"],
-					'format'	=> 'JSON'
-				));
-				die();
+			if ( isset($_GET['action'])) {
+				switch( $_GET['action']) {
+					case 'get-orders-qty': {
+						$result	= mysql_query("SELECT id FROM gt8_orders WHERE id_stts IN (21, 23) order by id DESC");
+						$ids	= array();
+						while( ($row=mysql_fetch_array($result))) {
+							$ids[] = $row[0];
+						}
+						die($this->printAction(join(',', $ids), 'message'));
+						break;
+					}
+				}
 			}
-			$this->saveGridState();
 		}
 		public function getCards($template='') {
 			$this->options['sql']		= 'orders.list-orders';

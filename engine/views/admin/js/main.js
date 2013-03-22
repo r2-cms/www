@@ -8,7 +8,7 @@ var jsAdmin	= {
 		e	= jCube.Event(e);
 		
 		new jCube.Server.HttpRequest({
-			url: '?logout',
+			url: '{{AROOT}}?logout',
 			noCache: true,
 			onLoad: function() {
 				window.location.reload();
@@ -150,5 +150,60 @@ jCube(function(){
 			}
 		});
 		
+	})();
+});
+jCube(function(){//NOTIFICATIONS
+	
+	(function(){//ORDERS
+		var orders	= [];
+		var Get	= function() {
+			var req	= new jCube.Server.HttpRequest({
+				url: ASP.CROOT + '{{GT8:admin.root}}orders/?action=get-orders-qty&format=JSON',
+				noCache: true,
+				onComplete: function(){
+					if ( this.ret.message) {
+						orders	= this.ret.message.split(',');
+						jCube.Document.Cookie.set('orders-qty', orders.join(','));
+					} else {
+						orders	= [];
+						jCube.Document.Cookie.set('orders-qty', '');
+					}
+					Process();
+				},
+				hideGrowl: true
+			});
+			GT8.Spinner.request(req);
+		}
+		var Process	= function(){
+			var eModules	= jCube('::.card span.module-name');
+			for ( var i=0; i<eModules.length; i++) {
+				if ( eModules[i].innerHTML.toLowerCase() === 'orders') {
+					if ( orders.length) {
+						eModules[i].getParent().getLastChild().addClass('notifications').removeClass('hidden').setHTML( orders.length);
+					} else {
+						eModules[i].getParent().getLastChild().addClass('notifications').addClass('hidden').setHTML( '&nbsp;');
+					}
+					break;
+				}
+			}
+			if ( orders.length) {
+				var eA	= jCube(':#eNotificationTop');
+				if ( !eA) {
+					eA	= jCube(document.createElement('A')).
+						addClass('button').
+						setProperty('href', ASP.CROOT +'{{GT8:admin.root}}orders/'+ (orders.length===1? orders[0] +'/': '?status=21,23')).
+						setHTML('<span><img src="'+ ASP.CROOT +'{{GT8:admin.root}}orders/imgs/large.png" /><small class="notification" >&nbsp;</small></span>').
+						setProperty('id', 'eNotificationTop')
+					;
+					eA.prependTo( jCube(':#eNotificationsC'));
+				}
+				eA.query(':small').setHTML(orders.length);
+			}
+		}
+		Get();
+		if ( jCube.Document.Cookie.get('orders-qty') ) {
+			orders	= jCube.Document.Cookie.get('orders-qty').split(',');
+			Process();
+		}
 	})();
 });

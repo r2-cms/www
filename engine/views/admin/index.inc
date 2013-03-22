@@ -6,7 +6,6 @@
 		{{VIEW:admin.header-default}}
 		<link rel="stylesheet" type="text/css" href="css/home.css" />
 		{{tag:script|inline:{{JS_SERVER_VARS}}}}
-		<script type="text/javascript" src="js/main.js" ></script>
 		<script type="text/javascript" src="js/home.js" ></script>
 	</head>
 	<body>

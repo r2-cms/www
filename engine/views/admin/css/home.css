@@ -86,6 +86,26 @@ header.admin {
 				height: 32px;
 				background: transparent url(../imgs/small-lock.png) no-repeat;
 			}
+			.home-cards-container div.notifications {
+				position: absolute;
+				right: 26px;
+				height: 30px;
+				top: 26px;
+				border: 2px solid #FFF;
+				border-radius: 20px;
+				background: #A80606;
+				background: #C43C35;
+				background-image: linear-gradient( top , #EE5F5B, #C43C35);
+				background-image: -webkit-linear-gradient( top, #EE5F5B, #C43C35);
+				background-image: -moz-linear-gradient( top , #EE5F5B, #C43C35);
+				background-image: -ms-linear-gradient( top , #EE5F5B, #C43C35);
+				font-size: 24px;
+				color: #FFF;
+				text-shadow: 1px 1px 1px #444;
+				line-height: 26px;
+				padding: 0 15px;
+				box-shadow: 1px 1px 3px #444;
+			}
 .go-page-button {
 	position: absolute;
 	top: 0;

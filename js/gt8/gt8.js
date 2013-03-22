@@ -711,7 +711,9 @@ var GT8	= {
 				req.position	= req.position || 'upper right';
 				req.duration	= req.duration || 850;
 				
-				if ( eLabel) {
+				if ( req.hideGrowl) {
+					
+				} else if ( eLabel) {
 					eLabel.addClass('spinning');
 				} else if ( eMessage) {
 					if ( eSpinner) {
@@ -732,7 +734,13 @@ var GT8	= {
 				req.onLoad	= null;
 				req.onComplete	= function() {
 					var ret	= GT8.onGeneralRequestLoad.call( this, null, true);
-					if ( growl) {
+					this.ret	= ret;
+					if ( this.hideGrowl) {
+						if ( onLoad) {
+							onLoad.apply( this, arguments);
+						}
+						return;
+					} else if ( growl) {
 						growl.obj.eImgC.addClass('hidden');
 					} else if ( eLabel) {
 						eLabel.removeClass('spinning');
@@ -776,7 +784,7 @@ var GT8	= {
 					}
 					if ( ret.value) {
 						if ( growl) {
-							growl.obj.query(':span').innerHTML	= (ret.valuePrefix || 'Valor: ') + req.value.format(2);
+							growl.obj.query(':span').innerHTML	= (ret.valuePrefix || 'Valor: ') + ret.value.format(2);
 							growl.obj.getFirstChild().className	= 'value';
 						} else if ( eLabel) {
 							eLabel.addClass('positive').removeClass('waiting');
@@ -826,7 +834,6 @@ var GT8	= {
 							eMessage.setHTML( 'Erro no servidor');
 						}
 					}
-					this.ret	= ret;
 					
 					if ( this.position == 'center') {//como a mensagem pode alterar o tamanho da caixa, ajustemos a posição do growl
 						growl.obj.setStyle({
@@ -842,13 +849,15 @@ var GT8	= {
 							growl.hide();
 						}
 					}, hideAfter + req.duration);
-
+					
 					if ( onLoad) {
 						onLoad.apply( this, arguments);
 					}
 				}
 				req.onError	= function() {
-					if ( growl ) {
+					if ( this.hideGrowl) {
+						
+					} else if ( growl ) {
 						growl.obj.eImgC.setStyle('display', 'none');
 						growl.obj.getFirstChild().className	= 'error';
 						growl.obj.query(':span').innerHTML	= req.error || 'Erro não especificado';
@@ -870,7 +879,7 @@ var GT8	= {
 					}
 				}
 				req.start();
-				return growl || eLabel;
+				return growl || eLabel || this;
 			},
 			create: function() {
 				var sp	= jCube(document.createElement('DIV')).setHTML('<div><div class="sp-imgC" ><img src="'+ jCube.root +'../imgs/gt8/spinner-small.gif" alt="" /></div><span>&nbsp;</span></div>').addClass('growl-spinner').setStyle({

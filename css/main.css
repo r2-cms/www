@@ -489,6 +489,7 @@ a.href-button-orange span:hover {
 a.href-button-red {
 	background: #A80606;
 	background-image: linear-gradient( top, #A80606, #900505 48%, #780404 52%, #3C0202);
+	background-image: -ms-linear-gradient( top, #A80606, #900505 48%, #780404 52%, #3C0202);
 	background-image: -moz-linear-gradient( top, #A80606, #900505 48%, #780404 52%, #3C0202);
 	background-image: -webkit-linear-gradient( top, #A80606, #900505 48%, #780404 52%, #3C0202);
 }
@@ -2052,6 +2053,7 @@ input.search {
 	background-image: linear-gradient( top , #EE5F5B, #C43C35);
 	background-image: -webkit-linear-gradient( top, #EE5F5B, #C43C35);
 	background-image: -moz-linear-gradient( top , #EE5F5B, #C43C35);
+	background-image: -ms-linear-gradient( top , #EE5F5B, #C43C35);
 	z-index: 10000;
 }
 	.gt8-debug-error h1, .gt8-debug-error h2 {
