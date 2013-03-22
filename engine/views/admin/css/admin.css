@@ -372,6 +372,25 @@ a.button img, span.group-button a img {
 	display: block;
 	border-radius: 8px;
 }
+a.button small.notification {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	border: 1px solid #FFF;
+	border-radius: 20px;
+	background: #A80606;
+	background: #C43C35;
+	background-image: linear-gradient( top , #EE5F5B, #C43C35);
+	background-image: -webkit-linear-gradient( top, #EE5F5B, #C43C35);
+	background-image: -moz-linear-gradient( top , #EE5F5B, #C43C35);
+	background-image: -ms-linear-gradient( top , #EE5F5B, #C43C35);
+	line-height: 15px;
+	font-size: 14px;
+	color: #FFF;
+	text-shadow: 1px 1px 1px #444;
+	padding: 2px 5px;
+	box-shadow: 1px 1px 3px #444;
+}
 /********************** HREF-BUTTON *******************************************/
 a.href-button {
 	display: block;

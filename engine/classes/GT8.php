@@ -335,6 +335,8 @@
 			$data['CROOT']	= CROOT;
 			$data['AROOT']	= CROOT.(isset($GT8['admin'])? $GT8['admin']['root']: 'admin');
 			$data['modal-class']	= isset($_GET['modal']) && ($_GET['modal']==1 || $_GET['modal']=='true')? 'modal-window': '';
+			$data['toolbar']	= isset($data['toolbar']) && $data['toolbar']? $data['toolbar']: '';
+			$data['title']		= isset($data['title']) && $data['title']? $data['title']: '';
 			
 			$OBJ	= null;
 			if ( isset($this) ) {
@@ -452,7 +454,7 @@
 			global $GT8;
 			
 			if ( $type === 'properties' ) {
-				preg_match_all('/\{\{\$this\-\>([a-zA-Z0-9\_\[\]\'\(.*?\'\"\,\ \)\-]+)}\}/', $contents, $result);
+				preg_match_all('/\{\{\$this\-\>([a-zA-Z0-9\_\[\]\'\(.*?\'\"\,\ \)\-\!]+)}\}/', $contents, $result);
 				
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
@@ -890,6 +892,12 @@
 		public function includeView( $file, $data) {
 			global $GT8;
 			include_once( SROOT."engine/views/$file.inc");
+		}
+		protected function setData( $name, $value='') {
+			$this->data[$name]	= $value;
+		}
+		public function getData( $name) {
+			return (isset($this->data[$name])? $this->data[$name]: '');
 		}
 		public function on404() {
 			$this->getUrlHistory();
