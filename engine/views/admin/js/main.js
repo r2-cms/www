@@ -170,6 +170,9 @@ jCube(function(){//NOTIFICATIONS
 					}
 					Process();
 				},
+				onError: function() {
+					Process();
+				},
 				hideGrowl: true
 			});
 			GT8.Spinner.request(req);
@@ -199,6 +202,7 @@ jCube(function(){//NOTIFICATIONS
 				}
 				eA.query(':small').setHTML(orders.length);
 			}
+			window.setTimeout(Get, 60*1000);
 		}
 		Get();
 		if ( jCube.Document.Cookie.get('orders-qty') ) {
