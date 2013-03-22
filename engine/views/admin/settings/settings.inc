@@ -4,35 +4,20 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Configurações gerais | GT8</title>
 		<link rel="stylesheet" type="text/css" href="css/settings.css" />
-		<link rel="stylesheet" type="text/css" href="{{CROOT}}css/gt8/gt8.css" />
-		<link rel="stylesheet" type="text/css" href="{{AROOT}}css/admin.css" />
-		<script type="text/javascript" src="{{CROOT}}jCube/jCube.single.js" ></script>
-		<script type="text/javascript" src="{{CROOT}}js/gt8/gt8.js" ></script>
-		<script type="text/javascript" src="{{AROOT}}js/main.js" ></script>
+		{{VIEW:admin.head-default}}
 		<script type="text/javascript" src="js/settings.js" ></script>
 		<script type="text/javascript" >
 			{{JS_SERVER_VARS}}
 		</script>
 	</head>
-	<body class="{{modal-class}}" >
+	<body class="{{modal-class}} overflow-auto" >
 		<div id="eMain" >
-			<header class="admin" >
-				<div class="holder" >
-					<nav class="main" >
-						<a class="button home" href="{{AROOT}}" title="Ir para a página administrativa inicial" ><span><img src="{{CROOT}}imgs/gt8/toolbar/home-regular.png" alt="[bt home]" /></span></a>
-						<a class="button user" href="{{AROOT}}users/Roger/" ><span><img src="{{CROOT}}{{GT8:explorer.root}}users/Roger/?small" alt="Carregando..." /></span></a>
-						<h1>Configurações</h1>
-						<a href="#" onclick="jsAdmin.logout(event)" class="button logout float-right" title="Finalizar esta sessão" ><span><img src="{{CROOT}}imgs/gt8/toolbar/logout-regular.png" alt="[bt logout]" /></span></a>
-					</nav>
-					<nav class="toolbar">
-						<a id="eBtAdd" title="Adicionar novo parâmetro" href="?action=add-param" class="button" ><img alt="[icon]" src="{{CROOT}}imgs/gt8/add-small.png" /></a>
-						<a id="eBtDel" title="Excluir parâmetro" href="?action=remove-param" class="button" ><img alt="[icon]" src="{{CROOT}}imgs/gt8/cancel-small.png" /></a>
-					</nav>
-					<nav class="directory" >{{$this->getDirLocation()}}</nav>
-					<script type="text/javascript" src="{{AROOT}}chat/json.js" ></script>
-				</div>
-				<div class="space" ><div class="main"></div><div class="toolbar" ></div><div class="directory"></div></div>
-			</header>
+			<?php
+				$x	= '<a id="eBtDel" title="Excluir parâmetro" href="?action=remove-param" class="button" ><img alt="[icon]" src="{{CROOT}}imgs/gt8/cancel-small.png" /></a>';
+				$x	.= '<a id="eBtAdd" title="Adicionar novo parâmetro" href="?action=add-param" class="button" ><img alt="[icon]" src="{{CROOT}}imgs/gt8/add-small.png" /></a>';
+				$this->setData('toolbar', $x);
+			?>
+			{{VIEW:admin.header-new}}
 			<div id="eResults" class="row-12 fluid-12 margin-top-large" >
 				<div class="padding-large card-white" >
 					<div class="header clearfix-child line-height-large bg-light box-shadow" >

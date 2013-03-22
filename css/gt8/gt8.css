@@ -1445,6 +1445,9 @@ input.search {
 	position: relative;
 	overflow: hidden !important;
 }
+.overflow-auto {
+	overflow: auto !important;
+}
 .paragraph {
 	display: block;
 	margin: 0 0 20px;

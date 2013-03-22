@@ -161,7 +161,9 @@ jCube(function(){//NOTIFICATIONS
 				url: ASP.CROOT + '{{GT8:admin.root}}orders/?action=get-orders-qty&format=JSON',
 				noCache: true,
 				onComplete: function(){
-					if ( this.ret.message) {
+					var message	= (this.ret.message +'').match(/[0-9\,]+/);
+					if ( message && message[0]) {
+						message	= message[0];
 						orders	= this.ret.message.split(',');
 						jCube.Document.Cookie.set('orders-qty', orders.join(','));
 					} else {
@@ -178,18 +180,20 @@ jCube(function(){//NOTIFICATIONS
 			GT8.Spinner.request(req);
 		}
 		var Process	= function(){
-			var eModules	= jCube('::.card span.module-name');
-			for ( var i=0; i<eModules.length; i++) {
-				if ( eModules[i].innerHTML.toLowerCase() === 'orders') {
-					if ( orders.length) {
-						eModules[i].getParent().getLastChild().addClass('notifications').removeClass('hidden').setHTML( orders.length);
-					} else {
-						eModules[i].getParent().getLastChild().addClass('notifications').addClass('hidden').setHTML( '&nbsp;');
+			if ( 'Página principal') {
+				var eModules	= jCube('::.card span.module-name');
+				for ( var i=0; i<eModules.length; i++) {
+					if ( eModules[i].innerHTML.toLowerCase() === 'orders') {
+						if ( orders.length) {
+							eModules[i].getParent().getLastChild().addClass('notifications').removeClass('hidden').setHTML( orders.length);
+						} else {
+							eModules[i].getParent().getLastChild().addClass('notifications').addClass('hidden').setHTML( '&nbsp;');
+						}
+						break;
 					}
-					break;
 				}
 			}
-			if ( orders.length) {
+			if ( 'Notificação no header') {
 				var eA	= jCube(':#eNotificationTop');
 				if ( !eA) {
 					eA	= jCube(document.createElement('A')).
@@ -201,8 +205,13 @@ jCube(function(){//NOTIFICATIONS
 					eA.prependTo( jCube(':#eNotificationsC'));
 				}
 				eA.query(':small').setHTML(orders.length);
+				if ( orders.length) {
+					eA.removeClass('hidden');
+				} else {
+					eA.addClass('hidden');
+				}
 			}
-			window.setTimeout(Get, 60*1000);
+			window.setTimeout(Get, ({{PARAM:notify-orders-timeout|60}})*1000);
 		}
 		Get();
 		if ( jCube.Document.Cookie.get('orders-qty') ) {
