@@ -145,13 +145,7 @@
 								mysql_query("
 									INSERT INTO
 										print_queue( id_explorer, creation)
-										SELECT {$this->data['id']}, NOW()
-										FROM
-											print_queue
-										WHERE
-											id_explorer = {$this->data['id']}
-										HAVING
-											COUNT(*) = 0
+									VALUES( $this->data['id']}, NOW())
 								") or die(mysql_error());
 								mysql_query("UPDATE print_queue SET printed = 0 WHERE id_explorer = {$this->data['id']}") or die(mysql_error());
 								print("//#message: Produto adiconado à fila de impressão.<br />Aguarde alguns segundos e pegue a etiquena na impressora.". PHP_EOL);
@@ -213,7 +207,7 @@
 											<strong class="title" >Título</strong>
 											<span class="family" >Família</span>
 											<span class="brand" >Marca</span>
-											<span class="id" >REF: {{id}}</span>
+											<span class="id" >REF: {{id}} <span>&nbsp;</span></span>
 										</div>
 										<div class="clearfix" ></div>
 										<div class="middle-info" >
@@ -245,6 +239,17 @@
 												E.stop();
 												jCube(":#eBarPrint").removeClass("hidden");
 												jCube(":#eMain").addClass("hidden");
+												
+												//include storage location info
+												jCube(":#eBarPrint .info .id span").setHTML(jCube(":#eStorageBt strong").innerHTML);
+												
+												//firefox pluggin to print without prompt dialog
+												if ( window.jsPrintSetup) {
+													jsPrintSetup.setOption("printSilent", 1);
+													jsPrintSetup.setSilentPrint(true);
+													jsPrintSetup.printWindow(window);
+													window.setTimeout(function(){ jCube(":#eBarPrint").trigger("onclick", E)}, 2000);
+												}
 											});
 											jCube(":#eBarPrint .img img").src	= jCube(":#ePublishC .img-preview img").src.replace(jCube(":input[name=filename]").value, "");
 											jCube(":#eBarPrint .title").innerHTML	= jCube("::nav.directory a")[7].innerHTML;

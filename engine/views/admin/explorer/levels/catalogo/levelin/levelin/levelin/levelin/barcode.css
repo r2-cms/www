@@ -87,12 +87,9 @@
 		#eBarPrint .img-qr {
 			position: absolute;
 			right: -13px;
-			top: -15px;
-			width: 110px;
-			height: 110px;
-		}
-		#eBarPrint . {
-			
+			top: -11px;
+			width: 100px;
+			height: 100px;
 		}
 .barcode .p1, .barcode .p3 {
 	-webkit-print-color-adjust: exact;
