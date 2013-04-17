@@ -1,6 +1,6 @@
 <?php
 	require_once( SROOT .'engine/controllers/admin/account/Editor.php');
-	class Index extends AdminEditor {
+	class NewUserAccount extends AdminEditor {
 		public function __construct() {
 			$this->checkActionRequest();
 			parent::__construct();

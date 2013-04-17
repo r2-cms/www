@@ -107,16 +107,17 @@
 					break;
 			}
 		}
-		public function printAddress() {
+		public function getAddress($template) {
 			if ( $this->id) {
 				$Pager	= Pager(array(
 					'sql'	=> 'address.list',
-					'format'	=> 'CARD',
+					'format'	=> 'TEMPLATE',
+					'template'	=> $template,
 					'required'	=> array(
 						array('a.id_users', $this->id)
 					)
 				));
-				print($Pager['rows']);
+				return $Pager['rows'];
 			}
 		}
 		public function getLevelArray( $table, $field) {

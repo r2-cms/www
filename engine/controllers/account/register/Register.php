@@ -16,13 +16,38 @@
 				header('location: ../');
 				die();
 			}
+			$this->data['name']	= '';
+			$this->data['birth']	= '';
+			$this->data['cpfcnpj']	= '';
+			$this->data['document']	= '';
+			$this->data['mail']	= '';
+			$this->data['phone-home']	= '';
+			$this->data['phone-mobile']	= '';
+			$this->data['zip']	= '';
+			$this->data['street']	= '';
+			$this->data['number']	= '';
+			$this->data['complement']	= '';
+			$this->data['reference']	= '';
+			$this->data['district']	= '';
+			$this->data['city']	= '';
+			$this->data['pass1']	= '';
+			$this->data['stt']	= '';
+			$this->data['natureza']	= '';
+			$this->data['genre']	= '';
+			$this->data['accountError']	= '';
 			
 			$this->checkActionRequest();
 			$this->setFields();
 			require_once( SROOT .'engine/functions/Pager.php');
 			
 		}
+		protected function redirectToAccount() {
+			header('location: ../');
+			die();
+		}
 		private function checkActionRequest() {
+			global $GT8;
+			
 			if ( isset($_GET['action']) && $_GET['action']) {
 				if ( $_GET['action'] === 'get-zip') {
 					$zip		= RegExp($_GET['zip'], '[0-9]{5}\-[0-9]{3}');
@@ -45,12 +70,11 @@
 					if ( count($Pager['rows']) > 0 ) {
 						print('//#error: e-mail já cadastrado!'. PHP_EOL);
 					} else {
-						print('//#E-mail ainda não cadastrado.'. PHP_EOL);
+						print('//#message: cadastro disponível!'. PHP_EOL);
 					}
 					die();
 				}
 				if ( $_GET['action'] === 'create-account') {
-					
 					require_once( SROOT. 'engine/queries/users/InsertUser.php');
 					$_GET['login']		= $_GET['mail'];
 					$_GET['level']		= 1;
@@ -60,10 +84,58 @@
 					$_GET['pass']			= $_POST['pass'];
 					$_GET['format']			= 'OBJECT';
 					$idUser	= InsertUser($_GET);
-					//$idUser	= 19;
 					
-					if ( !$idUser) {
-						die('Não foi possível criar o novo cadastro. Por favor, tente mais tarde.');
+					if ( !$idUser || $idUser === 'login already exists') {
+						//Rigel Sèi "><script>alert(666)</script>
+						$this->addExpirableData('name', htmlentities(utf8_encode($_GET['name'])), 300);
+						$this->addExpirableData('birth', RegExp($_GET['birth'], '[0-9\-\/]+'), 300);
+						$this->addExpirableData('cpfcnpj', RegExp($_GET['cpfcnpj'], '[0-9\.\-\/]+'), 300);
+						$this->addExpirableData('document', RegExp($_GET['document'], '[0-9\.\-\/a-zA-Z\ ]+'), 300);
+						$this->addExpirableData('mail', RegExp($_GET['mail'], '[A-Za-z0-9_\-\.\:\@]+'), 300);
+						$this->addExpirableData('phone-home', RegExp($_GET['phone-home'], '[0-9\-\(\)\ \.]+'), 300);
+						$this->addExpirableData('phone-mobile', RegExp($_GET['phone-mobile'], '[0-9\-\(\)\ \.]+'), 300);
+						$this->addExpirableData('zip', RegExp($_GET['zip'], '[0-9]{5}\-[0-9]{3}'), 300);
+						$this->addExpirableData('street', htmlentities(utf8_encode($_GET['street'])), 300);
+						$this->addExpirableData('number', htmlentities(utf8_encode($_GET['number'])), 300);
+						$this->addExpirableData('complement', htmlentities(utf8_encode($_GET['complement'])), 300);
+						$this->addExpirableData('reference', htmlentities(utf8_encode($_GET['reference'])), 300);
+						$this->addExpirableData('district', htmlentities(utf8_encode($_GET['district'])), 300);
+						$this->addExpirableData('city', htmlentities(utf8_encode($_GET['city'])), 300);
+						$this->addExpirableData('pass1', RegExp($_GET['pass1'], '[a-zA-Z0-9]+'));
+						$this->addExpirableData('pass2', RegExp($_GET['pass2'], '[a-zA-Z0-9]+'));
+						$this->addExpirableData('stt', RegExp($_GET['stt'], '[A-Z]{2,2}'), 300);
+						$this->addExpirableData('natureza', RegExp($_GET['natureza'], 'F|J'), 300);
+						$this->addExpirableData('genre', RegExp($_GET['genre'], 'M|F'), 300);
+						
+						if ( $idUser == 'login already exists') {
+							$this->addMessage('accountError', '
+								<p>
+									O e-mail escolhido já está sendo usado! Por favor, escolha outro e-mail
+								</p>
+								<p>
+									Se este e-mail {{mail}} lhe pertence, <a href="{{CROOT}}{{GT8:account.root}}" >clique aqui</a> para acessar seu cadastro. <br />
+									Se você esqueceu a senha, <a href="{{CROOT}}{{GT8:account.root}}{{GT8:account.resetPassword.root}}" >clique aqui</a> para recuperar a senha.
+								</p>
+							');
+							$this->addExpirableData('accountError', $idUser);
+						} else {
+							$this->addMessage('accountError', '
+								<p>
+									Ocorreu um erro ao registrar o cadastro!
+								</p>
+								<p>
+									Por favor, certifique-se que as informações digitadas estão corretas e/ou 
+									aguarde alguns instantes e tente novamente.
+								</p>
+								<p>
+									Se precisar de ajuda, contate nossa Central de Atendimento '. $this->getParam('phone-comercial') .', das '. $this->getParam('opening-hours') .'.
+								</p>
+							');
+							$this->addExpirableData('account-error', 'undefined error');
+							die('Não foi possível criar o novo cadastro. Por favor, tente mais tarde.');
+						}
+						header('location: ./');
+						die();
 					}
 					
 					$_POST["pass"]	= md5($_POST["pass"] .'-'. $_SESSION['GT8']['tstart']);
@@ -108,8 +180,7 @@
 						'stt'			=> $_GET['stt']
 					));
 					
-					header('location: ../');
-					die();
+					$this->redirectToAccount();
 				}
 				if ( $_GET['action'] == 'set-pass') {
 					//$this->update( 'pass', $_POST['pass']);

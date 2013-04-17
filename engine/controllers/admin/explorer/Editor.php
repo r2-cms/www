@@ -167,7 +167,7 @@
 			if ( !$this->id) {
 				$Pager	= $this->getUrlHistory($_GET['path'], false);
 				if ( $Pager ) {
-					header('location: '. CROOT . $Pager['new'], 301);
+					header('location: '. CROOT . $Pager['new'] . $Pager['qsa'], 301);
 					die();
 				} else {
 					GT8::printView( SROOT .'engine/views/admin/explorer/404/index.inc', array('path'=>RegExp($_GET['path'], '[a-z-A-Z0-9_\-\+\.\:\/\\\|\%\&\?\@]+')));

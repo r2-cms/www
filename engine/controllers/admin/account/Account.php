@@ -4,7 +4,7 @@
 		//die('Undefined GT8: a1i32->p4o1u1o0->ca1a5o6o->Home');
 	}
 	require_once( SROOT .'engine/classes/CardLister.php');
-	class Index extends CardLister {
+	class Account extends CardLister {
 		public $name	= 'users';
 		public $orderFilter	= array(
 			array("nome-crescente", "ordem alphabética", 'u.name'),
@@ -26,7 +26,6 @@
 			$spath			= $this->getSPath($GT8['admin']['root'] . $GT8['admin']['account']['root']);
 			
 			//spath
-			$spath	= $this->getSPath();
 			if ( isset($spath[0]) && ($spath[0]=='new-user-account' || $spath[0]=='new') ) {
 				//require_once( 'new-user-account/index.inc');
 				print("<pre>". print_r('666: Controller/Admin/Account/Index.php', 1) ."</pre>". PHP_EOL);

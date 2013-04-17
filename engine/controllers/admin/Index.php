@@ -62,9 +62,8 @@
 				'addSelect'	=> ' SUBSTRING_INDEX(m.module, "/", 1) AS module2, m.custom',
 				'order'	=> 'm.page_index, m.card_index'
 			));
-			
 			$Modules	= $Modules['rows'];
-			for($i=0; $i<count($Base); $i++) {
+			for( $i=0; $i<count($Base); $i++) {
 				$crr	= $Base[$i];
 				
 				$found	= false;

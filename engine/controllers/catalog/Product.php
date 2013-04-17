@@ -38,6 +38,11 @@
 				$this->redirect('forbidden');
 			}
 			$this->jsVars[]	= array('id', $this->id, true);
+			$line	= explode('/', $this->data['path']);
+			$line	= $line[0];
+			$this->jsVars[]	= array('line', $line);
+			$this->jsVars[]	= array('totalVariations', count($this->data['sizes']), true);
+			$this->jsVars[]	= array('priceParts', $this->data['price_parts'], true);
 		}
 		private function checkSotck() {
 			if ( $this->isUnavaiable) {

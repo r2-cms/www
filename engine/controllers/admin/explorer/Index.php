@@ -108,9 +108,9 @@
 				}
 				$html	.= '
 					<li id="ebook-'. $crr['id'] .'" class="'.$isMe.'" >
-						<a href="'. CROOT . $GT8['admin']['root'].'explorer/'. $crr['filename'] .'" title="img-'. $crr['id_dir'] .'"  >
+						<a href="'. CROOT . $GT8['admin']['root'] .'explorer/'. $crr['path'] . $crr['filename'] .($crr['type']==='directory'? '/':'?edit').'" title="img-'. $crr['id_dir'] .'"  >
 							<img class="left-icon-small" src="'. CROOT .$GT8['explorer']['root']. $crr['path'] . $crr['filename'] .'?thumb" alt="[favorite icon]" />
-							<span>'. utf8_encode(htmlentities($crr['title'])).'</span>
+							<span>'. utf8_encode(($crr['title'])).'</span>
 							<small class="ballon" >('. ($crr['files']+$crr['folders']) .')</small>
 						</a>
 					</li>
@@ -148,7 +148,7 @@
 					<li class="'.$isMe.'" >
 						<a href="'. CROOT . $GT8['admin']['root'].'explorer/'. $crr['filename'] .'/" title="img-'. $crr['id'] .'"  >
 							<img class="left-icon-small" src="'. CROOT .$GT8['explorer']['root']. $crr['path'] . $crr['filename'] .'?thumb" alt="[favorite icon]" />
-							<span>'. utf8_encode(htmlentities($crr['title'])).'</span>
+							<span>'. utf8_encode(($crr['title'])).'</span>
 							<small class="ballon" >('. ($crr['files']+$crr['folders']) .')</small>
 						</a>
 					</li>
@@ -323,7 +323,7 @@
 				$this->options['searchR'][]	= array('e.dirpath', $this->dirPathCode);
 				$this->options['where']		.= ' AND LENGTH(e.dirpath) > '. strlen($this->dirPathCode);
 				$this->options['search']	= array(
-					array('e.title, e.filename', $this->keywords)
+					array('e.title, e.filename, e.path', $this->keywords)
 				);
 			} else {
 				$this->options['ids']	= array(

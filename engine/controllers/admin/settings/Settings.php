@@ -4,7 +4,6 @@
 			global $GT8, $spath;
 			
 			$this->checkReadPrivileges('settings/');
-			
 			$this->checkActionRequest();
 		}
 		public function setParams( $id=0) {
@@ -42,7 +41,7 @@
 			));
 			$this->Pager	= $Pager['rows'];
 			if ( !isset($this->Pager[0]) || !$this->Pager[0] || !isset($this->Pager[0]['id'])) {
-				parent::on404();
+				//parent::on404();
 			}
 			
 			$this->Pager	= $Pager['rows'];

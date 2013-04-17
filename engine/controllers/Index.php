@@ -7,13 +7,18 @@
 	require_once(SROOT."engine/functions/Pager.php");
 	
 	class Index extends CardLister {
+		const BASE_ID_DIR	= '474';
+		
 		public $name	= 'categories';
 		public $genre	= '';
 		public $defaultLimit	= 30;
 		protected $filters	= array();
 		protected $crrDirPath	= '474/';
 		private $pathRegExp		= '^474/[0-9]+/$';
+		protected $crrCatalogName	= 'calcados/';
 		private $isSearch	= false;
+		private $isLiquidation	= false;
+		private $isBrands	= false;
 		public $orderFilter	= array(
 			array("mais-vendidos", "mais vendidos", 'ev.vtotal DESC'),
 			array("mais-visualizados", "mais populares", 'ev.vtotal DESC'),
@@ -47,9 +52,11 @@
 		protected function setDirPath() {//this method also checks if url exists
 			global $GT8, $paths;
 			$dirs	= $paths;
+			
 			if ( count($dirs)) {
-				$this->isSearch	= $dirs[0].'/' == $GT8['search']['root'];
-				
+				$this->isSearch		= $dirs[0].'/' == $GT8['search']['root'];
+				$this->isLiquidation	= $dirs[0].'/' == $GT8['liquidation']['root'];
+				$this->isBrands		= isset($dirs[1]) && $dirs[1] ==='marcas';
 				$row		= mysql_fetch_array(mysql_query("SELECT id FROM gt8_explorer WHERE filename = '{$GT8['catalog']['explorer-root']}' AND id_dir = 0"));
 				$crrPath	= $row[0] .'/';
 				$lastId		= $row[0] .'';
@@ -61,6 +68,10 @@
 						if ( empty($row[0])) {
 							if ( $this->isSearch) {
 								break;
+							} else if ( $this->isLiquidation) {
+								break;
+							} else if ( $this->isBrands) {
+								break;
 							} else {
 								$this->on404();
 							}
@@ -71,7 +82,7 @@
 				}
 				$this->crrDirPath	= $crrPath;
 				$array	= explode('/', $crrPath);
-				$pathRegExp	= '^474/';
+				$pathRegExp	= '^'. self::BASE_ID_DIR .'/';
 				for ( $i=1; $i<4; $i++) {
 					if ( isset($array[$i]) && $array[$i]) {
 						$pathRegExp	.= $array[$i] .'/';
@@ -97,13 +108,17 @@
 			$myLevel	= isset($_SESSION['login']['level'])?$_SESSION['login']['level']: 0;
 			$this->options['where']	.= " AND e.approved = 1 AND ez.approved = 1 AND e.read_privilege <= $myLevel";
 			
+			if ( $this->isLiquidation) {
+				//$spath[0]	= 'calcados';
+				$this->options['where']	.= ' AND ez.special = 1';//catalogo/line/family/
+			}
 			if ( isset($spath[4]) || (!isset($spath[4]) && isset($_GET['translate-img'])&&$_GET['translate-img']=1)) {//variações
 				//este arquivo, consulta o caminho de GT8.explorer.root para assegurar que a intenção é realmente carregar uma imagem. Portanto, simularemos esse caminho
 				$_GET['path']	= $GT8['explorer']['root'].'catalogo/'. $_GET['path'];
 				global $sizeRequested;
 				require( SROOT .'engine/controllers/admin/explorer/LoadPhisic.php');
 			}
-			if ( isset($spath[3]) && !$this->isSearch) {//produto
+			if ( isset($spath[3]) ) {//produto
 				require_once( SROOT.'engine/controllers/catalog/Product.php');
 				//envie como argumento o path menos o último diretório
 				$Product	= new Product(substr($this->crrDirPath, 0, -strpos(strrev($this->crrDirPath), '/', 1)));
@@ -114,14 +129,19 @@
 				);
 				die();
 			}
-			if ( isset($spath[2]) && !$this->isSearch) {//MARCA
+			
+			if ( isset($spath[2]) || $this->isBrands) {//MARCA
 				$spath[0]	= RegExp($spath[0], '[a-zA-Z0-9\-\_]+');
 				$spath[1]	= RegExp($spath[1], '[a-zA-Z0-9\-\_]+');
-				$spath[2]	= RegExp($spath[2], '[a-zA-Z0-9\-\_]+');
+				$spath[2]	= RegExp((isset($spath[2])? $spath[2]: ''), '[a-zA-Z0-9\-\_]+');
 				
 				//$this->genre	= $spath[0];
 				$this->options['where']	.= ' AND ez.dirpath REGEXP "'. $this->pathRegExp .'"';//catalogo/line/family/brand/
 				
+				if ( $this->isBrands && $spath[2]) {
+					$this->options['where']	.= ' AND e.path LIKE "%/'. $spath[2] .'/%" ';
+				}
+				
 				$this->data['category-title']	= strtoupper(substr($spath[0], 0, 1)) . substr($spath[0], 1);
 				
 				$this->getCategories();
@@ -140,44 +160,52 @@
 				);
 				die();
 			}
-			if ( isset($spath[1]) && !$this->isSearch) {//FAMÍLIAS
-				$spath[0]	= RegExp($spath[0], '[a-zA-Z0-9\-\_]+');
-				$spath[1]	= RegExp($spath[1], '[a-zA-Z0-9\-\_]+');
+			if ( isset($spath[1]) || (isset($_GET['familia']) && $_GET['familia']) || $this->isSearch) {//FAMÍLIAS
+				$line	= '';
+				$family	= '';
 				
-				//$this->genre	= $spath[0];
+				if ( isset($_GET['path']) && $_GET['path']) {
+					$q	= explode('/', (($_GET['path'])));
+					array_shift($q);
+					$q	= (utf8_decode(htmlspecialchars(mysql_real_escape_string(utf8_encode(join($q))))));
+					if ( $this->isSearch) {
+						$GT8['search-key-words']	= $q;
+					}
+					$this->options['search']	= array(
+						array('e.title,e.sumary,e.path', utf8_decode($q))
+					);
+				}
+				if ( $this->isLiquidation && isset($_GET['familia']) && $_GET['familia']) {
+					$family	= $_GET['familia'];
+				} else {
+					$spath[1]	= RegExp($spath[1], '[a-zA-Z0-9\-\_]+');
+					$family		= $spath[1];
+					$spath[0]	= RegExp($spath[0], '[a-zA-Z0-9\-\_]+');
+					$line		= $spath[0];
+				}
 				$this->options['where']	.= ' AND ez.dirpath REGEXP "'. $this->pathRegExp .'"';//catalogo/line/family/
 				
-				$this->data['category-title']	= strtoupper(substr($spath[0], 0, 1)) . substr($spath[0], 1);
-				
+				$this->data['category-title']	= strtoupper(substr($line, 0, 1)) . substr($line, 1) .' '. $family;
 				$this->getCategories();
 				
 				foreach( $this->data['categories'] AS $i=>$row) {
-					if ( $row['filename']==$spath[1]) {
+					if ( $row['filename'] == $family) {
 						$this->data['categories'][$i]['selected']	= 'selected';
 					}
 				}
 				
 				self::CardLister();
 				$this->printView(
-					SROOT .'engine/views/catalog/index.inc',
+					SROOT .'engine/views/'. ($this->isLiquidation? 'liquidation/liquidation.inc': 'catalog/index.inc'),
 					$this->data,
 					$this
 				);
 				die();
 			}
-			if ( isset($spath[0]) || $this->isSearch) {//LINHAS
+			if ( isset($spath[0])) {//LINHAS
 				$spath[0]	= RegExp($spath[0], '[a-zA-Z0-9\-\_]+');
 				
 				$this->genre	= $spath[0];
-				
-				if ( $this->isSearch) {
-					if (isset($spath[1])) {
-						$this->options['search']	= array(
-							array('e.title,e.sumary,e.path', mysql_real_escape_string($spath[1]))
-						);
-						$GT8['search-key-words']	= htmlspecialchars($spath[1]);
-					}
-				}
 				
 				$this->options['where']	.= ' AND ez.dirpath REGEXP "'. $this->pathRegExp .'"';//catalogo/line/
 				$this->addAttributeInSelect('genero');
@@ -187,7 +215,7 @@
 				
 				self::CardLister();
 				$this->printView(
-					SROOT .'engine/views/catalog/index.inc',
+					SROOT .'engine/views/'. ($this->isLiquidation? 'liquidation/liquidation.inc': 'catalog/index.inc'),
 					$this->data,
 					$this
 				);
@@ -203,6 +231,8 @@
 			}
 		}
 		private function prepareFilters() {
+			global $path;
+			
 			if ( isset($_GET['preco-minimo'])) {//MIN PRICE
 				$this->filters[]	= array('preco-minimo', (integer)$_GET['preco-minimo'], true);
 				$this->options['where']	.= ' AND ez.price_selling > '. (integer)$_GET['preco-minimo'];
@@ -236,15 +266,88 @@
 					';
 				}
 			}
-			{//COLORS
-				$cores	= explode(',', $_GET['cores']);
-				$this->data['filter-colors']	= array();
-				for ( $i=0, $len=count($this->colors); $i<$len; $i++) {
-					$this->data['filter-colors'][]	= array(
-						'color'		=> $this->colors[$i],
-						'selected'	=> in_array( $this->colors[$i], $cores)? 'selected': ''
-					);
+			{//ALL
+				$attrWhere	= $this->options['where'];
+				$attrSearch	= '';
+				if ( $this->isLiquidation) {
+					$attrWhere	.= ' AND ez.special = 1';
 				}
+				if ( $this->isSearch) {
+					
+					$q	= explode('/', $_GET['path']);
+					array_shift($q);
+					$q	= utf8_decode(utf8_decode(htmlspecialchars(mysql_real_escape_string(utf8_encode(join($q))))));
+					$attrSearch	= " AND (
+						1 = 0
+						OR e.title LIKE '%{$q}%'
+						OR e.sumary LIKE '%{$q}%'
+						OR e.path LIKE '%{$q}%'
+					)
+					";
+				}
+			}
+			if ( 0){//COLORS
+				$cores	= explode(',', $_GET['cores']);
+				$Pager	= Pager(array(
+					'select'	=> '
+						e.id, e.attribute, e.value, stock, COUNT(*) AS total, "" AS selected
+					',
+					'from'		=> "
+						(
+							SELECT
+								e.id, 
+								e.id_dir, 
+								a.attribute,
+								v.value,
+								e.dirpath,
+								e.path,
+								e.filename,
+								1 AS stock
+							FROM
+								gt8_explorer e
+								INNER JOIN gt8_explorer ez					ON ez.id = e.id_dir
+								LEFT JOIN gt8_explorer_attributes_value v	ON ez.id = v.id_explorer
+								JOIN gt8_explorer_attributes a				ON a.id = v.id_attributes
+								
+								LEFT JOIN gt8_explorer_attributes_value v2 	ON e.id = v2.id_explorer
+								LEFT JOIN gt8_explorer_attributes a2 		ON a2.id = v2.id_attributes
+							WHERE
+								1 = 1
+								AND ez.dirpath REGEXP '{$this->pathRegExp}'
+								AND e.stock > 0
+								AND a.attribute IN('cor')
+								$attrWhere
+								$attrSearch
+							GROUP BY
+								attribute, VALUE, ez.id
+							
+							ORDER BY
+								attribute, VALUE
+							) e
+					",
+					'where'		=> '
+						
+					',
+					'group'		=> '
+						e.attribute, e.value
+					',
+					'order'		=> '
+						attribute, value
+					',
+					'foundRows'=>1,
+					'-debug'=>1
+				));
+				$this->data['filter-colors']	= $Pager['rows'];
+				$coresLC	= $cores;
+				for( $i=0; $i<count($coresLC); $i++) {
+					$coresLC[$i]	= strtolower($coresLC[$i]);
+				}
+				foreach( $this->data['filter-colors'] AS $i=>$row) {
+					if ( in_array(strtolower($row['value']), $coresLC)) {
+						$this->data['filter-colors'][$i]['selected']	= 'selected';
+					}
+				}
+				
 				if ( isset($_GET['cores']) && $_GET['cores']) {
 					$cores	= explode(',', RegExp($_GET['cores'], '[a-zA-Z0-9çáéíóúãõâê\-\_\,]+'));
 					
@@ -257,7 +360,6 @@
 			}
 			{//ATTRIBUTES
 				$onlyAttribs;
-				$attrWhere	= $this->options['where'];
 				$attribsGet	= array();
 				$optionsWhere	= $this->options['where'];
 				
@@ -267,7 +369,7 @@
 					$array		= array();
 					$lastValue	= '';
 					
-					if ( !isset($_GET['cores']) || !$_GET['cores']) {
+					if ( 0 || !isset($_GET['cores']) || !$_GET['cores']) {
 						$this->options['addFrom']	.= '
 							LEFT JOIN gt8_explorer_attributes_value v 	ON ez.id = v.id_explorer
 							LEFT JOIN gt8_explorer_attributes a 		ON a.id = v.id_attributes
@@ -331,8 +433,9 @@
 									1 = 1
 									AND ez.dirpath REGEXP '{$this->pathRegExp}'
 									AND e.stock > 0
-									AND a.attribute NOT IN('cor', 'desconto', 'altura do salto')
+									AND a.attribute NOT IN('desconto', 'altura do salto', 'altura da plataforma', 'altura do cano', 'altura', 'largura', 'profundidade')
 									$attrWhere
+									$attrSearch
 								GROUP BY
 									attribute, VALUE, ez.id
 								
@@ -350,6 +453,7 @@
 							attribute, value
 						',
 						'foundRows'=>1,
+						'limit'=>1000,
 						'-debug'=>1
 					));
 				}
@@ -437,7 +541,7 @@
 											1 = 1
 											AND ez.dirpath REGEXP '{$this->pathRegExp}'
 											AND e.stock > 0
-											AND a.attribute NOT IN('cor', 'desconto')
+											AND a.attribute NOT IN('altura da plataforma', 'desconto')
 											AND a.attribute IN('{$Pager['rows'][$i]['attribute']}')
 											
 											$otherAttribs
@@ -490,6 +594,16 @@
 				}
 			}
 			$this->options['where']	= $attrWhere;
+			
+			{//FAMILY
+				if ( isset($_GET['familia']) && $_GET['familia']) {
+					$idFamily	= RegExp($_GET['familia'], '[a-zA-Z0-9\-\.\,\+\=\&]+');
+					$idFamily	= mysql_fetch_array(mysql_query("SELECT e.id FROM gt8_explorer e WHERE e.filename = '". $idFamily ."' AND e.dirpath REGEXP '^". self::BASE_ID_DIR ."/[0-9]+/$'"));
+					$idFamily	= $idFamily[0];
+					$this->options['where']	.= " AND ez.dirpath REGEXP '^". self::BASE_ID_DIR ."/[0-9]+/". $idFamily ."/'";
+					
+				}
+			}
 		}
 		public function on404() {
 			parent::on404();
@@ -497,7 +611,41 @@
 		private function checkActionRequest() {
 			if ( isset($_GET['action']) && $_GET['action']) {
 				switch($_GET['action']) {
-					
+					case 'adicionar-newsletter': {
+						
+						$name	= mysql_real_escape_string(substr($_GET['name'], 0, 32));
+						$mail	= RegExp(substr($_GET['mail'], 0, 48), '[a-zA-Z0-9\@\.\-\_]+');
+						$idUser	= (integer)$_SESSION['login']['id'];
+						$ip		= RegExp($_SERVER['REMOTE_ADDR'], '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}');
+						
+						if ( $mail && $mail === $_GET['mail'] && $ip && $ip===$_SERVER['REMOTE_ADDR']) {
+							
+							mysql_query("
+								INSERT INTO
+									gt8_mail_subscribers(id_users, name, mail, creation, ip)
+								SELECT
+									$idUser, '$name', '$mail', NOW(), '$ip'
+								FROM
+									gt8_mail_subscribers
+								WHERE
+									name = '$name' AND
+									mail	= '$mail' AND
+									ip NOT IN (
+										SELECT 
+											ip
+										FROM 
+											gt8_mail_subscribers
+										WHERE 
+											ip = '$ip' AND ( HOUR(creation)=HOUR(NOW()) AND DAY(creation)=DAY(NOW()) AND MONTH(creation)=MONTH(NOW()) AND YEAR(creation)=YEAR(NOW()) )
+									)
+								HAVING
+									COUNT(*) = 0
+							") or $this->throwError($_SESSION['login']['level']>5? mysql_error(): 'Não foi possível inserir o registro agora.<br />Por favor, tente mais tarde.', 'Erro no banco de dados!');
+						}
+						die('//message: E-mail cadastrado com sucesso!'. PHP_EOL);
+						
+						break;
+					}
 				}
 				die();
 			}
@@ -521,7 +669,7 @@
 		}
 		public function getCategories() {
 			if ( !isset($this->data['categories']) && count($this->data['categories'])==0) {
-				global $paths;
+				global $paths, $GT8;
 				
 				$dir2	= substr($this->pathRegExp, 0, strpos($this->pathRegExp, '/', 5)) .'/$';
 				$Pager	= Pager(array(
@@ -530,6 +678,7 @@
 					'where'	=> ' AND e.dirpath REGEXP "'.$dir2.'"',
 					'order'	=> 'e.title'
 				));
+				//die("<pre>". print_r( $Pager, 1) ."</pre>".PHP_EOL);
 				
 				//correct category's name
 				$this->data['category-title']	= strtolower($this->data['category-title']);
@@ -540,11 +689,8 @@
 				
 				//replace fullpath
 				foreach( $Pager['rows'] AS $i=>$row) {
-					$Pager['rows'][$i]['fullpath']	= CROOT . str_replace(
-						array('downloads/catalogo/'),
-						array(''),
-						$Pager['rows'][$i]['fullpath']
-					);
+					$crr	= $Pager['rows'][$i]['fullpath'];
+					$Pager['rows'][$i]['fullpath']	= CROOT . ($this->isLiquidation? $GT8['liquidation']['root']: '') . substr($crr, strpos($crr, '/', strlen($GT8['explorer']['root']))+1);
 				}
 				$this->data['categories']	= $Pager['rows'];
 			}
@@ -637,6 +783,9 @@
 			$options['group']		= 'e.dirpath';
 			$options['limit']		= $Config['limit'];
 			$options['foundRows']		= count($ids);
+			if ( $Config['random'] === '1') {
+				$options['order']	= 'RAND()';
+			}
 			//$options['debug']	= 1;
 			
 			$Pager	= Pager($options);
@@ -645,17 +794,21 @@
 				array('@', 'semi-invisible', '/',				'?edit'),
 				$Pager['rows']
 			);
-			$rows	= array();
-			for( $i=0; $i<count($ids); $i++) {
-				$id	= $ids[$i];
-				for( $j=0; $j<count($Pager['rows']); $j++) {
-					if ( $Pager['rows'][$j]['id_dir'] == $id) {
-						$rows[]	= $Pager['rows'][$j];
-						break;
+			if ( $Config['random'] === '1') {
+				$this->data[$dataRowsName]	= $Pager['rows'];
+			} else {
+				$rows	= array();
+				for( $i=0; $i<count($ids); $i++) {
+					$id	= $ids[$i];
+					for( $j=0; $j<count($Pager['rows']); $j++) {
+						if ( $Pager['rows'][$j]['id_dir'] == $id) {
+							$rows[]	= $Pager['rows'][$j];
+							break;
+						}
 					}
 				}
+				$this->data[$dataRowsName]	= $rows;
 			}
-			$this->data[$dataRowsName]	= $rows;
 		}
 		public function getBanners( $page, $field, $index=-1) {
 			$index	= (integer)$index;
@@ -714,11 +867,16 @@
 			$this->data[$dataRowsName]	= $rows;
 		}
 		public function getServerJSVars() {
+			global $spath;
+			
 			$this->jsVars[]	= array('id', 0);
 			$this->jsVars[]	= array('d', $this->idDir);
 			$this->jsVars[]	= array('u', utf8_encode(addslashes($_SESSION['login']['name'])));
 			$this->jsVars[]	= array('priceMin', isset($_GET['preco-minimo'])? (integer)$_GET['preco-minimo']: 0, true);
 			$this->jsVars[]	= array('priceMax', isset($_GET['preco-maximo'])? (integer)$_GET['preco-maximo']: 1000, true);
+			
+			$line	= explode('/', $spath);
+			$this->jsVars[]	= array('line', $line[0]);
 			
 			return parent::getServerJSVars();
 		}
