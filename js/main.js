@@ -47,12 +47,73 @@ jCube(function(){
 		imgSrc.src	= jCube.root +'../imgs/gt8/poof-regular.png';
 	})();
 	GT8.analytics.onLoad();
-	jCube('::.MenuDropDown').each(function(){
-		new jCube.Pluggins.MenuDropDown({
-			container: this,
-			offsetY: 0
+	(function(){//MENU DROPDOWN
+		if ( !jCube(':.main .MenuDropDown')) {
+			return;
+		}
+		var eBrandViewer	= jCube(':#eMenuBrands').getParent().query(':.viewer .brand-info');
+		var eBrandViewerImg	= jCube(':#eMenuBrands').getParent().query(':.viewer .brand-info img');
+		var eBrandViewerInf	= jCube(':#eMenuBrands').getParent().query(':.viewer .brand-info .content');
+		var eBrandHolder	= jCube(':#eMenuBrands').getParent().query(':.viewer');
+		//BRANDS
+		jCube('::#eMenuBrands ul li a').addEvent('onmouseover', function(E){
+			var brand	= this.href.substringIndex('/', -2).split('/')[0];
+			var info		= brandsInfo[brand];
+			
+			if ( info) {
+				eBrandViewerImg.src	= ASP.CROOT +'downloads/brands/'+ brand +'/?regular';
+				eBrandViewerInf.innerHTML	= info;
+				eBrandHolder.removeClass('default');
+			} else {
+				eBrandViewerImg.src	= ASP.CROOT +'imgs/gt8/bank.gif';
+				eBrandViewerInf.innerHTML	= '&nbsp;';
+				eBrandHolder.addClass('default');
+			}
+			eBrandViewer.setStyle('opacity', 0).setStyle('display', 'block').fadeIn(450);
 		});
-	});
+		
+		//FAMILIES
+		var eFamilyViewer		= jCube(':#eMenuFamilies').getParent().query(':.viewer .family-info');
+		var eFamilyViewerTtl	= jCube(':#eMenuFamilies').getParent().query(':.viewer .family-info strong');
+		var eFamilyViewerInf	= jCube(':#eMenuFamilies').getParent().query(':.viewer .family-info .content');
+		var eFamilyHolder		= jCube(':#eMenuFamilies').getParent().query(':.viewer');
+		jCube('::#eMenuFamilies ul li a').addEvent('onmouseover', function(E){
+			var family	= this.href.substringIndex('/', -2).split('/')[0];
+			var info		= familiesInfo[family];
+			if ( info) {
+				eFamilyViewerTtl.innerHTML	= family;
+				eFamilyViewerInf.innerHTML	= info;
+				eFamilyHolder.removeClass('default');
+			} else {
+				eFamilyViewerTtl.innerHTML	= '&nbsp;';
+				eFamilyViewerInf.innerHTML	= '&nbsp;';
+				eFamilyHolder.addClass('default');
+			}
+			eFamilyViewer.setStyle('opacity', 0).setStyle('display', 'block').fadeIn(450);
+		});
+		
+		//HOME
+		
+		//BOLSAS
+		
+		jCube('::.MenuDropDown-sub').each(function(){
+			this.removeClass('hidden');
+		});
+		jCube('::.MenuDropDown').each(function(){
+			new jCube.Pluggins.MenuDropDown({
+				container: this,
+				offsetY: 0,
+				hideDelay:650,
+				onOpenStart: function( eHolder) {
+					eHolder.query(':.viewer').addClass('default');
+					eFamilyViewerTtl.innerHTML	= '&nbsp;';
+					eFamilyViewerInf.innerHTML	= '&nbsp;';
+					eBrandViewerImg.src	= ASP.CROOT +'imgs/gt8/bank.gif';
+					eBrandViewerInf.innerHTML	= '&nbsp;';
+				},
+			});
+		});
+	})();
 	jCube("::label.input-button, label.input-text").each(function(){
 		var
 			main	= this,
@@ -69,7 +130,11 @@ jCube(function(){
 				link.addClass('href-button-blue');
 			} else {
 				pseudo.fadeIn();
-				link.removeClass('href-button-blue');
+				link.each(function(){
+					if ( !this.className.contains('href-button-blue-fixed')) {
+						this.removeClass('href-button-blue');
+					}
+				});
 			}
 		}
 		input.addEvent('keydown', CheckInput);
@@ -85,13 +150,16 @@ jCube(function(){
 		input.trigger('keyup');
 	});
 	jCube('::input.phone-mask').each(function(){//PHONE-MASK
-		this.setFixedMask('(##) ####-#####?');
+		var value	= this.value;
+		this.setFixedMask('(##) ####-#####?').value	= value;
 	});
 	jCube('::input.mask-date').each(function(){//MASK-DATE
-		this.setFixedMask('##/##/####');
+		var value	= this.value;
+		this.setFixedMask('##/##/####').value	= value;
 	});
 	jCube('::input.mask-zip').each(function(){//MASK-ZIP
-		this.setFixedMask('#####-###');
+		var value	= this.value;
+		this.setFixedMask('#####-###').value	= value;
 	});
 	jCube('::img.auto-sprite').each(function(){//img.auto-sprite
 		var sett	= this.title.split('|');
@@ -143,16 +211,18 @@ jCube(function(){
 		});
 		this.addEvent('onchange', function(e) {
 			this.trigger('updateValue');
+		}).addEvent('onkeyup', function(e) {
+			this.trigger('updateValue');
 		});
 	}).trigger('updateValue');
 	(function(){//MAIN SEARCH
 		jCube('::label.main-search input').addEvent('onkeydown', function(E){
 			if ( E.key == 13) {
-				window.location	= jCube.root +'../busca/'+ escape(this.value);
+				window.location	= jCube.root +'../busca/'+ (this.value);
 			}
 		});
 		jCube('::label.main-search a.href-button').addEvent('onclick', function(E){
-			this.href	= jCube.root +'../busca/'+ escape( this.getParent('label').query(':input').value);
+			this.href	= jCube.root +'../busca/'+ ( this.getParent('label').query(':input').value);
 		});
 	})();
 	(function(){//INCREASER side-by-size
@@ -576,6 +646,88 @@ jCube(function(){
 			});
 		});
 	})();
+	(function(){//OTHERS
+		(function(){//newsletter
+			if ( !jCube(':#eNewsletterCapture')) {
+				return;
+			}
+			
+			var sent	= false;
+			var eFields		= jCube(':#eNewsletterCapture .fields');
+			var eFeedback	= jCube(':#eNewsletterCapture .feedback').addEvent('onclick', function(E){
+				E.stop();
+				
+				if ( sent) {
+					var b	= eFeedback.getParent().getOffset();
+					GT8.poof( b.right-100, b.top+window.getScrollTop(), function(){ jCube(':#eNewsletterCapture').remove(); });
+				} else {
+					this.fadeOut({
+						duration: 250,
+						onComplete: function(){
+							this.addClass('display-none');
+							eFields.removeClass('display-none').setStyle('opacity',0).fadeIn({
+								duration: 450
+							});
+						}
+					});
+				}
+			});
+			var eA	= jCube(':#eNewsletterCapture a').addEvent('onclick', function(E){
+				E.stop();
+				
+				if ( !eInputs[1].value || !/^[\w-]+(\.[\w]+)*\@[\w-]+(\.\w+)*(\.[\w-]{2,4})$/.test(eInputs[1].value)) {
+					
+					eFields.fadeOut({
+						duration: 250,
+						onComplete: function(){
+							this.addClass('display-none');
+							eFeedback.removeClass('display-none').setStyle('opacity',0).fadeIn({
+								duration: 450
+							});
+						}
+					});
+					eFeedback.setHTML('Ops, parece que este e-mail não é válido. Vamos tentar novamente?');
+					return;
+				}
+				
+				var req	= new jCube.Server.HttpRequest({
+					url: jCube.root +'../?action=adicionar-newsletter&format=JSON',
+					onComplete: function(){
+						
+					},
+					noGrowl: true
+				});
+				
+				req.addGet('name', eInputs[0].value);
+				req.addGet('mail', eInputs[1].value);
+				
+				GT8.Spinner.request(req);
+				eFields.fadeOut({
+					delay: 500,
+					duration: 250,
+					onComplete: function(){
+						this.addClass('display-none');
+						eFeedback.removeClass('display-none').setStyle('opacity',0).fadeIn({
+							duration: 450
+						});
+					}
+				});
+				eFeedback.setHTML('Obrigado, seu e-mail foi cadastrado com sucesso!');
+				
+				jCube.Document.Cookie.set('newsletter', 1, 90);//3 months
+				sent	= true;
+			});
+			var eInputs	= jCube('::#eNewsletterCapture input').addEvent('onkeydown', function(E){
+				if ( E.key == 13) {
+					if ( this.name === 'name') {
+						eInputs[1].focus();
+					} else {
+						eA.trigger('onclick', E);
+					}
+				}
+			});
+		})();
+	})();
 });
 
 var GT8	= {
@@ -924,7 +1076,7 @@ var GT8	= {
 				req.position	= req.position || 'upper right';
 				req.duration	= req.duration || 850;
 				
-				if ( req.noGrowl) {
+				if ( req.hideGrowl || req.noGrowl) {
 					
 				} else if ( eLabel) {
 					eLabel.addClass('spinning');
@@ -947,11 +1099,14 @@ var GT8	= {
 				req.onLoad	= null;
 				req.onComplete	= function() {
 					var ret	= GT8.onGeneralRequestLoad.call( this, null, true);
-					
-					if ( this.noGrowl) {
+					this.ret	= ret;
+					if ( this.hideGrowl || req.noGrowl) {
+						if ( onLoad) {
+							onLoad.apply( this, arguments);
+						}
 						return;
 					} else if ( growl) {
-						growl.obj.eImgC.fadeOut();
+						growl.obj.eImgC.addClass('hidden');
 					} else if ( eLabel) {
 						eLabel.removeClass('spinning');
 					} else if ( eMessage) {
@@ -959,7 +1114,7 @@ var GT8	= {
 							eSpinner.fadeOut({
 								duration: 0.6,
 								onComplete: function() {
-									//this.addClass('hidden');
+									this.addClass('hidden');
 								}
 							});
 						}
@@ -994,7 +1149,7 @@ var GT8	= {
 					}
 					if ( ret.value) {
 						if ( growl) {
-							growl.obj.query(':span').innerHTML	= (ret.valuePrefix || 'Valor: ') + req.value.format(2);
+							growl.obj.query(':span').innerHTML	= (ret.valuePrefix || 'Valor: ') + ret.value.format(2);
 							growl.obj.getFirstChild().className	= 'value';
 						} else if ( eLabel) {
 							eLabel.addClass('positive').removeClass('waiting');
@@ -1034,7 +1189,7 @@ var GT8	= {
 					
 					if ( !actionPerformed) {
 						if ( growl) {
-							growl.obj.query(':span').innerHTML	= req.message || 'Nenhuma ação foi realizada.';
+							growl.obj.query(':span').innerHTML	= 'Nenhuma ação foi realizada.';
 							growl.obj.getFirstChild().className	= 'undefined';
 						} else if ( eLabel) {
 							eLabel.addClass('error').removeClass('waiting');
@@ -1044,19 +1199,30 @@ var GT8	= {
 							eMessage.setHTML( 'Erro no servidor');
 						}
 					}
-					this.ret	= ret;
+					
+					if ( this.position == 'center') {//como a mensagem pode alterar o tamanho da caixa, ajustemos a posição do growl
+						growl.obj.setStyle({
+							left: '50%',
+							top: '50%',
+							marginLeft: -growl.obj.offsetWidth/2,
+							marginTop: -growl.obj.offsetHeight
+						});
+					}
+					
 					window.setTimeout(function(){
 						if ( growl) {
 							growl.hide();
 						}
 					}, hideAfter + req.duration);
-
+					
 					if ( onLoad) {
 						onLoad.apply( this, arguments);
 					}
 				}
 				req.onError	= function() {
-					if ( growl ) {
+					if ( this.hideGrowl || req.noGrowl) {
+						
+					} else if ( growl ) {
 						growl.obj.eImgC.setStyle('display', 'none');
 						growl.obj.getFirstChild().className	= 'error';
 						growl.obj.query(':span').innerHTML	= req.error || 'Erro não especificado';
@@ -1078,7 +1244,7 @@ var GT8	= {
 					}
 				}
 				req.start();
-				return growl || eLabel;
+				return growl || eLabel || this;
 			},
 			create: function() {
 				var sp	= jCube(document.createElement('DIV')).setHTML('<div><div class="sp-imgC" ><img src="'+ jCube.root +'../imgs/gt8/spinner-small.gif" alt="" /></div><span>&nbsp;</span></div>').addClass('growl-spinner').setStyle({

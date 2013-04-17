@@ -54,7 +54,7 @@ jCube(function(){//MIN n MAX PRICES
 		}
 	});
 });
-jCube(function(){
+jCube(function(){//OTHERS
 	//fix ASCII names
 	jCube('::#eFilterColorsC span > a.color').each(function(){
 		if ( this.parentNode.title.toLowerCase().contains('onca')) {
@@ -76,4 +76,11 @@ jCube(function(){
 		var eA	= this.getParent('a');
 		window.setTimeout(function(){ eA.href	= orig;}, 250);
 	});
+});
+jCube(function(){//ATTRIBUTES (desnecessários)
+	
+	if ( !['calcados', 'busca', 'marcas'].contains(ASP.line)) {
+		jCube('::#eFilterSizes').addClass('hidden');
+	}
+
 });

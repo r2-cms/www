@@ -52,8 +52,9 @@ var GT8	= {
 		jCube("::span.e-select select,label.select-encapsuled select").each(function(){//SELECT (SPAN.e-select)
 			this.addEvent('updateValue', function() {
 				this.getNextSibling().getFirstChild().innerHTML	= this.getOption().innerHTML;
-			});
-			this.addEvent('onchange', function(e) {
+			}).addEvent('onkeyup', function(E){
+				this.trigger('updateValue', E);
+			}).addEvent('onchange', function(e) {
 				this.trigger('updateValue');
 			});
 		}).trigger('updateValue');
@@ -373,6 +374,151 @@ var GT8	= {
 			});
 			input.trigger('keyup');
 		});
+		(function(){//SAVE BUTTON
+			
+			var requesting	= false;
+			var tstart		= new Date().getTime();
+			jCube('::input.gt8-form-post, input.gt8-form-post-send').each(function(){//mask
+				if ( this.getPreviousSibling() && (this.getPreviousSibling().innerHTML.toLowerCase().contains('telefone')||this.getPreviousSibling().innerHTML.toLowerCase().contains('celular'))) {
+					this.setFixedMask('(##) ####-#####?').value	= this.value.replace(/_/g, '');
+				}
+			});
+			var eRequireds	= jCube('::.required .gt8-form-post, .required .gt8-form-posto');
+			var totalRequired	= eRequireds.length;
+			var chron	= new jCube.Time.Chronometer({
+				onComplete: function(){
+					CheckValidation();
+				}
+			});
+			eRequireds.addEvent('onkeyup', function(E){
+				if ( CheckValidation() && (new Date().getTime()-tstart)>1000) {//o timeout é para assegurar que o evento não está sendo disparado pelo próprio sistema (as fxs GT8 disparam inicialmente alguns triggers em objetos como .e-select), mas sim pelo usuário
+					jCube('::.href-button.gt8-form-post-save, .href-button.gt8-form-post-send').addClass('href-button-blue href-button-ok');
+				} else {
+					jCube('::.href-button.gt8-form-post-save, .href-button.gt8-form-post-send').removeClass('href-button-blue').removeClass('href-button-ok');
+				}
+				var eParent;
+				eRequireds	= jCube('::.required .gt8-form-post, .required .gt8-form-posto');
+				eRequireds.each(function(){
+					//remova os underlines dos telefones
+					if ( this.getPreviousSibling() && (this.getPreviousSibling().innerHTML.toLowerCase().contains('telefone')||this.getPreviousSibling().innerHTML.toLowerCase().contains('celular'))) {
+						//maldito bug do input mask
+						this.value	= this.value.replace(/_/g, '');
+					}
+					
+					eParent	= this.getParent('.required');
+					if ( eParent ) {
+						if ( (this.nodeName==='SELECT' && this.selectedIndex>0) || (this.nodeName!=='SELECT' && this.value)) {
+							eParent.removeClass('error').addClass('ok').__OK_STTS_ONCE	= true;
+						} else {
+							eParent.removeClass('ok');
+							if ( eParent.__OK_STTS_ONCE) {
+								eParent.addClass('error');
+							}
+						}
+					}
+				});
+				chron.start(450);
+			});
+			var CheckValidation	= function(){
+				//check for required fields
+				eRequireds	= jCube('::.required .gt8-form-post, .required .gt8-form-posto');
+				totalRequired	= eRequireds.length;
+				var count	= 0;
+				var eParent	= null;
+				for ( var i=0; i<totalRequired; i++) {
+					if ( eRequireds[i].nodeName=='SELECT'? eRequireds[i].selectedIndex: eRequireds[i].value ) {
+						count++;
+					} else {
+						eParent	= eRequireds[i].getParent('.required');
+						if ( eParent.__OK_STTS_ONCE) {
+							eParent.addClass('error');
+						}
+					}
+				}
+				return count === totalRequired;
+			}
+			jCube('::.href-button.gt8-form-post-save, .href-button.gt8-form-post-send').addEvent('onclick', function(E){//save
+				jCube('::.required .gt8-form-post, .required .gt8-form-posto').each(function(){
+					this.getParent('.required').__OK_STTS_ONCE	= true;
+				}).trigger('onkeyup');
+				
+				if ( !CheckValidation() ) {
+					E.stop();
+					
+					GT8.Spinner.show({
+						label: 'Campo obrigatório!',
+						hideImage: true,
+						hideAfter: 10000
+					});
+					var eMissingReqField	= jCube('::.required.error .gt8-form-post, .required.error .gt8-form-posto')[0];
+					if ( eMissingReqField) {
+						eMissingReqField.focus();
+						window.setTimeout(function(){ eMissingReqField.focus(); }, 250);
+					}
+					return;
+				}
+				
+				if ( window.OnBeforeSave) {
+					var ret	= window.OnBeforeSave();
+					
+					if ( ret === false) {
+						E.stop();
+						return;
+					}
+				}
+				
+				var eA	= this;
+				var actionName	= this.className.match(/gt8formname\-([0-9a-zA-Z\-\_]+)/)[1];
+				if ( !actionName) {
+					alert('Não é possível salvar os dados agora!');
+					E.stop();
+				}
+				if ( requesting) {
+					E.stop();
+				} else {
+					requesting	= true;
+					var req	= new jCube.Server.HttpRequest({
+						url: '?action='+ actionName,
+						noCache: true,
+						method: jCube.Server.HttpRequest.HTTP_POST,
+						onComplete: function(){
+							requesting	= false;
+							if ( window.OnAfterSave) {
+								window.OnAfterSave(this);
+							}
+						},
+						position: 'center'
+					});
+					jCube('::input.gt8-form-post').each(function(){
+						req.addGet( this.name, this.value);
+					});
+					jCube('::select.gt8-form-post').each(function(){
+						req.addGet( this.name, this.getOptionValue());
+					});
+					jCube('::input.gt8-form-posto').each(function(){
+						req.addPost( this.name, this.value);
+					});
+					jCube('::select.gt8-form-posto').each(function(){
+						req.addPost( this.name, this.getOptionValue());
+					});
+					
+					if ( this.className.contains('gt8-form-post-send')) {
+						this.href	= req.url +'&format=OBJECT';
+						
+						if ( this.getParent('.gt8-form-sender')) {
+							this.getParent('.gt8-form-sender').action	= this.href;
+							this.getParent('.gt8-form-sender').submit();
+							E.stop();
+						}
+					} else {
+						E.stop();
+						req.addGet('format', 'JSON');
+						GT8.Spinner.request(req);
+					}
+				}
+				
+			});
+		})();
 	},
 	adjustImgSize: function( eImg){
 		eImg	= jCube(eImg);
@@ -698,6 +844,7 @@ var GT8	= {
 			showGlasspane
 			showGlasspaneOptions
 			hideImage
+			hideGrowl
 			type error
 			position	center|upper right
 	*/
@@ -711,7 +858,7 @@ var GT8	= {
 				req.position	= req.position || 'upper right';
 				req.duration	= req.duration || 850;
 				
-				if ( req.hideGrowl) {
+				if ( req.hideGrowl || req.noGrowl) {
 					
 				} else if ( eLabel) {
 					eLabel.addClass('spinning');
@@ -735,7 +882,7 @@ var GT8	= {
 				req.onComplete	= function() {
 					var ret	= GT8.onGeneralRequestLoad.call( this, null, true);
 					this.ret	= ret;
-					if ( this.hideGrowl) {
+					if ( this.hideGrowl || req.noGrowl) {
 						if ( onLoad) {
 							onLoad.apply( this, arguments);
 						}
@@ -855,7 +1002,7 @@ var GT8	= {
 					}
 				}
 				req.onError	= function() {
-					if ( this.hideGrowl) {
+					if ( this.hideGrowl || req.noGrowl) {
 						
 					} else if ( growl ) {
 						growl.obj.eImgC.setStyle('display', 'none');

@@ -1,10 +1,13 @@
 jCube.Include('Element.addClass');
+jCube.Include('Element.injectAfter');
 jCube.Include('Element.removeClass');
+jCube.Include('Element.setProperty');
 jCube.Include('Element.setValue');
 jCube.Include('Math.between');
 jCube.Include('Math.getLinearEquation');
 jCube.Include('Pluggins.BackgroundEffect');
 jCube.Include('Pluggins.TabbedPane');
+jCube.Include('Time.Chronometer');
 jCube.Include('Transition.fadeIn');
 jCube.Include('Transition.fadeOut');
 jCube.Include('Transition.moveTo');
@@ -88,6 +91,7 @@ jCube(function(){
 			}, 750);
 			
 			magActive	= true;
+			E.stop();
 		});
 		document.body.addEvent('onclick', function(E){//mag deactivation
 			if ( magActive) {
@@ -106,45 +110,69 @@ jCube(function(){
 			}
 		});
 	})();
-	(function(){//SIZE SELECT
-		jCube('::.sizes-chooser > a').addEvent('onclick', function(E){
-			E.stop();
-			
-			jCube('::.sizes-chooser > a').removeClass('selected');
-			this.addClass('selected');
-			
-			if ( jCube(':.bt-buy-overlay')) {
-				jCube(':.bt-buy-overlay').trigger('onclick');
-			}
-		});
-	})();
-	(function(E){//BUY BT and OVERLAY
+	(function(){//BUY BT and OVERLAY
+		var openTstart	= null;//indica o tempo do clique para abrir o overlay. Calcularemos o tempo do clique para evitar dblclick
 		var eOverlay	= jCube(document.createElement('DIV')).
 			addClass('pos-overlay bt-buy-overlay').
 			addEvent('onclick', function(){
-				this.fadeOut({
-					onComplete: function(){
-						this.remove();
-						jCube(':.sizes-chooser-holder').setStyle('z-index', 1).removeClass('highlighted');
-					}
+				if ( (new Date().getTime() - openTstart) > 800) {
+					this.fadeOut({
+						onComplete: function(){
+							this.remove();
+							jCube(':.sizes-chooser-holder').setStyle('z-index', 1).removeClass('highlighted');
+						}
+					});
 				}
-			)
-		});
+			})
+		;
 		jCube(':a#eBtBuy').addEvent('onclick', function(E){
-			if ( jCube(':.sizes-chooser .selected')) {
-				this.href	= jCube(':.sizes-chooser .selected').href;
-			} else {
-				//create overlay
-				E.stop();
+			
+			if ( ASP.line === 'calcados') {
+				if ( jCube(':.sizes-chooser .selected')) {
+					this.href	= jCube(':.sizes-chooser .selected').href;
+				} else {
+					//create overlay
+					E.stop();
+					
+					jCube('::.sizes-chooser-label').addClass('product-label-emphasys');
+					jCube('::.sizes-chooser-holder a:not(.unavaiable)').addClass('product-bt-emphasys');
+					
+					jCube(':.sizes-chooser-holder').setStyle({
+						zIndex: 2000
+					}).addClass('highlighted').removeClass('trans-pulsate-left');
+					
+					openTstart	= new Date().getTime();
+					eOverlay.appendTo(document.body).setStyle('opacity', 0).fadeIn({
+						duration: 4850,
+						onComplete: function(){
+							if ( eOverlay.parentNode === document.body) {
+								jCube(':.sizes-chooser-holder').addClass('trans-pulsate-left')
+								window.setTimeout(function(){
+									jCube(':.grid sizes-chooser-label');
+								}, 1000);
+							}
+						}
+					});
+				}
+				return;
+			}
+			
+			if ( ASP.line === 'acessorios') {
+				var href	= jCube(':.sizes-chooser a').href;
+				this.href	= href;
 				
-				jCube(':.sizes-chooser-holder').setStyle({
-					zIndex: 2000
-				}).addClass('highlighted');
-				eOverlay.appendTo(document.body).setStyle('opacity', 0).fadeIn(850);
+				return;
 			}
 		});
 	})();
 	(function(){//SHOES GRID
+		if ( ASP.line.toLowerCase() === 'acessorios') {
+			jCube(':.sizes-chooser-holder').addClass('hidden');
+			return;
+		}
+		if ( ASP.line.toLowerCase() !== 'calcados') {
+			return;
+		}
 		if ( !jCube('::.sizes-chooser a').length) {
 			return;
 		}
@@ -180,6 +208,29 @@ jCube(function(){
 					eA.prependTo( eSizes[0].parentNode);
 				}
 			}
+		}
+	})();
+	(function(){//SIZE SELECT
+		jCube('::.sizes-chooser > a').addEvent('onclick', function(E){
+			
+			jCube('::.sizes-chooser > a').removeClass('selected');
+			this.addClass('selected');
+			
+			if ( jCube(':.bt-buy-overlay')) {
+				jCube(':.bt-buy-overlay').trigger('onclick');
+			}
+			if ( jCube(':.bt-buy-overlay') && jCube(':.bt-buy-overlay').parentNode === document.body) {
+				//go to url
+			} else {
+				E.stop();
+			}
+		}).each(function(){
+			
+		});
+	})();
+	(function(){//PRICE & PARTS
+		if ( ASP.priceParts === 1) {
+			jCube(':.pay-methods').addClass('hidden');
 		}
 	})();
 	(function(){//Stock avaibility
