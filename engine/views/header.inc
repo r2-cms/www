@@ -55,66 +55,105 @@
 						<div class="grid-12" >
 							<div class="top" >
 								<a href="{{CROOT}}" ><strong>Home</strong></a>
-							</div>
-							<div class="top" >
-								<a href="{{CROOT}}calcados/anabela/" ><strong>Anabela</strong></a>
-								<!--<div class="MenuDropDown-sub hidden" >
-									<div class="holder" >
-										<ul>
-											<li><a href="{{CROOT}}masculino/calcados/" ><strong>Calçados</strong></a></li>
-											<li><a href="{{CROOT}}masculino/calcados/cuturnos/" >Cuturnos</a></li>
-											<li><a href="{{CROOT}}masculino/calcados/mocassins/" >Mocassins</a></li>
-											<li><a href="{{CROOT}}masculino/calcados/sapatenis/" >Sapatênis</a></li>
-											<li><a href="{{CROOT}}masculino/calcados/sapato-casual/" >Sapato Casual</a></li>
-											<li><a href="{{CROOT}}masculino/calcados/sapato-social/" >Sapato Social</a></li>
-											<li><a href="{{CROOT}}masculino/calcados/chinelos/" >Chinelos</a></li>
-											<li><a href="{{CROOT}}masculino/calcados/tenis/" >Tênis</a></li>
-											<li><a href="{{CROOT}}masculino/calcados/esportivos/" >Esportivos</a></li>
-										</ul>
-										<ul>
-											<li><a href="{{CROOT}}masculino/esportivos/" ><strong>Esportivos</strong></a></li>
-											<li><a href="{{CROOT}}masculino/esportivos/running/" >Running</a></li>
-											<li><a href="{{CROOT}}masculino/esportivos/adventure/" >Adventure</a></li>
-											<li><a href="{{CROOT}}masculino/esportivos/skate/" >Skate</a></li>
-											<li><a href="{{CROOT}}masculino/esportivos/surf/" >Surf</a></li>
-											<li><a href="{{CROOT}}masculino/esportivos/futebol/" >Futebol</a></li>
-											<li><a href="{{CROOT}}masculino/esportivos/training/" >Training</a></li>
-											<li><a href="{{CROOT}}masculino/esportivos/basquete/" >Basquete</a></li>
-										</ul>
-										<ul>
-											<li><a href="{{CROOT}}masculino/acessorios/" ><strong>Acessórios</strong></a></li>
-											<li><a href="{{CROOT}}masculino/acessorios/mochilas/" >Mochilas</a></li>
-											<li><a href="{{CROOT}}masculino/acessorios/cintos/" >Cintos</a></li>
-											<li><a href="{{CROOT}}masculino/acessorios/oculos/" >Óculos</a></li>
-											<li><a href="{{CROOT}}masculino/acessorios/suspensorios/" >Suspensórios</a></li>
-											<li><a href="{{CROOT}}masculino/acessorios/canetas/" >Canetas</a></li>
-										</ul>
+								<div class="MenuDropDown-sub hidden" >
+									<div id="eMenuHome" class="holder mdd-stop row-12 fluid-12 clearfix-child" >
+										<ul class="grid-12 marginless title" ><li><strong>Salão do Calçado</strong></li></ul>
+										<div class="grid-12 marginless viewer single border-left" >
+											<a href="{{CROOT}}" class="home-info text-decoration-none cursor-default" onclick="return null;" >
+												<span class="content padding" >
+													O Salão do Calçado comercializa somente produtos confeccionados em couro legítimo.
+													Não trabalhos com materiais alternativos, como PU.<br /><br />
+													Apesar de nossos produtos serem calçados finos, produzidos com materiais de qualidade e de marcas reconhecidas,
+													nossos preços são altamernte competitivos, em geral, abaixo da concorrência.<br /><br />
+													Todos nossos produtos passam por rigoroso controle de qualidade. <br /><br /><br />
+													<small>Salão do Calçado 2013 &copy;</small>
+												</span>
+											</a>
+										</div>
 									</div>
-								</div>-->
+								</div>
 							</div>
 							<div class="top" >
-								<a href="{{CROOT}}calcados/botas/" ><strong>Botas</strong></a>
+								<a href="{{CROOT}}calcados/" ><strong>Calçados Femininos</strong></a>
+								<div class="MenuDropDown-sub hidden" >
+									<div id="eMenuFamilies" class="holder mdd-stop row-12 fluid-12 clearfix-child" >
+										<ul class="grid-12 marginless title" ><li><strong>Categorias</strong></li></ul>
+										<ul class="grid-3 marginless" >
+											<li><a href="{{CROOT}}calcados/anabela/" ><span>Anabela</span></a></li>
+											<li><a href="{{CROOT}}calcados/botas/" ><span>Botas</span></a></li>
+											<li><a href="{{CROOT}}calcados/cap-toe/" ><span>Cap Toe</span></a></li>
+											<li><a href="{{CROOT}}calcados/meia-pata/" ><span>Meia Pata</span></a></li>
+											<li><a href="{{CROOT}}calcados/peep-toe/" ><span>Peep Toe</span></a></li>
+										</ul>
+										<ul class="grid-3 marginless border-left" >
+											<li><a href="{{CROOT}}calcados/rasteiras/" ><span>Rasteiras</span></a></li>
+											<li><a href="{{CROOT}}calcados/sandalias/" ><span>Sandálias</span></a></li>
+											<li><a href="{{CROOT}}calcados/sapatilhas/" ><span>Sapatilhas</span></a></li>
+											<li><a href="{{CROOT}}calcados/scarpins/" ><span>Scarpins</span></a></li>
+											<li><a href="{{CROOT}}calcados/tenis/" ><span>Tênis</span></a></li>
+										</ul>
+										<div class="grid-6 marginless viewer default border-left" >
+											<a href="{{CROOT}}calcados/" class="family-info text-decoration-none cursor-default" onclick="return null;" >
+												<strong>Modelo</strong>
+												<span class="content" >&nbsp;</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="top brands" >
+								<a href="{{CROOT}}calcados/marcas/" ><strong>Marcas</strong></a>
+								<div class="MenuDropDown-sub hidden" >
+									<div id="eMenuBrands" class="holder mdd-stop row-12 fluid-12 clearfix-child" >
+										<ul class="grid-12 marginless title" ><li><strong>Marcas mais procuradas</strong></li></ul>
+										<ul class="grid-3 marginless" >
+											{{$this->setBrandsTop10()}}
+											{{FOREACH:brands-top-5}}
+											<li><a href="{{CROOT}}calcados/marcas/{{filename}}/" ><span>##title##</span></a></li>
+											{{/FOREACH}}
+										</ul>
+										<ul class="grid-3 marginless border-left" >
+											{{FOREACH:brands-top-10}}
+											<li><a href="{{CROOT}}calcados/marcas/{{filename}}/" ><span>##title##</span></a></li>
+											{{/FOREACH}}
+										</ul>
+										<div class="grid-6 marginless viewer default border-left" >
+											<a href="{{CROOT}}calcados/marcas/" class="brand-info text-decoration-none cursor-default" onclick="return false;" >
+												<span class="display-block margin-bottom-small" >
+													<img src="{{CROOT}}imgs/gt8/blank.gif" />
+												</span>
+												<span class="content" >&nbsp;</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="top bolsas" >
+								<a href="{{CROOT}}acessorios/bolsas/" ><strong>Bolsas &amp; Acessórios</strong></a>
+								<div class="MenuDropDown-sub hidden" >
+									<div id="eMenuBolsas" class="holder mdd-stop row-12 fluid-12 clearfix-child" >
+										<ul class="grid-12 marginless title" ><li><strong>Acessórios e Bolsas</strong></li></ul>
+										<div class="grid-3 marginless" >
+											<div class="padding" >
+												Confira nossa linha de bolsas, todas confeccionadas em couro legítimo
+											</div>
+										</div>
+										<div class="grid-9 viewer single border-left" >
+											<a href="{{CROOT}}acessorios/bolsas/top-couro/grande-marrom/" class="grid-4 small-card text-decoration-none" onclick="return null;" >
+												<img src="{{CROOT}}acessorios/bolsas/top-couro/grande-marrom/?translate-img=1&preview" />
+											</a>
+											<a href="{{CROOT}}acessorios/bolsas/top-couro/verniz-marrom/" class="grid-4 small-card text-decoration-none" onclick="return null;" >
+												<img src="{{CROOT}}acessorios/bolsas/top-couro/verniz-marrom/?translate-img=1&preview" />
+											</a>
+											<a href="{{CROOT}}acessorios/bolsas/top-couro/couro-azul/" class="grid-4 small-card text-decoration-none" onclick="return null;" >
+												<img src="{{CROOT}}acessorios/bolsas/top-couro/couro-azul/?translate-img=1&preview" />
+											</a>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="top" >
-								<a href="{{CROOT}}calcados/cap-toe/" ><strong>Cap Toe</strong></a>
-							</div>
-							<div class="top" >
-								<a href="{{CROOT}}calcados/meia-pata/" ><strong>Meia Pata</strong></a>
-							</div>
-							<div class="top" >
-								<a href="{{CROOT}}calcados/peep-toe/" ><strong>Peep Toe</strong></a>
-							</div>
-							<div class="top" >
-								<a href="{{CROOT}}calcados/rasteiras/" ><strong>Rasteiras</strong></a>
-							</div>
-							<div class="top" >
-								<a href="{{CROOT}}calcados/sandalias/" ><strong>Sandálias</strong></a>
-							</div>
-							<div class="top" >
-								<a href="{{CROOT}}calcados/sapatilhas/" ><strong>Sapatilhas</strong></a>
-							</div>
-							<div class="top" >
-								<a href="{{CROOT}}calcados/scarpins/" ><strong>Scarpins</strong></a>
+								<a href="{{CROOT}}liquidacao/" ><strong>Liquidação</strong></a>
 							</div>
 						</div>
 					</div>

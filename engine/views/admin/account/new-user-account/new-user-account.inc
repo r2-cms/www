@@ -12,10 +12,10 @@
 	</head>
 	<body class="{{modal-class}}" >
 		<div id="eMain" >
-			<?php $Index->printHeader(array(
+			<?php $this->printHeader(array(
 				"h1" 		=> 'Novo registro',
-				'directory'	=> $Index->getDirLocation(),
-				'toolbar'	=> $Index->toolbarItems
+				'directory'	=> $this->getDirLocation(),
+				'toolbar'	=> $this->toolbarItems
 			)); ?>
 			<div class="Editor-new-item padding-top col-22 border-radius input-validation" >
 				<h2>Registro de usuário</h2>

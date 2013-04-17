@@ -117,9 +117,7 @@ jCube(function(){
 	(function(){//after submit
 		Editor.enabled	= true;
 		Editor.createNew.onLoad	= function( response, id) {
-			if ( this.ret.error) {
-				
-			} else {
+			if ( this.ret.insertId) {
 				window.setTimeout(function(){
 					window.location	= (window.location+'').replace('new-user-account', jCube(':label input[name=login]').value);
 				}, 2000);

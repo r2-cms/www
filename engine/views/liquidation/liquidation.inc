@@ -2,7 +2,7 @@
 <html lang="en" >
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>{{category-title}} | Salão do Calçado</title>
+		<title>Calçados em liquidação | Salão do Calçado</title>
 		{{VIEW:head}}
 		<link rel="stylesheet" type="text/css" href="{{CROOT}}css/catalog.css" />
 		<script type="text/javascript" src="{{CROOT}}js/catalog.js" ></script>
@@ -25,7 +25,7 @@
 						<h3 class="text-indent-medium margin-bottom-none" >{{category-title}}</h3>
 						<div class="linksC padding-medium padding-top-none padding-bottom-none" >
 							{{FOREACH:categories}}
-							<a href="{{fullpath}}" class="{{selected}}" >##title##</a>
+							<a href="?familia={{filename}}" class="{{selected}}" >##title##</a>
 							{{/FOREACH}}
 						</div>
 					</div>

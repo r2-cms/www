@@ -25,7 +25,7 @@
 	<body>
 		<div id="eMain" >
 			{{VIEW:header}}
-			<div id="eLogin" class="login row-12 fluid-12 clearfix-child margin-top-large" >
+			<div id="eLogin" class="login row-12 fluid-12 clearfix-child margin-top-large margin-bottom-large" >
 				<h1 class="grid-12 margin-bottom" >Seu cadastro</h1>
 				<div class="grid-12 card bg-white shadow-small clearfix-child" >
 					<div class="grid-7 marginless bg-graylight sborder-left" >
@@ -65,7 +65,7 @@
 								<strong>Não tenho cadastro</strong>
 							</h2>
 							<ul>
-								<li>Rastreie seus pedidos</li>
+								<li>Acompanhe seus pedidos</li>
 								<li>Veja seu histórico de compras</li>
 								<li>Receba promoções</li>
 							</ul>
@@ -79,5 +79,6 @@
 				</div>
 			</div>
 		</div>
+		{{VIEW:tracking-ga}}
 	</body>
 </html>

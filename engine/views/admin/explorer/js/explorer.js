@@ -503,8 +503,7 @@ jCube(function(){
 		var imgDelete	= ASP.CROOT +'imgs/gt8/cancel-small.png';
 		var imgOrig		= null;
 		
-		jCube('::#eBookmarks LI').setDraggable({
-			
+		jCube('::#eBookmarks li').setDraggable({
 			onStart: function(e) {
 				origXY	= [e.pageX, e.pageY];
 				w	= this.offsetWidth;
@@ -531,7 +530,7 @@ jCube(function(){
 						}
 					});
 					req.addGet('action', 'removeFromBookmarks');
-					req.addGet('value', LI.query(':A').title);
+					req.addGet('value', LI.query(':A').title.substring(4));
 					
 					req.start();
 				} else {

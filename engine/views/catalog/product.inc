@@ -6,13 +6,6 @@
 		{{VIEW:head}}
 		<link rel="stylesheet" type="text/css" href="{{CROOT}}css/product.css" />
 		<script type="text/javascript" src="{{CROOT}}js/product.js" ></script>
-		<script type="text/javascript" >
-		//<![CDATA[
-			{{JS_SERVER_VARS}}
-			jCube(function(){
-			});
-		//]]>
-		</script>
 	</head>
 	<body class="catalog home" >
 		<div id="eMain" itemscope itemtype="http://data-vocabulary.org/Product" >
@@ -68,7 +61,7 @@
 							<span class="grid pay-methods" >Parcelamento: até {{price_parts}}x de R$ <strong>$$financiamento$$</strong> sem juros</span>
 						</p>
 						<p class="item margin-bottom-large line-height-large clearfix-child item-separator sizes-chooser-holder hidden-{{no-stock}}" >
-							<span class="grid" >Escolha seu tamanho:</span>
+							<span class="grid sizes-chooser-label" >Escolha seu tamanho:</span>
 							<span class="grid sizes-chooser clearfix-child" >
 								{{FOREACH:sizes}}
 								<a href="{{CROOT}}{{GT8:cart.root}}?action=adicionar-produto&amp;produto={{id}}&amp;clean-qsa=1" title="{{stock}} em estoque" rel="nofollow" >{{crr_size}}</a>
@@ -95,7 +88,7 @@
 				</div>
 			</div>
 			<div class="row-12 fluid-12 clearfix-child" >
-				<div class="TabbedPane" >
+				<div class="TabbedPane grid-12" >
 					<div class="header" >
 						<div class="tab" ><div>Descrição</div></div>
 						<div class="tab" ><div>Características</div></div>

@@ -6,14 +6,6 @@
 		{{VIEW:head}}
 		<link rel="stylesheet" type="text/css" href="{{CROOT}}css/catalog.css" />
 		<script type="text/javascript" src="{{CROOT}}js/catalog.js" ></script>
-		<script type="text/javascript" >
-		//<![CDATA[
-			{{JS_SERVER_VARS}}
-			jCube(function(){
-				
-			});
-		//]]>
-		</script>
 	</head>
 	<body class="catalog home" >
 		<div id="eMain" >
@@ -29,7 +21,7 @@
 							{{/FOREACH}}
 						</div>
 					</div>
-					<div class="grid-12 marginless links-menu card bg-white box-shadow" >
+					<div id="eFilterSizes" class="grid-12 marginless links-menu card bg-white box-shadow" >
 						<h3 class="text-indent margin-bottom-none" >Tamanhos</h3>
 						<div class="padding-small padding-top clearfix-child" >
 							{{FOREACH:filter-sizes}}
@@ -58,17 +50,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="grid-12 marginless links-menu card bg-white box-shadow" id="eFilterColorsC" >
-						<h3 class="text-indent margin-bottom-none" >Cores</h3>
-						<div class="padding-small padding-top clearfix-child" >
-							{{FOREACH:filter-colors}}
-							<span class="grid-2h margin-left-m margin-right-m margin-bottom" title="{{color}}" ><a href="?cores={{color}}" class="href-button line-height-large link-click-toggle color color-{{color}} {{selected}}" ><span>&nbsp;</span></a></span>
-							{{/FOREACH}}
-						</div>
-					</div>
 					{{FOREACH:attributes}}<div class="grid-12 marginless links-menu card bg-white box-shadow" >
 						<h3 class="text-indent-medium margin-bottom-none" >##attribute##</h3>
-						<div class="linksC padding-medium padding-top-none padding-bottom-none click-toggle" >
+						<div class="linksC padding-medium padding-top-none padding-bottom-none click-toggle attributes-max-height" >
 							{{foreach-column:attribute}}<a href="?atributos=##attribute##-##value##" class="checkbox {{selected}}" >##value##<small>({{total}})</small></a>{{/foreach-column}}
 						</div>
 					</div>{{/FOREACH}}

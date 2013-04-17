@@ -9,6 +9,19 @@
 		<script type="text/javascript" src="{{CROOT}}js/gt8/gt8.js" ></script>
 		<script type="text/javascript" src="{{AROOT}}account/js/login.js" ></script>
 		<script type="text/javascript" src="{{AROOT}}js/main.js" ></script>
+		<script type="text/javascript" >
+		//<![CDATA[
+			
+			var ASP	= {
+				tkn:	'{{GT8:account.token}}',
+				sstart: '-{{SESSION:GT8.tstart}}',
+				tstart: '-{{SESSION:GT8.tstart}}',
+				CROOT: '{CROOT}}',
+				padmin: '{CROOT}}'
+			}
+			
+		//]]>
+		</script>
 	</head>
 	<body>
 		<div id="eMain" >

@@ -76,11 +76,31 @@
 							</div>
 						</div>
 						<div class="card dados input-validation" >
-							<?php $this->writeInputLabeled('title', 'Título', 'required', 1, 48, array('onkeyup'=>'if ( jCube(":input.filename").value.length=="" ) { jCube(":input.filename").value = this.value; } ' )); ?>
-							<?php $this->writeInputLabeled('filename', 'Nome de arquivo', '', 1, 64, array('readonly'=>true)); ?>
-							<?php $this->writeInputLabeled('code', 'Código', '', 1, 64, array()); ?>
-							<?php $this->writeTextareaLabeled('sumary', 'Resumo', '', 1, 128, array('styleTA'=>'height:78px')); ?>
-							<?php $this->writeTextareaLabeled('description', 'Descrição', '', 0, 4096); ?>
+							<label class="line" >
+								<strong class="col-5">Título</strong>
+								<span class="col-10"><input type="text" value="##title##" name="title" class="gt8-update input-rounded-shadowed" /><small>Título</small></span>
+								<em class="col-6" >&nbsp;</em>
+							</label>
+							<label class="line readonly" >
+								<strong class="col-5" >Nome de arquivo</strong>
+								<span class="col-10" ><input type="text" value="##filename##" name="filename" class="gt8-update input-rounded-shadowed readonly" readonly="readonly" /><small>Nome de arquivo</small></span>
+								<em class="col-6" >&nbsp;</em>
+							</label>
+							<label class="line" >
+								<strong class="col-5" >Código</strong>
+								<span class="col-10" ><input type="text" value="##code##" name="code" class="gt8-update input-rounded-shadowed" /><small>Código</small></span>
+								<em class="col-6" >&nbsp;</em>
+							</label>
+							<label title="maxlength:128" class="line" >
+								<strong class="col-5" >Resumo</strong>
+								<span class="col-14" ><textarea style="height:78px" name="sumary" class="gt8-update input-rounded-shadowed" rows="1" cols="1" >##sumary##</textarea><small>Resumo</small></span>
+								<em class="col-6" >&nbsp;</em>
+							</label>
+							<label title="maxlength:4096" class="line" >
+								<strong class="col-5" >Descrição</strong>
+								<span class="col-14" ><textarea name="description" class="gt8-update input-rounded-shadowed" rows="1" cols="1" >##description##</textarea><small>Descrição</small></span>
+								<em class="col-6" >&nbsp;</em>
+							</label>
 						</div>
 						<div class="card imagem" >
 							<div class="line" >

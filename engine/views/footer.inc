@@ -1,3 +1,28 @@
+			{{IF:!$_COOKIE['newsletter']}}<div id="eNewsletterCapture" >
+				<div class="row-12 fluid-12 clearfix-child" >
+					<div class="grid-12 bg-white shadow overflow-hidden" >
+						<div class="above fields padding clearfix-child" >
+							<div class="grid-3 alpha" >
+								<strong class="display-block padding-left padding-top-small" >
+									RECEBA promoções em seu e-mail
+								</strong>
+							</div>
+							<label class="grid-3 omega input-button" >
+								<input type="text" name="name" value="" />
+								<small>Digite seu nome</small>
+							</label>
+							<label class="grid-6 omega input-button" >
+								<input type="text" name="mail" value="" />
+								<small>Digite seu e-mail</small>
+								<a class="href-button href-button-blue href-button-blue-fixed" href="{{CROOT}}?action=adicionar-newsletter" rel="nofollow" ><span class=" padding-left-medium padding-right-medium" >CADASTRAR</span></a>
+							</label>
+						</div>
+						<img src="{{CROOT}}imgs/mail-regular.png" class="footer-bg" alt="" />
+						<div class="above feedback padding line-height-large display-none" ></div>
+					</div>
+				</div>
+			</div>
+			{{/IF}}
 			<div class="height-large" ></div>
 			<footer class="main" >
 				<div class="shadow-container block top" >
@@ -22,22 +47,22 @@
 						<div class="grid-2h t-grid-2 m-grid-1h" >
 							<h6><a href="{{CROOT}}{{GT8:atendimento.root}}" >Atendimento</a></h6>
 							<ul>
-								<li><a href="{{CROOT}}{{GT8:atendimento.root}}duvidas-frequentes/" >Dúvidas Frequentes</a></li>
-								<li><a href="{{CROOT}}{{GT8:atendimento.root}}duvidas-frequentes/" >Dúvidas Frequentes</a></li>
-								<li><a href="{{CROOT}}{{GT8:atendimento.root}}trocas-e-devolucoes/" >Trocas e Devoluções</a></li>
-								<li><a href="{{CROOT}}{{GT8:atendimento.root}}prazos-de-entrega/" >Entregas</a></li>
-								<li><a href="{{CROOT}}{{GT8:atendimento.root}}formas-de-pagamento/" >Pagamentos</a></li>
-								<li><a href="{{CROOT}}{{GT8:account.root}}" >Meus Cadastro</a></li>
-								<li><a href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}" >Meus Pedidos</a></li>
+								<li><a class="link" href="{{CROOT}}{{GT8:atendimento.root}}duvidas-frequentes/" >Dúvidas Frequentes</a></li>
+								<li><a class="link" href="{{CROOT}}{{GT8:atendimento.root}}duvidas-frequentes/" >Dúvidas Frequentes</a></li>
+								<li><a class="link" href="{{CROOT}}{{GT8:atendimento.root}}trocas-e-devolucoes/" >Trocas e Devoluções</a></li>
+								<li><a class="link" href="{{CROOT}}{{GT8:atendimento.root}}prazos-de-entrega/" >Entregas</a></li>
+								<li><a class="link" href="{{CROOT}}{{GT8:atendimento.root}}formas-de-pagamento/" >Pagamentos</a></li>
+								<li><a class="link" href="{{CROOT}}{{GT8:account.root}}" >Meus Cadastro</a></li>
+								<li><a class="link" href="{{CROOT}}{{GT8:account.root}}{{GT8:account.orders.root}}" >Meus Pedidos</a></li>
 							</ul>
 						</div>
 						<div class="grid-2h t-grid-2 m-grid-1h" >
 							<h6><a href="{{CROOT}}institucional/" >Institucional</a></h6>
 							<ul>
-								<li><a href="{{CROOT}}institucional/sobre-a-empresa/" >Sobre a Empresa</a></li>
-								<li><a href="{{CROOT}}institucional/politica-de-privacidade/" >Política de Privacidade</a></li>
-								<li><a href="{{CROOT}}institucional/seguranca/" >Política de Segurança</a></li>
-								<li><a href="{{CROOT}}institucional/seja-nosso-fornecedor/" >Seja Nosso Fornecedor</a></li>
+								<li><a class="link" href="{{CROOT}}institucional/sobre-a-empresa/" >Sobre a Empresa</a></li>
+								<li><a class="link" href="{{CROOT}}institucional/politica-de-privacidade/" >Política de Privacidade</a></li>
+								<li><a class="link" href="{{CROOT}}institucional/seguranca/" >Política de Segurança</a></li>
+								<li><a class="link" href="{{CROOT}}institucional/seja-nosso-fornecedor/" >Seja Nosso Fornecedor</a></li>
 							</ul>
 						</div>
 						<div class="grid-2hm t-grid-3 shadowless mobile-hidden" >
@@ -83,14 +108,4 @@
 					</p>
 				</div>
 			</footer>
-			<script type="text/javascript" >
-			  var _gaq = _gaq || [];
-			  _gaq.push(['_setAccount', 'UA-38822431-1']);
-			  _gaq.push(['_trackPageview']);
-			
-			  (function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			  })();
-			</script>
+			{{VIEW:tracking-ga}}

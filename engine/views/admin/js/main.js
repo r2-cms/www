@@ -153,8 +153,7 @@ jCube(function(){
 	})();
 });
 jCube(function(){//NOTIFICATIONS
-	
-	(function(){//ORDERS
+	if ( jCube(':#eNotificationsC') ) {//ORDERS
 		var orders	= [];
 		var Get	= function() {
 			var req	= new jCube.Server.HttpRequest({
@@ -198,7 +197,7 @@ jCube(function(){//NOTIFICATIONS
 				if ( !eA) {
 					eA	= jCube(document.createElement('A')).
 						addClass('button').
-						setProperty('href', ASP.CROOT +'{{GT8:admin.root}}orders/'+ (orders.length===1? orders[0] +'/': '?status=21,23')).
+						setProperty('href', ASP.CROOT +'{{GT8:admin.root}}orders/'+ (orders.length===1? orders[0].trim() +'/': '?status=21,23')).
 						setHTML('<span><img src="'+ ASP.CROOT +'{{GT8:admin.root}}orders/imgs/large.png" /><small class="notification" >&nbsp;</small></span>').
 						setProperty('id', 'eNotificationTop')
 					;
@@ -211,12 +210,12 @@ jCube(function(){//NOTIFICATIONS
 					eA.addClass('hidden');
 				}
 			}
-			window.setTimeout(Get, ({{PARAM:notify-orders-timeout|60}})*1000);
 		}
 		Get();
 		if ( jCube.Document.Cookie.get('orders-qty') ) {
 			orders	= jCube.Document.Cookie.get('orders-qty').split(',');
 			Process();
 		}
-	})();
+		window.setInterval(Get, ({{PARAM:notify-orders-timeout|60}})*1000);
+	};
 });

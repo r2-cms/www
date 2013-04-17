@@ -18,7 +18,10 @@
 			
 			var ASP	= {
 				tkn:	'{{GT8:account.token}}',
-				sstart: '-{{SESSION:GT8.tstart}}'
+				sstart: '-{{SESSION:GT8.tstart}}',
+				tstart: '-{{SESSION:GT8.tstart}}',
+				CROOT: '{CROOT}}',
+				padmin: '{CROOT}}'
 			}
 			
 		//]]>
@@ -29,7 +32,7 @@
 			{{VIEW:cart.header}}
 			<div id="eLogin" class="login row-12 fluid-12 clearfix-child margin-top-large" >
 				<h1 class="grid-12 margin-bottom" >Seu cadastro</h1>
-				<div class="grid-12 card bg-white shadow-small clearfix-child" >
+				<div class="grid-12 card bg-white shadow-small margin-bottom-large clearfix-child" >
 					<div class="grid-7 marginless bg-graylight sborder-left" >
 						<div class="height-4 grid-10 prefix-1 suffix-1 padding-top-large padding-bottom-large clearfix-child" >
 							<h2 class="text-align-left" >
@@ -72,7 +75,7 @@
 								<li>Receba promoções</li>
 							</ul>
 							<p class="abs-bottom pos-bottom grid-10" >
-								<a href="{{CROOT}}{{GT8:account.root}}{{GT8:account.register.root}}" class="href-button line-height-large bt-create-new-account" >
+								<a href="../{{GT8:cart.create-account.root}}" class="href-button line-height-large bt-create-new-account" >
 									<span>Criar conta</span>
 								</a>
 							</p>

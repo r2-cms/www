@@ -5,7 +5,7 @@
 		<title>{{title}} | Salão do Calçado</title>
 		{{VIEW:head}}
 	</head>
-	<body class="not-found" >
+	<body class="error" >
 		<div id="eMain" >
 			{{VIEW:header}}
 			{{VIEW:location}}

@@ -99,7 +99,22 @@
 						</div>
 						<div class="card input-validation" id="card-address" >
 							<div class="cards" >
-								<?php $Editor->printAddress(); ?>
+								{{METHOD:getAddress}}
+								<a title="address-4" href="{{AROOT}}address/{{id}}/" class="address card card-border col-7" id="address-{{id}}" >
+									<em class="zip">{{zip}}</em>
+									<span class="imgC" >
+										<img alt="" src="{{CROOT}}imgs/gt8/address/{{type}}.png" />
+									</span>
+									<strong class="estado">{{stt}} - ##city##</strong>
+									<span class="title">##street##, {{number}} - ##complement##. ##district##</span>
+									<span class="id_users hidden">{{id_users}}</span>
+									<span class="stt hidden">{{stt}}</span>
+									<span class="city hidden">##city##</span>
+									<span class="street hidden">##street##</span>
+									<span class="number hidden">##number##</span>
+									<span class="district hidden">##district##</span>
+								</a>
+								{{/METHOD}}
 							</div>
 						</div>
 						<div class="card input-validation" id="card-history" >

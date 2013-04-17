@@ -54,7 +54,16 @@
 		mysql_query("UPDATE print_queue SET printed = 1 WHERE id_explorer = ". $Pager['id'] ." AND printed = 0 LIMIT 1") or die(mysql_error());
 		
 		//Cria código de barras, padrão code39, nas variações dos produtos
-		$codProd	= substr( '000000'. $Pager['filename'], -6);
+		$code39		= '789';//country code
+		$code39		.= '1000';//company code
+		$code39		.= substr('0000'. $Pager['id'], -5);//prod code
+		$code39_dv	= 0;
+		for ( $i=0; $i<strlen($code39); $i++) {
+			$code39_dv	+= ((integer)substr($code39, $i, 1) * ($i%2===0?1:3));
+		}
+		$code39_dv	= ceil($code39_dv/10)*10 - $code39_dv;
+		$code39	.= $code39_dv .'';
+		
 		$codFamily	= explode('/', $Pager['path']);
 		$codFamily	= $codFamily[2];
 		$codFamily	= mysql_fetch_array(mysql_query("SELECT e.code FROM gt8_explorer e WHERE e.path = 'catalogo/calcados/' AND e.filename = '$codFamily' "));
@@ -197,11 +206,11 @@
 					</div>
 					<div class="barcode code39C" >
 						<div class="barcode code39" >
-							<?php print(Barcode39( $codProd.$codFamily.$tamanho.$price)); ?>
+							<?php print(Barcode39( $code39)); ?>
 						</div>
 						<img class="img-qr" src="?action=print-qr-bar&url=<?php print($Pager['url']); ?>" alt="" />
 						<div class="barcode code39 font-size-small textual-code" >
-							*<?php print($codProd.$codFamily.$tamanho.$price); ?>*
+							*<?php print($code39); ?>*
 						</div>
 					</div>
 					<div class="clearfix" ></div>

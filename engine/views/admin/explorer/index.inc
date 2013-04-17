@@ -26,7 +26,7 @@
 					<div class="clear invisible height-15" >&nbsp;</div>
 					<?php
 					$modalClass	= $this->isModal? ' hidden': '';
-					$this->printCards('<a class="card col-'. ($this->isModal?4:6) .' locked-{{locked}} allow- privilege-" href="{{filename}}/type={{type}}" title="##title##" id="img-{{id}}" >
+					$this->printCards('<a class="card col-6 locked-{{locked}} allow- privilege-" href="{{CROOT}}{{GT8:admin.root}}explorer/{{path}}{{filename}}/type={{type}}" title="##title##" id="img-{{id}}" >
 						<span class="hidden" >{{all-fields}}</span>
 						<em class="user'. $modalClass .'" title="{{id_user}}" >##user##</em>
 						<strong class="title" >##title##</strong>

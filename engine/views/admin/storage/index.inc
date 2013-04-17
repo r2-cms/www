@@ -26,7 +26,7 @@
 		</script>
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 	</head>
-	<body class="{{modal-class}}" >
+	<body class="{{modal-class}} overflow-auto" >
 		<div id="eMain" >
 			{{VIEW:admin.header-new}}
 			<div id="eResults" class="row-12 fluid-12 margin-top-small clearfix-child" >

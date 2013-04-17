@@ -29,10 +29,10 @@
 				<div class="knob-pane" >&nbsp;</div>
 				<div class="content cards row right-pane" >
 					<div class="clear invisible height-15" >&nbsp;</div>
-					<?php $this->printCards('
+					{{METHOD:getCards}}
 						<a title="address-{{id}}" href="{{id}}/" class="address card card-border col-7" id="address-{{id}}" >
 							<em class="zip">{{zip}}</em>
-							<span class="imgC"><img alt="[imagem]" src="{{CROOT}}imgs/gt8/address/Delivery.png" /></span>
+							<span class="imgC"><img alt="[imagem]" src="{{CROOT}}imgs/gt8/address/{{type}}.png" /></span>
 							<strong class="estado">{{stt}} - ##city##</strong>
 							<span class="title">##street##, {{number}}. ##district##</span>
 							<span class="stt hidden">{{stt}}</span>
@@ -41,7 +41,7 @@
 							<span class="number hidden">{{number}}</span>
 							<span class="district hidden">{{district}}</span>
 						</a>
-					'); ?>
+					{{/METHOD}}
 					<div class="clear invisible height-15" >&nbsp;</div>
 				</div>
 				<div class="clear" >&nbsp;</div>
