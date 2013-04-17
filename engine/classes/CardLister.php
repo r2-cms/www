@@ -8,8 +8,8 @@
 		public $keywords	= '';
 		protected $options	= null;
 		public $Pager	= null;
-		public $index	= null;
-		public $limit	= null;
+		public $index	= 0;
+		public $limit	= 0;
 		public $bts		= null;
 		public $defaultLimit	= 10;
 		public $search	= null;

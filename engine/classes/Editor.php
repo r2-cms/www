@@ -345,7 +345,7 @@
 			} else if ( isset($this->Pager['rows'][0]['fullpath'])) {
 				$img	= '<div class="line img-preview" ><span class="imgC border" title="Pré-visualização" ><img src="'. CROOT . $this->Pager['rows'][0]['fullpath'] .'?regular" alt="" /></span></div>';
 			} else if ( isset($this->Pager['rows'][0]['explorer_img'])) {
-				$img	= '<div class="line img-preview" ><span class="imgC border cursor-pointer" title="Pré-visualização" onclick="Modal.show({objRef:this, tabIndex:2, onChoose: null, url:\''. CROOT . $GT8['admin']['root'] . $GT8['explorer']['root'] . 'users/' . $this->Pager['rows'][0]['login'] .'/?edit&locationbar=0\'})" ><img src="'. CROOT . $GT8['explorer']['root'] . $this->Pager['rows'][0]['explorer_img'] .'" alt="[Preview]" /></span></div>';
+				$img	= '<div class="line img-preview" ><span class="imgC border cursor-pointer" title="Pré-visualização" onclick="Modal.show({objRef:this, tabIndex:2, onChoose: null, url:\''. CROOT . $GT8['admin']['root'] . 'explorer/users/' . $this->Pager['rows'][0]['login'] .'/?edit&locationbar=0\'})" ><img src="'. CROOT . $GT8['explorer']['root'] . $this->Pager['rows'][0]['explorer_img'] .'" alt="[Preview]" /></span></div>';
 			}
 			
 			////////////////////////////LOCK////////////////////////////////////

@@ -17,7 +17,6 @@
 				$this->isAdmin	= false;
 			}
 			
-			
 			$this->checkActionRequest();
 		}
 		private function checkActionRequest() {
@@ -51,6 +50,16 @@
 				}
 			}
 			
+			$time	= time();
+			foreach( $_SESSION['expirable-data'] as $name=>$value) {
+				if ( isset($_SESSION['expirable-data'][$name]) ) {
+					if ( ($time-$_SESSION['expirable-data'][$name][2]) < $_SESSION['expirable-data'][$name][1] ) {
+						$data[$name]	= utf8_encode($_SESSION['expirable-data'][$name][0]);
+					} else {
+						unset($_SESSION['expirable-data'][$name]);
+					}
+				}
+			}
 			foreach( $data as $name=>$value) {
 				
 				if ( strpos('#'. $text, '##'. $name .'##')  ) {
@@ -150,9 +159,8 @@
 						$baseFound	= true;
 					}
 				} else if ( $crr) {
-					$dirs[]	= $crr;
+					$dirs[]	= utf8_decode(urldecode($crr));
 				}
-				
 			}
 			$pathQSA	= '';
 			if ( strpos('#'.$_SERVER['REQUEST_URI'], '?')) {
@@ -183,9 +191,9 @@
 				
 				$html	= '<a href="'. CROOT .'" >'. $GT8['title'] .'</a><span>&nbsp;</span>';
 				for ( $i=0, $len=count($dirs); $i<$len-1; $i++) {
-					$html	.= '<a href="'. str_repeat('../', ($len-$i-1)) .'" >'. ($paths[$len-$i-1]) .'</a><span>&nbsp;</span>';
+					$html	.= '<a href="'. str_repeat('../', ($len-$i-1)) .'" >'. utf8_decode(urldecode($paths[$len-$i-1])) .'</a><span>&nbsp;</span>';
 				}
-				$html	.= ' <span>'. $paths[0] .'</span>';
+				$html	.= ' <span>'. (urldecode($paths[0])) .'</span>';
 			}
 			
 			return $html;
@@ -468,6 +476,13 @@
 								
 								//params
 								$params	= explode(',', substr($reg[4], 1, -1));
+								for ( $j=0; $j<count($params); $j++){
+									if ( substr($params[$j], 0, 1) === "'" && substr($params[$j], -1) === "'" ) {
+										$params[$j]	= substr($params[$j], 1, -1);
+									} else if ( substr($params[$j], 0, 1) === '"' && substr($params[$j], -1) === '"' ) {
+										$params[$j]	= substr($params[$j], 1, -1);
+									}
+								}
 								$var	= call_user_func_array( array($OBJ, $reg[2]), $params);
 								
 								if ( isset($OBJ->data)) {
@@ -672,16 +687,24 @@
 						$selected	= $result[7][$i] !== null? $result[7][$i]: null;
 						$options	= $result[9][$i] !== null? explode(',',$result[9][$i]): array();
 						$crr	= '';
-						foreach( $OBJ->data[$result[1][$i]] AS $row=>$arr) {
-							$val	= $arr[$value];
-							$nam	= $arr[$name];
-							if ( in_array('utf8', $options)) {
-								$val	= utf8_encode($val);
-								$nam	= utf8_encode($nam);
+						
+						if ( isset($OBJ->data[$result[1][$i]]) && gettype($OBJ->data[$result[1][$i]]) === 'array') {
+							foreach( $OBJ->data[$result[1][$i]] AS $row=>$arr) {
+								$val	= $arr[$value];
+								$nam	= $arr[$name];
+								if ( in_array('utf8', $options)) {
+									$val	= utf8_encode($val);
+									$nam	= utf8_encode($nam);
+								}
+								$crr	.= '<option value="'. $nam .'" '. ($selected!==null&&$arr[$selected]?'selected="selected"':'') .'>'. $val .'</option>';
 							}
-							$crr	.= '<option value="'. $nam .'" '. ($selected!==null&&$arr[$selected]?'selected="selected"':'') .'>'. $val .'</option>';
+							$contents	= str_replace('{{COMBO-OPTIONS:'.$result[1][$i].$result[2][$i].$result[3][$i].$result[4][$i].$result[5][$i].$result[6][$i].$result[7][$i].$result[8][$i].$result[9][$i].'}}', $crr, $contents);
+						} else {
+							if ( $this->getParam('debug-active') == 'true') {
+								print('<h1>Objeto inválido em data!</h1>');
+								die("<pre>". print_r( $result[1], 1) ."</pre>".PHP_EOL);
+							}
 						}
-						$contents	= str_replace('{{COMBO-OPTIONS:'.$result[1][$i].$result[2][$i].$result[3][$i].$result[4][$i].$result[5][$i].$result[6][$i].$result[7][$i].$result[8][$i].$result[9][$i].'}}', $crr, $contents);
 						
 						//depois do método compile, não é mais permitido loop!
 						break;
@@ -707,18 +730,24 @@
 				}
 				return array( $contents, $data);
 			}
-			if ( $type === 'param' ) {
+			if ( $type === 'param' ) {//PARAM:name|default|cateogory|idUser|cache(true|false)
 				preg_match_all('/\{\{PARAM:([a-zA-Z\.\-0-9\_\/\|]+)\}\}/', $contents, $result);
 				if ( $result && isset($result[1])) {
 					for ( $i=0; $i<count($result[1]); $i++) {
 						$name		= $result[1][$i];
 						$default	= '';
+						$category	= 'system';
+						$idUser		= 0;
+						$cache		= true;
 						if ( strpos('#'.$name, '|')>0) {
-							$default	= explode('|', $name);
-							$name		= $default[0];
-							$default	= $default[1];
+							$args		= explode('|', $name);
+							$name		= $args[0];
+							$default	= isset($args[1])&&$args[1]? $args[1]: '';
+							$category	= isset($args[2])&&$args[2]? $args[2]: $category;
+							$idUser		= isset($args[3])&&$args[3]? (integer)$args[3]: $idUser;
+							$cache		= isset($args[4])&&$args[4]? (strtolower($args[4])==='false'||$args[4]==='0')? false:true: $cache;
 						}
-						$param		= GT8::getParam($name, 'system', 0);
+						$param		= GT8::getParam($name, $category, $idUser, $cache);
 						$param		= $param? $param: $default;
 						$contents	= str_replace('{{PARAM:'.$result[1][$i].'}}', $param, $contents);
 						
@@ -894,7 +923,13 @@
 			include_once( SROOT."engine/views/$file.inc");
 		}
 		protected function setData( $name, $value='') {
-			$this->data[$name]	= $value;
+			
+			if ( substr($name, -2) === '[]' ) {//ARRAY[]
+				$name	= $this->getData(substr($name, 0, -2));
+				$this->data[$name][]	= $value;
+			} else {
+				$this->data[$name]	= $value;
+			}
 		}
 		public function getData( $name) {
 			return (isset($this->data[$name])? $this->data[$name]: '');
@@ -927,6 +962,26 @@
 					array('old', $url)
 				)
 			));
+			if ( !isset($Pager['rows'][0])) {
+				$urlSteps	= array();
+				$urlSlash	= explode('/', $url);
+				$urlOff	= array();
+				for ( $i=min(4, count($urlSlash)); $i>0; $i--) {
+					$urlOff[]	= $urlSlash[count($urlSlash)-1];
+					array_pop($urlSlash);
+					$Pager	= Pager(array(
+						'sql'	=> 'urlHistory.list',
+						'required'	=> array(
+							array('old', join('/', $urlSlash))
+						)
+					));
+					if ( isset($Pager['rows'][0])) {
+						$urlOff	= array_reverse($urlOff);
+						$Pager['rows'][0]['new']	.= '/'. join('/', $urlOff);
+						break;
+					}
+				}
+			}
 			if ( isset($Pager['rows'][0])) {
 				$qsas	= explode('&', $_SERVER['QUERY_STRING']);
 				$qsa	= '?';
@@ -1048,13 +1103,13 @@
 		public function prnt($field, $addSlashes=false) {
 			print($this->get($field, $addSlashes));
 		}
-		public static function getParam( $name, $category='', $idUser=-1) {
+		public static function getParam( $name, $category='', $idUser=-1, $cache=true) {
 			$idUser	= (integer)$idUser;
 			if ( $idUser==-1 && isset($_SESSION['login']['id']) && $_SESSION['login']['id']) {
 				$idUser	= $_SESSION['login']['id'];
 			}
 			
-			if ( isset($_SESSION['param-cache'][$name])) {
+			if ( isset($_SESSION['param-cache'][$name]) && $cache) {
 				return $_SESSION['param-cache'][$name];
 			}
 			$name		= mysql_real_escape_string($name);
@@ -1171,6 +1226,68 @@
 				print('//#affected rows: '. mysql_affected_rows() . PHP_EOL);
 			}
 		}
+		public function addMessage($name, $value) {
+			$_SESSION['messages'][$name]	= $value;
+		}
+		public function addSessionMessage($name, $value) {
+			$_SESSION['session-messages'][$name]	= $value;
+		}
+		public function deleteMessage($name) {
+			global $GT8;
+			
+			$_SESSION['session-messages'][$name]	= '';
+			$_SESSION['messages'][$name]	= '';
+			$GT8['messages'][$name]	= '';
+		}
+		public function getMessages($name){
+			global $GT8;
+			$html	= '';
+			if ( isset($_SESSION['session-messages'][$name]) && !empty($_SESSION['messages'][$name])) {
+				$html	.= $_SESSION['session-messages'][$name];
+			}
+			if ( isset($_SESSION['messages'][$name]) && !empty($_SESSION['messages'][$name])) {
+				$html	.= $_SESSION['messages'][$name];
+				$_SESSION['messages'][$name]	= '';
+			}
+			if ( isset($GT8['messages'][$name]) && !empty($GT8['messages'][$name])) {
+				$html	.= $GT8['messages'][$name];
+				$GT8['messages'][$name]	= '';
+			}
+			return $html;
+		}
+		public function hasMessages($name) {
+			global $GT8;
+			if ( isset($_SESSION['session-messages'][$name]) && !empty($_SESSION['session-messages'][$name])) {
+				return '';
+			} else if ( isset($_SESSION['messages'][$name]) && !empty($_SESSION['messages'][$name])) {
+				return '';
+			} else if ( isset($GT8['messages'][$name]) && !empty($GT8['messages'][$name])) {
+				return '';
+			}
+			return ' hidden';
+		}
+		public function addExpirableData( $name, $value, $expiresIn=3) {
+			$_SESSION['expirable-data'][$name]	= array($value, $expiresIn, time());
+		}
+		public function throwError($error, $title, $format='', $file='') {
+			if ( $format==='' || !$format) {
+				if ( isset($_GET['format']) && $_GET['format']) {
+					$format	= $_GET['format'];
+				}
+			}
+			if ( $format==='JSON') {
+				die('//#error: '. $error. PHP_EOL);
+			}
+			
+			if ( !$file || $file === '') {
+				$file 	= SROOT .'engine/views/error.inc';
+			}
+			$this->printView( $file, array(
+				'title'	=> ($title? $title: 'Erro!'),
+				'message'	=> $error
+			));
+			die();
+		}
 		static function leaveSSL() {
 			if ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on" ) {
 				$redirect = "http://". $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -1180,9 +1297,10 @@
 		}
 		static function enterSSL() {
 			if (
+				(isset($GT8['allowSSL']) && $GT8['allowSSL']) &&
 				$_SERVER['DOCUMENT_ROOT'] != '/home/robson/sites/r2-cms.com/www/trunk' &&
 				$_SERVER['DOCUMENT_ROOT'] != '/Users/Roger/Sites' &&
-				!strpos('#'. $_SERVER['DOCUMENT_ROOT'], 'C:/xampp/htdocs') &&
+				!strpos('#'. $_SERVER['DOCUMENT_ROOT'], 'C:/xampp/') &&
 				(!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "")
 			) {
 				$redirect = "https://". $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -1279,6 +1397,24 @@
 			} else {
 				return '';
 			}
+		}
+		public function setBrandsTop10($template) {
+			require_once( SROOT .'engine/functions/Pager.php');
+			$Pager	= Pager(array(
+				'sql'	=> 'products.brands',
+				'limit'		=> '10'
+			));
+			$rows1	= array();
+			$rows2	= array();
+			for ( $i=0; $i<count($Pager['rows']); $i++) {
+				if ( $i < 5) {
+					$rows1[]	= $Pager['rows'][$i];
+				} else {
+					$rows2[]	= $Pager['rows'][$i];
+				}
+			}
+			$this->data['brands-top-5']		= $rows1;
+			$this->data['brands-top-10']	= $rows2;
 		}
 	}
 ?>
