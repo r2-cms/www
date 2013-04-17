@@ -206,9 +206,25 @@ var Editor	= {
 		} else if ( window.ASP ) {
 			req.addGet( 'sql', ASP.cardListerName + '.update');
 		}
-		if ( window.ASP) {
-			req.addGet( 'id', ASP.id);
+		var id	= ASP.id;
+		
+		//auto grab custom id
+		if ( eInput.getParent('.gt8-update-id')) {
+			var id	= (eInput.getParent('.gt8-update-id').id +'');
+			id	= id? id.match(/[0-9]+$/): [0];
+			if ( id && id[0]) {
+				id	= id[0];
+			} else {
+				id	= 0;
+			}
 		}
+		if ( !id && window.ASP) {
+			id	= ASP.id;
+		}
+		if ( id) {
+			req.addGet('id', id);
+		}
+		
 		req.addGet( 'field', name);
 		req.addGet( 'value', value);
 		GT8.Spinner.request( req);
