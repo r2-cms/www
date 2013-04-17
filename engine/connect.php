@@ -20,6 +20,18 @@
 	if ( !isset($_SESSION['param-cache'])) {
 		$_SESSION['param-cache']	= array();
 	}
+	if ( !isset($_SESSION['session-messages'])) {
+		$_SESSION['session-messages']	= array();
+	}
+	if ( !isset($_SESSION['messages'])) {
+		$_SESSION['messages']	= array();
+	}
+	if ( !isset($GT8['messages'])) {
+		$GT8['messages']	= array();
+	}
+	if ( !isset($_SESSION['expirable-data'])) {
+		$_SESSION['expirable-data']	= array();
+	}
 	if ( !isset($_SESSION['login']) ) {
 		$_SESSION['login']	= array();
 	}
