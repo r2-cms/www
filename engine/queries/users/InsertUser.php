@@ -58,7 +58,7 @@
 			if ( $format === 'JSON') {
 				die('//#error: login já existe. Por favor, escolha outro!'. PHP_EOL);
 			} else if ( $format === 'OBJECT'){
-				return 'login already exists';
+				return 'login already exists';//não deve ser alterado!
 			} else {
 				return false;
 			}
@@ -104,7 +104,7 @@
 			
 			if ( $format == 'JSON') {
 				print('//#affected rows: 1!'. PHP_EOL);
-				print('//#id inserted successfully ('. $id .')!'. PHP_EOL);
+				print('//#insert id: '. $id . PHP_EOL);
 				print('//#message: Usuário "'. $login .'" criado com sucesso!'. PHP_EOL);
 			}
 			if ( $level > 3) {

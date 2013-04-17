@@ -88,11 +88,10 @@
 			#  também todos os arquivos que estão dentro deste diretório       #
 			#                                                                  #
 			####################################################################
-			
+			global $GT8;
 			$crrPath	= $Pager['filename'];
 			$oldFull	= $Pager['path'] . $crrPath .'/';
 			$newFull	= $Pager['path'] . $value .'/';
-			
 			$len	= strlen($oldFull);
 			$result	= mysql_query("
 				SELECT
@@ -103,6 +102,14 @@
 					path LIKE '$oldFull%'
 			");
 			$return	= 0;
+			####################################################################
+			#                        URL HISTORY                               #
+			#                                                                  #
+			# Registre as alterações dos urls de todos os descenntedes         #
+			# para que não se percam links                                     #
+			#                                                                  #
+			####################################################################
+			$prefixCrop	= isset($GT8['catalog']['explorer-root'])? $GT8['explorer']['root'] . $GT8['catalog']['explorer-root']: '';
 			require_once( SROOT .'engine/queries/urlHistory/addNewUrlHistory.php');
 			while( ($row=mysql_fetch_assoc($result))) {
 				$id	= $row['id'];
@@ -116,38 +123,52 @@
 				") or die('//#error: Erro no servidor (1).'. ($_SESSION['login']['level']>8? ' Explorer.updateFile::UPDATE: '. mysql_error(): '') . PHP_EOL);;
 				$return++;
 				
-				//url history
-				addNewUrlHistory(array(
-					'old'	=> $GT8['admin']['root'] . $GT8['explorer']['root'] . $Pager['path'] . $Pager['filename'],
-					'new'	=> $GT8['admin']['root'] . $GT8['explorer']['root'] . $Pager['path'] . $value,
-					'format'	=> $format
-				));
+				//public url history
 				addNewUrlHistory(array(
 					'old'	=> $GT8['explorer']['root'] . $Pager['path'] . $Pager['filename'],
 					'new'	=> $GT8['explorer']['root'] . $Pager['path'] . $value,
 					'format'	=> $format
 				));
+				//admin url history
+				addNewUrlHistory(array(
+					'old'	=> $GT8['admin']['root'] .'explorer/'. $Pager['path'] . $Pager['filename'],
+					'new'	=> $GT8['admin']['root'] .'explorer/'. $Pager['path'] . $value,
+					'format'	=> $format
+				));
+				//catalog url history
+				if ( !empty($prefixCrop)) {
+					addNewUrlHistory(array(
+						'old'	=> str_replace($prefixCrop, '', $GT8['explorer']['root'] . $Pager['path'] . $Pager['filename']),
+						'new'	=> str_replace($prefixCrop, '', $GT8['explorer']['root'] . $Pager['path'] . $value),
+						'format'	=> $format
+					));
+				}
 			}
 			
-		}
-		if ( $name == 'filename') {
 			####################################################################
-			#                        URL HISTORY                               #
-			#                                                                  #
-			# Registre as alterações dos urls para que não se percam links     #
-			#                                                                  #
+			# URL history do filename atual. Acima foram os                    #
+			# urls dos descendentes                                            #
 			####################################################################
 			require_once( SROOT .'engine/queries/urlHistory/addNewUrlHistory.php');
-			addNewUrlHistory(array(
-				'old'	=> $GT8['admin']['root'] . $GT8['explorer']['root'] . $Pager['path'] . $Pager['filename'],
-				'new'	=> $GT8['admin']['root'] . $GT8['explorer']['root'] . $Pager['path'] . $value,
-				'format'	=> $format
-			));
+			//public
 			addNewUrlHistory(array(
 				'old'	=> $GT8['explorer']['root'] . $Pager['path'] . $Pager['filename'],
 				'new'	=> $GT8['explorer']['root'] . $Pager['path'] . $value,
 				'format'	=> $format
 			));
+			//admin url history
+			addNewUrlHistory(array(
+				'old'	=> $GT8['admin']['root'] .'explorer/'. $Pager['path'] . $Pager['filename'],
+				'new'	=> $GT8['admin']['root'] .'explorer/'. $Pager['path'] . $value,
+				'format'	=> $format
+			));
+			if ( !empty($prefixCrop)) {
+				addNewUrlHistory(array(
+					'old'	=> str_replace($prefixCrop, '', $GT8['explorer']['root'] . $Pager['path'] . $Pager['filename']),
+					'new'	=> str_replace($prefixCrop, '', $GT8['explorer']['root'] . $Pager['path'] . $value),
+					'format'	=> $format
+				));
+			}
 		}
 		
 		require_once(SROOT.'engine/functions/LogAdmActivity.php');

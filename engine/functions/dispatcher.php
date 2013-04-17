@@ -20,7 +20,6 @@
 		//require( SROOT .'engine/controllers/admin/explorer/Index.php');
 		die();
 	}
-	
 	for ( $ipath=0; $ipath<count($paths); $ipath++) {
 		$path	= $paths[$ipath];
 		$found	= false;
@@ -47,7 +46,6 @@
 			}
 		}
 	}
-	
 	$base	= substr($base, 0, -1);
 	require_once(SROOT.'engine/classes/GT8.php');
 	$fileviewer	= $base;
@@ -62,9 +60,9 @@
 	if ( isset($_GET['action']) && $_GET['action'] === 'login') {
 		require_once( SROOT ."engine/functions/CheckLogin.php");
 	}
-	if ( $found && substr($base, -1)=='/') {//DIR
+	if ( $found ) {//DIR
 		
-		//se houver um arquivo com o mesmo nome do diretório, iniciando em maísculo, é classe com auto inicialização. Carreguemo-la!
+		//se houver um arquivo com o mesmo nome do diretório, iniciando em maiúsculo, é classe com auto inicialização. Carreguemo-la!
 		$baseClassName	= strpos($controller, '/')+1<strlen($controller)? substr( $controller, strpos($controller, '/')+1): $controller;
 		//$baseClassName	= strtoupper(substr($baseClassName, 0, 1)) . substr($baseClassName, 1, (strlen($baseClassName)-2));
 		$baseClassName	= explode('/', $baseClassName);
@@ -72,6 +70,7 @@
 			array_pop($baseClassName);
 		}
 		$baseClassName	= ucfirst($baseClassName[count($baseClassName)-1]);
+		$baseClassNameV	= strtolower($baseClassName);
 		$fileController	= '';
 		if ( file_exists(SROOT.'engine/controllers/'. $controller . $baseClassName .'.php')) {
 			$fileController	= SROOT.'engine/controllers/'. $controller . $baseClassName .'.php';
@@ -89,18 +88,43 @@
 				while ( ($pos=strpos('#'.$baseClassName, '-')) > 0) {
 					$baseClassName	= substr($baseClassName, 0, $pos-1) . substr(strtoupper($baseClassName), $pos, 1) . substr($baseClassName, $pos+1);
 				}
-				$fileController	= SROOT .'engine/controllers'. strtolower($fileController) .'/'. $baseClassName .'.php';
-				if ( !file_exists($fileController)) {
+				if ( file_exists(SROOT .'engine/controllers/'. strtolower($fileController) .'/'. $baseClassName .'.php') ) {
+					$fileController	= SROOT .'engine/controllers/'. strtolower($fileController) .'/'. $baseClassName .'.php';
+				} else if ( file_exists(SROOT .'engine/controllers'. strtolower($fileController) .'/'. $baseClassName .'.php') ) {
+					$fileController	= SROOT .'engine/controllers'. strtolower($fileController) .'/'. $baseClassName .'.php';
+				} else {
 					$fileController	= '';
 				}
-				
 			} else {
 				$fileController	= '';
 			}
 		}
 		
+		if ( file_exists(SROOT .'engine/views/'. $fileviewer . strtolower($baseClassName) .'.inc')) {
+			$fileviewer	= SROOT .'engine/views/'. $fileviewer . strtolower($baseClassName) .'.inc';
+			
+		} else if ( file_exists(SROOT .'engine/views/'. $fileviewer . strtolower($baseClassNameV) .'.inc')) {
+			$fileviewer	= SROOT .'engine/views/'. $fileviewer . strtolower($baseClassNameV) .'.inc';
+			
+		} else if ( file_exists(SROOT .'engine/views/'. $fileviewer . substr($fileviewer, 0, -1) .'.inc')) {
+			$fileviewer	= SROOT .'engine/views/'. $fileviewer . substr($fileviewer, 0, -1) .'.inc';
+			
+		} else if ( file_exists(SROOT .'engine/views/'. $fileviewer .'/'. $fileviewer .'.inc')) {
+			//é diretório, mas está sem o forward slash
+			$fileviewer	= SROOT .'engine/views/'. $fileviewer .'/'. $fileviewer .'.inc';
+			
+		} else if ( file_exists(SROOT .'engine/views/'. $fileviewer) && !is_dir(SROOT .'engine/views/'. $fileviewer)) {
+			//somente views diretas, como arquivos js, css, etc
+			$fileviewer	= SROOT .'engine/views/'. $fileviewer;
+			
+		} else if ( file_exists(SROOT .'engine/views/'. $fileviewer .'index.inc')) {
+			$fileviewer	= SROOT .'engine/views/'. $fileviewer .'index.inc';
+			
+		} else {
+			$fileviewer	.= 'index.inc';
+			
+		}
 		//camel case class name
-		
 		if ( $fileController ) {
 			require( $fileController);
 			$Index	= new $baseClassName;
@@ -108,16 +132,18 @@
 			if ( isset($Index->data)) {
 				$Data	= array_merge($Index->data, $Data);
 			}
-			$Index->printView(
-				file_exists(SROOT .'engine/views/'. $fileviewer . strtolower($baseClassName) .'.inc')? SROOT .'engine/views/'. $fileviewer . strtolower($baseClassName) .'.inc': SROOT .'engine/views/'. $fileviewer.'index.inc',
-				$Data,
-				null,
-				$Index
-			);
+			if ( file_exists($fileviewer)) {
+				$Index->printView(
+					$fileviewer,
+					$Data,
+					null,
+					$Index
+				);
+			}
 			die();
 		}
-		$fileviewer	.= 'index.inc';
 		$controller	.= 'Index.php';
+		
 	} else if ($found) {//FILE
 		
 	} else {//NOT FOUND
@@ -165,6 +191,7 @@
 		while ( ($pos=strpos('#'.$baseClassName, '-')) > 0) {
 			$baseClassName	= substr($baseClassName, 0, $pos-1) . substr(strtoupper($baseClassName), $pos, 1) . substr($baseClassName, $pos+1);
 		}
+		
 		if ( file_exists(SROOT.'engine/controllers/'.$controller .'/Editor.php') ) {//o Editor.php deve ter precedência sobre o Index.php
 			require(SROOT.'engine/controllers/'.$controller .'/Editor.php');
 			if ( file_exists(SROOT.'engine/views/'.$controller .'/editor.inc') ) {
@@ -194,7 +221,6 @@
 		} else {
 			$fileV	= SROOT .'engine/views/404/index.inc';
 		}
-		
 		if ( class_exists('AdminEditor')) {
 			$Editor	= new AdminEditor();
 			if ( method_exists($Editor, 'on404')) {
@@ -232,7 +258,8 @@
 				$Index
 			);
 		} else {
-			GT8::printView(
+			$Index	= new GT8();
+			$Index->printView(
 				$fileV,
 				$Data,
 				$Editor,
@@ -247,6 +274,11 @@
 	} else if ( file_exists(SROOT.'engine/controllers/'.$controller) ) {
 		require_once(SROOT.'engine/controllers/'.$controller);
 	} else {
+		//if the image is cached send a 304
+		if ( isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+			header('Last-Modified: '.$_SERVER['HTTP_IF_MODIFIED_SINCE'], true, 304);
+			exit;
+		}
 		$mime	= '';
 		$useView	= false;
 		switch( substr($fileviewer, -4)) {
@@ -276,12 +308,16 @@
 			}
 		}
 		if ( $mime) {
+			header("Cache-Control: private, max-age=10800, pre-check=10800");
+			header("Pragma: private");
+			header("Expires: " . date( DATE_RFC822, strtotime(" 5 day")));
+			header('Last-Modified: '. date( DATE_RFC822, $data['modification']));
 			header("Content-Type: $mime");
 			if ( $useView) {
 				$gt8	= new GT8();
-				$gt8->printView(SROOT.'engine/views/'.$fileviewer);
+				$gt8->printView(file_exists(SROOT.'engine/views/'.$fileviewer)? SROOT.'engine/views/'.$fileviewer: $fileviewer);
 			} else {
-				print(file_get_contents(SROOT.'engine/views/'.$fileviewer));
+				print(file_get_contents(file_exists(SROOT.'engine/views/'.$fileviewer)? SROOT.'engine/views/'.$fileviewer: $fileviewer));
 			}
 			die();
 		}
@@ -294,10 +330,12 @@
 			$Data	= array_merge($Index->data, $Data);
 		}
 	}
-	if ( file_exists(SROOT .'engine/views/'. $fileviewer) && !is_dir(SROOT .'engine/views/'. $fileviewer) ) {
+	$fileVCond1	= file_exists(SROOT .'engine/views/'. $fileviewer) && !is_dir(SROOT .'engine/views/'. $fileviewer);
+	$fileVCond2	= file_exists($fileviewer) && !is_dir($fileviewer);
+	if ( $fileVCond1 || $fileVCond2 ) {
 		if ( $Index) {
 			$Index->printView(
-				SROOT .'engine/views/'. $fileviewer,
+				$fileVCond1? SROOT .'engine/views/'. $fileviewer: $fileviewer,
 				$Data,
 				null,
 				$Index
@@ -305,7 +343,7 @@
 		} else {
 			$Index	= new GT8;
 			$Index->printView(
-				SROOT .'engine/views/'. $fileviewer,
+				$fileVCond1? SROOT .'engine/views/'. $fileviewer: $fileviewer,
 				$Data,
 				$Editor
 			);

@@ -110,7 +110,7 @@
 						print('//#error: missing the destination of the e-mail!'. PHP_EOL);
 					}
 					die('Erro: destinatário ausente!');
-				} else if ( !$content) {
+				} else if ( !$body) {
 					if ( $this->format == 'JSON') {
 						print('//#error: Cannot send a mail without content!'. PHP_EOL);
 					}
@@ -132,7 +132,7 @@
 							'$subject',
 							'{$from[0]}',
 							'{$to[0]}',
-							'". mysql_real_escape_string($content) ."'
+							'". mysql_real_escape_string($body) ."'
 						FROM
 							gt8_mail_copy m
 						WHERE
@@ -141,7 +141,7 @@
 							m.sbjct		= '$subject' AND
 							m.frm		= '{$from[0]}' AND
 							m.dstntn	= '{$to[0]}' AND
-							m.cntnt		= '". mysql_real_escape_string($content) ."'
+							m.cntnt		= '". mysql_real_escape_string($body) ."'
 						HAVING
 							COUNT(*) = 0
 						

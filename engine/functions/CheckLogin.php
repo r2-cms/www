@@ -13,15 +13,22 @@
 	}
 	
 	function CheckLogin( $login, $hpass, $keepLogged=false, $useMD5=true) {
+		global $GT8;
 		$huser	= md5(strtolower($login));
 		$hpass	= RegExp($hpass, "[a-fA-F0-9]+");
 		
 		if ( !isset($_SESSION['analytics-page']) ) {
 			//SUSPECT: DOS attack
 			//Cookies não apresentam riscos, pois é feita validação antes. Mas se a procedência não for cookies, durma e morra
-			if ( $useMD5 ) {
-				sleep(30);
-				die('-303');
+			
+			//exceção é o caso da página não ter analytics. Neste caso, não dá para verificar
+			if ( !isset($GT8['analytics']) || $GT8['analytics'] === false) {
+				
+			} else {
+				if ( $useMD5 ) {
+					sleep(30);
+					die('-303');
+				}
 			}
 		}
 		if ( isset($_SESSION['login']['last-try']) ) {

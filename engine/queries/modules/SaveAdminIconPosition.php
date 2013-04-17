@@ -18,7 +18,7 @@
 			$options['id_users']	= $_SESSION['login']['id'];
 			$options['card_index']	= (integer)$options['card_index'];
 			$options['page_index']	= (integer)$options['page_index'];
-			$options['module']	= RegExp($options['module'], '[a-zA-Z0-9\-\.]+');
+			$options['module']	= RegExp($options['module'], '[a-zA-Z0-9\-\.\/]+');
 			$options['id']	= mysql_query("SELECT id FROM gt8_modules WHERE id_users = {$options['id_users']} AND module = '{$options['module']}'");
 			if ( !$options['id']) {
 				die('invalid!');
@@ -66,7 +66,7 @@
 			") or die("SQL Update Error on Qr::SAIP");
 			
 			if ( (isset($options['format']) && $options['format'] === 'JSON') || ( isset($_GET['format']) && $_GET['format'] === 'JSON')) {
-				print("//#affected rows: 1". PHP_EOL);
+				print("//#affected rows: ". mysql_affected_rows() . PHP_EOL);
 			}
 		}
 		public function getValue( $field, $value) {

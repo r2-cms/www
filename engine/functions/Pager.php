@@ -536,7 +536,7 @@
 					$name	= $gridCols[$i][0];
 					$raw	= $row[$name];
 					$utf	= utf8_encode($raw);
-					$ett	= utf8_encode(htmlentities(utf8_encode($raw)));
+					$ett	= utf8_encode((($raw)));
 					$type	= $gridCols[$i][1];
 					
 					if ( $type == 'string') {
