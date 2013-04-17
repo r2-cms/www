@@ -1022,6 +1022,82 @@ a.checkbox {
 			position: absolute;
 			right: 5px;
 		}
+/*INFO*/
+label.input-text sub, label.input-select sub {
+	line-height: 20px;
+	min-height: 40px !important;
+	opacity: 0;
+	color: #393;
+	transition: all 0.4s;
+	-ms-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+}
+	label.input-text.required sub, label.input-select.required sub {
+		background: url('../../imgs/gt8/required-small.png') no-repeat left 13px transparent;
+		margin-left: -40px;
+		padding-left: 40px;
+		color: #B55;
+		left: 10px;
+		opacity: 1;
+	}
+	label.input-text.ok sub, label.input-select.ok sub {
+		background: url('../../imgs/gt8/ok-small.png') no-repeat left 13px transparent;
+		color: #393;
+		margin-left: -40px;
+		padding-left: 40px;
+		opacity: 1;
+	}
+	label.input-text.error sub, label.input-select.error sub {
+		background: url('../../imgs/gt8/error-small.png') no-repeat left 13px transparent;
+		color: #B55;
+		opacity: 1;
+	}
+		label.input-select.required sub, label.input-select.ok sub, label.input-select.error sub {
+			margin-left: -50px;
+			padding-left: 50px;
+		}
+/************************************* EDITABLE FIELDS *************************/
+.editable-fields {
+	
+}
+	.editable-fields input {
+		display: block;
+		height: 30px;
+		width: 100%;
+		padding: 0;
+		border: none;
+		background: transparent;
+		font-size: inherit;
+		color: inherit;
+		transition: all 0.4s;
+	}
+	.editable-fields input:focus {
+		outline: 1px solid #56B4EF;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset, 0 0 3px #52A8EC inset;
+		background: #FFC;
+	}
+	.editable-fields .selectless {
+		display: inline-block;
+		margin-left: 0;
+		padding-right: 20px;
+		width: 100%;
+	}
+		.editable-fields .selectless select {
+			display: block;
+			border: none;
+			line-height: inherit;
+			background: transparent;
+			font-family: inherit;
+			font-size: inherit;
+			color: inherit;
+		}
+.icon-enabled-1 {
+	background: transparent url(../../imgs/gt8/icon-bullet-active-mini.png) no-repeat center/10px;
+}
+.icon-enabled-0 {
+	background: transparent url(../../imgs/gt8/icon-bullet-disabled-mini.png) no-repeat center/10px;
+}
 /************************************* INCREASER ******************************/
 /*INCREASER*/
 label.increaser {

@@ -31,6 +31,8 @@ h1 {
 			position: absolute;
 			left: 0;
 			top: 0;
+			max-width: 1440px;
+			max-height: 1080px;
 		}
 			.banner #eMagnifierC img.bt-close {
 				position: absolute;
@@ -127,6 +129,28 @@ p.item > span {
 				padding: 0px 4px;
 				margin: 5px 4px 0;
 				line-height: 30px;
+			}
+			.sizes-chooser a.product-bt-emphasys {
+				background-color: #4C97DF;
+				background-image: linear-gradient( top , #4C97DF, #539EDF 48%, #4692DE 52%, #3176D5);
+				background-image: -ms-linear-gradient( top , #4C97DF, #539EDF 48%, #4692DE 52%, #3176D5);
+				background-image: -moz-linear-gradient( top , #4C97DF, #539EDF 48%, #4692DE 52%, #3176D5);
+				background-image: -webkit-linear-gradient( top, #4C97DF, #539EDF 48%, #4692DE 52%, #3176D5);
+				padding: 5px 12px;
+				color: #FFF;
+				text-shadow: 0 1px 1px #333;
+			}
+			.sizes-chooser-label {
+				transition: all 0.4s;
+				-ms-transition: all 0.4s;
+				-moz-transition: all 0.4s;
+				-webkit-transition: all 0.4s;
+			}
+			.sizes-chooser-holder .product-label-emphasys {
+				display: block !important;
+				float: none !important;
+				font-weight: bolder;
+				font-size: 18px;
 			}
 /*********************** TabbedPane *******************************************/
 body .TabbedPane {

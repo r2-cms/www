@@ -20,10 +20,14 @@ h1, h2, h3, h4, h5, h6, p, ul, li {
 	margin: 0 0 20px;
 }
 h1 {
-	font-size: 1em;
-	line-height: 300%;
+	font-size: 2em;
+	line-height: 200%;
 	margin: 0;
 }
+	.directory h1 {
+		font-size: 1em;
+		line-height: 300%;
+	}
 h2 {
 	font-size: 1.5em;
 	color: #333;
@@ -137,7 +141,7 @@ header.main {
 			}
 				header.main > nav a.logo img {
 					width: 157px;
-					height: 99px;
+					height: 97px;
 				}
 		header.main .empty-space {
 			height: 40px;
@@ -276,16 +280,16 @@ header.main {
 		position: relative;
 		z-index: 2;
 		box-shadow: 0 0px 2px #999;
-		padding: 18px 0;
 	}
 		header.main > nav.menu .top {
-			width: 10%;
+			width: 19.9%;
 		}
 			header.main > nav.menu a {
 				display: block;
 				float: none !important;
-				height: 37px;
-				line-height: 39px;
+				height: 50px;
+				line-height: 50px;
+				padding: 0;
 			}
 
 /****************************** DIRECTORY *************************************/
@@ -316,32 +320,119 @@ nav.directory {
 		box-shadow: -1px 0 0 #FFFFFF, -2px 0 0 #CCCCCC, 1px 0 0 #FFFFFF, 2px 0 0 #CCCCCC;
 	}
 	.MenuDropDown .top > a strong {
-		box-shadow: 1px 0 0 #FFFFFF, 2px 0 0 #CCCCCC;
 		border-left: none !important;
 		padding: 0 !important;
 		text-align: center;
+		box-shadow: 1px 0 0 #FFFFFF, 2px 0 0 #CCCCCC;
 	}
 	.MenuDropDown .top > a {
 		border-left: none !important;
 	}
-	.MenuDropDown .top > a:hover strong, .MenuDropDown .top > a.over strong {
+	.MenuDropDown .top > a:hover, .MenuDropDown .top > a.over {
 		box-shadow: -3px 1px 5px #999999, 3px 1px 5px #999999;
 		background: rgba( 255, 255, 255, 0.86) !important;
 		border-left: none !important;
 		border-right: none !important;
 	}
-	.MenuDropDown-sub .holder {
-		background: #FFF !important;
-		background: rgba( 255,255,255, 0.86) !important;
-		left: -1px !important;
-	}
-		.MenuDropDown-sub .holder ul:not(:last-child) {
-			box-shadow: 1px 0 0 #CCC, 2px 0 0 #FFE;
+		.MenuDropDown .top > a:hover strong, .MenuDropDown .top > a.over strong {
+			background: transparent !important;
+			box-shadow: none;
 		}
-			.MenuDropDown-sub .holder ul li {
-				margin: 0 10px !important;
+	.MenuDropDown-sub {
+		width: 100% !important;
+		left: 0 !important;
+		padding: 1px 0 50px !important;
+		margin-left: 0 !important;
+	}
+		.MenuDropDown-sub .holder {
+			background: #FFF !important;
+			max-width: 1233px !important;
+			left: 0 !important;
+			margin: 0 auto !important;
+			float: none !important;
+			width: 90% !important;
+		}
+			.MenuDropDown-sub .holder .border-left {
+				box-shadow: -1px 0 0 #BBBBBB, -2px 0 0 #FFFFFF;
 			}
-
+				html .MenuDropDown-sub .holder ul {
+					margin: 0px 10px 10px;
+				}
+					.MenuDropDown-sub .holder ul li {
+						margin: 0 10px !important;
+					}
+						.MenuDropDown-sub .holder ul li > strong {
+							padding: 0px;
+							line-height: 32px;
+							cursor: default;
+							display: block;
+							margin: 0 20px 10px;
+							text-transform: uppercase;
+						}
+							.MenuDropDown-sub .holder ul li > a {
+								line-height: 40px;
+								height: 40px;
+							}
+									.MenuDropDown-sub .holder ul li a:hover {
+										background: linear-gradient(#F8C39B, #F18636) repeat scroll 0 0 #F8C39B !important;
+										background: -ms-linear-gradient(#F8C39B, #F18636) repeat scroll 0 0 #F8C39B !important;
+										background: -moz-linear-gradient(#F8C39B, #F18636) repeat scroll 0 0 #F8C39B !important;
+										background: -webkit-linear-gradient(#F8C39B, #F18636) repeat scroll 0 0 #F8C39B !important;
+										border-radius: 1px;
+										box-shadow: 0 1px 3px 0px #888;
+									}
+								.MenuDropDown-sub .holder ul li > a > span {
+									display: block;
+									border-bottom: 1px dotted #F18636;
+								}
+				.MenuDropDown-sub .holder ul.title {
+					margin: 10px 10px 0;
+				}
+					.MenuDropDown-sub .holder ul.title li strong {
+						margin: 0;
+					}
+				html .MenuDropDown-sub .holder .viewer {
+					margin-top: -30px !important;
+					min-height: 246px;
+				}
+					html .MenuDropDown-sub .holder .viewer.default {
+						background: transparent url(../imgs/logo-large.png) no-repeat center;
+					}
+					html .MenuDropDown-sub .holder .viewer.single {
+						background: transparent none;
+						margin-top: -20px !important;
+						box-shadow: none;
+						height: 246px;
+						overflow: hidden;
+						padding-top: 10px;
+					}
+						html .MenuDropDown-sub .holder .small-card {
+							background: transparent;
+							border-radius: 4px;
+							box-shadow: 0 2px 5px 0px #666;
+						}
+							html .MenuDropDown-sub .holder .small-card img {
+								width: 100%;
+							}
+		.MenuDropDown-sub .holder .viewer .brand-info, .MenuDropDown-sub .holder .viewer .family-info {
+			display: none;
+			opacity: 0;
+			padding: 10px 30px;
+		}
+			.MenuDropDown-sub .holder .viewer .family-info strong {
+				display: block;
+				font-size: 18px;
+				line-height: 32px;
+				margin-bottom: 20px;
+				text-transform: capitalize;
+			}	
+				.MenuDropDown-sub .holder .content {
+					display: block;
+					text-decoration: none;
+				}
+					.MenuDropDown-sub .holder .content {
+						
+					}
 /****************************** FOOTER ****************************************/
 footer.main {
 	font-size: 0.9em;
@@ -373,6 +464,28 @@ footer.main.fixed {
 	footer.main ul li a {
 		line-height: 200%;
 		color: #666;
+	}
+/****************************** NEWSLETTER CAPTURE ****************************/
+#eNewsletterCapture {
+	margin-top: 80px;
+}
+	#eNewsletterCapture .above {
+		position: relative;
+		z-index: 2;
+	}
+	#eNewsletterCapture .feedback {
+		background: rgba(255,230,230,0.8) url("../imgs/bt-close-mini.gif") no-repeat scroll right 20px center;
+		cursor: pointer;
+		font-weight: bolder;
+		text-align: center;
+	}
+	#eNewsletterCapture .footer-bg {
+		position: absolute;
+		left: -20px;
+		top: -12%;
+		width: auto;
+		height: 125%;
+		z-index: 1;
 	}
 /******************************  MODAL-WINDOW *********************************/
 .modal-window {
@@ -1080,13 +1193,13 @@ a.href-button-disabled span {
 	display: block;
 }
 .clearfix, .clearfix-child:after {
-  clear: both;
-  display: block;
-  overflow: hidden;
-  visibility: hidden;
-  width: 0;
-  height: 0;
-  content: '';
+	clear: both;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+	content: '';
 }
 .imgC {
 	position: relative;
@@ -1269,6 +1382,9 @@ label.input-button, label.input-text, label.input-select {
 	position: relative;
 	line-height: 3em;
 }
+		label.input-button, label.input-text {
+			cursor: text;
+		}
 	label.input-button > input, label.input-text > input, label.input-text > select {
 		position: relative;
 		width: 100%;
@@ -1577,7 +1693,7 @@ label.increaser.side-by-side {
 			}
 /************************************* CLASSES ********************************/
 #eMain {
-	opacity: 0;
+	/*opacity: 0;*/
 }
 .wrapper {
 	position: relative;
@@ -1728,10 +1844,10 @@ img.float-right {
 	line-height: 40px !important;
 }
 .margin-top {
-	margin-top: 20px;
+	margin-top: 20px !important;
 }
 .margin-top-small {
-	margin-top: 10px;
+	margin-top: 10px !important;
 }
 .margin-top-mini {
 	margin-top: 5px;
@@ -1898,14 +2014,29 @@ input.search {
 .border-radius {
 	border-radius: 4px !important;
 }
+.cursor-default {
+	cursor: default !important;
+}
+.cursor-pointer {
+	cursor: pointer !important;
+}
 /************************************* TRANSITIONS ****************************/
 .trans-pulsate-left {
 	position: relative;
 	animation: trans-pulsate-left 1s ease-in-out;
+	-ms-animation: trans-pulsate-left 1s ease-in-out;
 	-moz-animation: trans-pulsate-left 1s ease-in-out;
 	-webkit-animation: trans-pulsate-left 1s ease-in-out;
 }
 @-moz-keyframes trans-pulsate-left {
+	0%   { left: 0px; }
+	20%  { left: -40px; }	
+	40%  { left: 30px; }
+	60%  { left: -20px; }
+	80%  { left: 10px; }
+	100% { left: 0px; }
+}
+@-ms-keyframes trans-pulsate-left {
 	0%   { left: 0px; }
 	20%  { left: -40px; }	
 	40%  { left: 30px; }
@@ -2038,7 +2169,7 @@ input.search {
 	width: 100%;
 	height: 100%;
 	z-index: 1000;
-	background: rgba( 0,0,0, 0.3);
+	background: rgba( 0,0,0, 0.6);
 }
 .gt8-debug-error {
 	position: relative;
@@ -2054,7 +2185,8 @@ input.search {
 	background-image: -webkit-linear-gradient( top, #EE5F5B, #C43C35);
 	background-image: -moz-linear-gradient( top , #EE5F5B, #C43C35);
 	background-image: -ms-linear-gradient( top , #EE5F5B, #C43C35);
-	z-index: 10000;
+	box-shadow: 0 2px 6px #444444;
+	z-index: 100;
 }
 	.gt8-debug-error h1, .gt8-debug-error h2 {
 		color: #FFF;
@@ -2071,5 +2203,9 @@ input.search {
 		background: rgba(255,255,255,0.6) url(../imgs/delete-small.png) center no-repeat;
 		box-shadow: 1px 0 2px #666;
 		border-radius: 4px;
+	}
+	.gt8-debug-error a {
+		color: #38B8F5;
+		text-shadow: 0 1px 1px #333333;
 	}
 

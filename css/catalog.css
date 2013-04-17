@@ -193,3 +193,7 @@ a.href-button.color-prata		{ background-image: url(../imgs/catalog/colors/prata.
 a.href-button.color-xadrez		{ background-image: url(../imgs/catalog/colors/xadrez.jpg); }
 a.href-button.color-zebra		{ background-image: url(../imgs/catalog/colors/zebra.jpg); }
 
+.attributes-max-height {
+	max-height: 250px;
+	overflow: auto;
+}
